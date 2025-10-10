@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - 10minute.studio</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            line-height: 1.8;
+        }
+        h1 { color: #667eea; }
+        h2 { color: #FF6B35; margin-top: 30px; }
+        .language-switch {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .language-switch a {
+            margin: 0 10px;
+            padding: 8px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .back-link { color: #667eea; text-decoration: none; }
+        .language-content { display: none; }
+        .language-content.active { display: block; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Back to Home</a>
+
+    <div class="language-switch">
+        <a href="#" onclick="showLanguage('ko'); return false;">한국어</a>
+        <a href="#" onclick="showLanguage('en'); return false;">English</a>
+    </div>
+
+    <!-- 한글 버전 -->
+    <div id="korean" class="language-content active">
+        <h1>이용약관</h1>
+        <p><strong>적용 대상:</strong> 10minute.studio의 모든 게임 및 서비스</p>
+        <p><strong>시행일:</strong> 2025년 1월 1일</p>
+
+        <h2>1. 서비스 이용</h2>
+        <p>10minute.studio의 게임은 무료로 제공되며, 광고가 포함될 수 있습니다.</p>
+
+        <h2>2. 사용자 규칙</h2>
+        <ul>
+            <li>부적절한 닉네임 사용 금지</li>
+            <li>치트, 핵 등 부정행위 금지</li>
+            <li>타인에게 피해를 주는 행위 금지</li>
+        </ul>
+
+        <h2>3. 서비스 변경</h2>
+        <p>게임은 사전 공지 없이 업데이트되거나 변경될 수 있습니다.</p>
+
+        <h2>4. 책임 제한</h2>
+        <p>게임 이용으로 인한 손해에 대해 회사는 책임지지 않습니다. 게임은 "있는 그대로" 제공됩니다.</p>
+
+        <h2>5. 연락처</h2>
+        <p>Email: <a href="mailto:10minute.studio2025@gmail.com">10minute.studio2025@gmail.com</a></p>
+
+        <footer style="margin-top: 60px; padding-top: 20px; border-top: 1px solid #e2e8f0; color: #666;">
+            <p>© 2025 10minute.studio. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- 영문 버전 -->
+    <div id="english" class="language-content">
+        <h1>Terms of Service</h1>
+        <p><strong>Applies to:</strong> All games and services by 10minute.studio</p>
+        <p><strong>Effective Date:</strong> January 1, 2025</p>
+
+        <h2>1. Service Use</h2>
+        <p>10minute.studio games are provided free of charge and may include advertisements.</p>
+
+        <h2>2. User Rules</h2>
+        <ul>
+            <li>No inappropriate nicknames</li>
+            <li>No cheating, hacking, or unfair play</li>
+            <li>No harmful behavior toward others</li>
+        </ul>
+
+        <h2>3. Service Changes</h2>
+        <p>Games may be updated or modified without prior notice.</p>
+
+        <h2>4. Limitation of Liability</h2>
+        <p>We are not liable for any damages arising from game use. Games are provided "as is".</p>
+
+        <h2>5. Contact</h2>
+        <p>Email: <a href="mailto:10minute.studio2025@gmail.com">10minute.studio2025@gmail.com</a></p>
+
+        <footer style="margin-top: 60px; padding-top: 20px; border-top: 1px solid #e2e8f0; color: #666;">
+            <p>© 2025 10minute.studio. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        function showLanguage(lang) {
+            document.querySelectorAll('.language-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.getElementById(lang === 'ko' ? 'korean' : 'english').classList.add('active');
+        }
+    </script>
+</body>
+</html>

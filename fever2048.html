@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FEVER2048 - 10minute.studio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+            color: white;
+        }
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        .back-link {
+            display: inline-block;
+            margin: 20px 0;
+            color: #667eea;
+            text-decoration: none;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section h2 {
+            font-size: 1.8em;
+            color: #FF6B35;
+            margin-bottom: 20px;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .feature-box {
+            background: #f7fafc;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid #FF6B35;
+        }
+        .feature-box h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        .download-section {
+            text-align: center;
+            padding: 40px;
+            background: #f7fafc;
+            border-radius: 12px;
+            margin: 40px 0;
+        }
+        .download-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            margin: 10px;
+            background: #000;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🔥 FEVER2048</h1>
+        <p>2048 + Roguelike Deck-Building</p>
+    </header>
+
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to 10minute.studio</a>
+
+        <section class="section">
+            <h2>게임 소개</h2>
+            <p style="font-size: 1.1em;">
+                FEVER2048은 클래식 2048 퍼즐에 로그라이크 덱빌딩 시스템을 결합한 혁신적인 게임입니다. <br>
+                단순히 타일을 합치는 것을 넘어, 전략적 카드 선택으로 매 게임이 새로운 도전이 됩니다.
+            </p>
+        </section>
+
+        <section class="section">
+            <h2>주요 기능</h2>
+            <div class="features">
+                <div class="feature-box">
+                    <h3>🎴 파워카드 시스템</h3>
+                    <p>레벨업마다 3장 중 1장 선택<br>12종의 고유한 효과<br>전략적 덱빌딩</p>
+                </div>
+                <div class="feature-box">
+                    <h3>🔥 피버모드</h3>
+                    <p>특정 카드로 발동<br>최대 8배 점수 획득<br>Lucky7 자동 피버</p>
+                </div>
+                <div class="feature-box">
+                    <h3>🏆 글로벌 리더보드</h3>
+                    <p>전 세계 플레이어와 경쟁<br>실시간 순위 확인<br>최고 기록 도전</p>
+                </div>
+                <div class="feature-box">
+                    <h3>📈 카드 성장</h3>
+                    <p>카드 레벨업 시스템<br>출현 확률 상승<br>전략적 컬렉션 관리</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>게임 방법</h2>
+            <ol style="font-size: 1.05em; line-height: 2;">
+                <li>화면을 스와이프하여 타일 이동</li>
+                <li>같은 숫자 타일을 합쳐서 2048 달성</li>
+                <li>레벨업하며 파워카드 획득</li>
+                <li>전략적으로 카드를 활용하여 고득점</li>
+                <li>피버모드로 폭발적인 점수 획득!</li>
+            </ol>
+        </section>
+
+        <div class="download-section">
+            <h2 style="margin-bottom: 20px;">지금 다운로드</h2>
+            <p style="margin-bottom: 30px;">iOS 및 Android에서 무료로 즐기세요!</p>
+            <a href="#" class="download-btn">🍎 App Store</a>
+            <a href="#" class="download-btn">📱 Google Play</a>
+        </div>
+
+        <section class="section">
+            <h2>지원</h2>
+            <p>문의사항이 있으신가요? <a href="contact.html" style="color: #667eea;">여기</a>로 연락주세요.</p>
+            <p style="margin-top: 10px;">
+                <a href="privacy.html" style="color: #667eea;">개인정보 처리방침</a> | 
+                <a href="terms.html" style="color: #667eea;">이용약관</a>
+            </p>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2025 10minute.studio. All rights reserved.</p>
+    </footer>
+</body>
+</html>

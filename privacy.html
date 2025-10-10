@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - 10minute.studio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: #f9fafb;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .language-switch {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px 0;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .language-switch a {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px 30px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .language-switch a:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        .language-switch a.active {
+            background: #FF6B35;
+        }
+        .language-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        .language-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        h2 {
+            color: #FF6B35;
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #FF6B35;
+        }
+        h3 {
+            color: #667eea;
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        p {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        strong {
+            color: #2d3748;
+            font-weight: 600;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: #f7fafc;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border: 1px solid #e2e8f0;
+        }
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+        a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .info-box {
+            background: #eef2ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .warning-box {
+            background: #fff5f5;
+            border-left: 4px solid #f56565;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        hr {
+            margin: 40px 0;
+            border: none;
+            border-top: 2px solid #e2e8f0;
+        }
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            color: #718096;
+            border-top: 2px solid #e2e8f0;
+        }
+        footer strong {
+            color: #667eea;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Home</a>
+
+        <div class="language-switch">
+            <a href="#" class="active" onclick="showLanguage('ko'); return false;">한국어</a>
+            <a href="#" onclick="showLanguage('en'); return false;">English</a>
+        </div>
+
+        <!-- 한글 버전 -->
+        <div id="korean" class="language-content active">
+            <h1>FEVER2048 개인정보 처리방침</h1>
+            
+            <div class="info-box">
+                <p><strong>최종 수정일</strong>: 2025년 10월 13일</p>
+                <p><strong>시행일</strong>: 2025년 10월 13일</p>
+            </div>
+
+            <h2>1. 개요</h2>
+            <p>10minute.studio(이하 "회사")는 FEVER2048 모바일 게임 애플리케이션(이하 "앱")을 통해 수집되는 개인정보를 소중히 다루며, 관련 법령을 준수합니다.</p>
+
+            <h2>2. 수집하는 개인정보 항목</h2>
+
+            <h3>2.1 필수 수집 정보</h3>
+            <ul>
+                <li><strong>사용자 식별자 (UUID)</strong>: Firebase에서 자동 생성되는 고유 ID</li>
+                <li><strong>닉네임</strong>: 무작위로 생성되는 닉네임 (예: "GAMER_A4B2")</li>
+                <li><strong>게임 기록</strong>: 최고 점수, 최고 타일, 플레이 시간</li>
+                <li><strong>게임 통계</strong>: 게임 플레이 횟수, 파워카드 사용 통계, 도전과제 달성 기록</li>
+            </ul>
+
+            <h3>2.2 자동 수집 정보</h3>
+            <ul>
+                <li><strong>기기 정보</strong>: 기기 모델, OS 버전, 언어 설정</li>
+                <li><strong>게임 플레이 데이터</strong>: Firebase Analytics를 통한 게임 이벤트 (게임 시작, 완료, 점수 달성 등)</li>
+                <li><strong>광고 식별자</strong>: AdMob을 통한 광고 표시를 위한 광고 ID (IDFA/AAID)</li>
+            </ul>
+
+            <h2>3. 개인정보의 수집 및 이용 목적</h2>
+
+            <h3>3.1 서비스 제공</h3>
+            <ul>
+                <li>글로벌 리더보드 순위 표시 및 경쟁 기능 제공</li>
+                <li>게임 진행 상황 저장 및 복구</li>
+                <li>도전과제 달성 기록 관리</li>
+            </ul>
+
+            <h3>3.2 서비스 개선</h3>
+            <ul>
+                <li>게임 플레이 패턴 분석을 통한 게임 밸런스 조정</li>
+                <li>버그 수정 및 서비스 품질 향상</li>
+                <li>사용자 경험 개선</li>
+            </ul>
+
+            <h3>3.3 광고 제공</h3>
+            <ul>
+                <li>맞춤형 광고 표시 (AdMob)</li>
+                <li>광고 효과 측정 및 분석</li>
+            </ul>
+
+            <h2>4. 개인정보의 보관 및 이용 기간</h2>
+            <ul>
+                <li><strong>보관 기간</strong>: 앱을 삭제하기 전까지</li>
+                <li><strong>삭제 방법</strong>:
+                    <ul>
+                        <li>앱 삭제 시 로컬 데이터 자동 삭제</li>
+                        <li>앱 내 설정에서 "게임 데이터 초기화" 기능 제공</li>
+                        <li>서버 데이터 삭제 요청: <a href="mailto:10minute.studio2025@gmail.com">10minute.studio2025@gmail.com</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>5. 개인정보의 제3자 제공</h2>
+            <p>회사는 원칙적으로 사용자의 개인정보를 제3자에게 제공하지 않습니다. 다만, 다음의 경우는 예외로 합니다:</p>
+
+            <h3>5.1 서비스 제공을 위한 필수 공유</h3>
+            <ul>
+                <li><strong>Firebase (Google)</strong>: 리더보드, 게임 데이터 저장, 분석</li>
+                <li><strong>AdMob (Google)</strong>: 광고 표시 및 수익화</li>
+                <li><strong>Apple/Google</strong>: 앱스토어 플랫폼 제공</li>
+            </ul>
+
+            <h2>6. 개인정보 처리 위탁</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>수탁업체</th>
+                        <th>위탁 업무 내용</th>
+                        <th>개인정보 보유기간</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Google Firebase</td>
+                        <td>데이터 저장, 분석</td>
+                        <td>앱 삭제 시까지</td>
+                    </tr>
+                    <tr>
+                        <td>Google AdMob</td>
+                        <td>광고 표시</td>
+                        <td>광고 표시 기간</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>7. 사용자의 권리</h2>
+            <p>사용자는 언제든지 다음의 권리를 행사할 수 있습니다:</p>
+            <ul>
+                <li><strong>열람 요구권</strong>: 앱 내 "리더보드 > MY STATS"에서 확인</li>
+                <li><strong>정정 요구권</strong>: 설정에서 닉네임 변경 (현재 버전에서는 자동 생성)</li>
+                <li><strong>삭제 요구권</strong>: 설정 > 게임 데이터 초기화 또는 <a href="mailto:10minute.studio2025@gmail.com">10minute.studio2025@gmail.com</a> 문의</li>
+                <li><strong>처리정지 요구권</strong>: 앱 삭제 또는 이메일 문의</li>
+            </ul>
+
+            <h2>8. 개인정보의 파기</h2>
+            <ul>
+                <li><strong>파기 시점</strong>: 앱 삭제 시 또는 사용자 요청 시</li>
+                <li><strong>파기 방법</strong>:
+                    <ul>
+                        <li>로컬 데이터: 앱 삭제 시 자동 삭제</li>
+                        <li>서버 데이터: 요청 접수 후 7일 이내 삭제</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>9. 개인정보 보호책임자</h2>
+            <p>개인정보 관련 문의, 불만 처리, 피해 구제 등에 관한 사항은 아래로 문의해 주시기 바랍니다:</p>
+            <ul>
+                <li><strong>이메일</strong>: <a href="mailto:10minute.studio2025@gmail.com">10minute.studio2025@gmail.com</a></li>
+                <li><strong>회신 기간</strong>: 영업일 기준 7일 이내</li>
+            </ul>
+
+            <h2>10. 아동의 개인정보 보호</h2>
+            <p>본 앱은 만 13세 미만 아동을 대상으로 하지 않으며, 고의로 아동의 개인정보를 수집하지 않습니다.</p>
+
+            <h2>11. 개인정보 처리방침의 변경</h2>
+            <p>본 개인정보 처리방침은 관련 법령 및 회사 정책에 따라 변경될 수 있습니다. 변경 시 앱 내 공지 또는 업데이트 노트를 통해 고지합니다.</p>
+
+            <h2>12. 준거법 및 관할</h2>
+            <p>본 방침은 대한민국 법령을 준거법으로 하며, 서비스 이용 중 발생한 분쟁은 관할 법원의 관할에 따릅니다.</p>
+
+            <hr>
+
+            <footer>
+                <p><strong>10minute.studio</strong></p>
+                <p>최종 수정일: 2025년 10월 13일</p>
+            </footer>
+        </div>
+
+        <!-- 영문 버전 -->
+        <div id="english" class="language-content">
+            <h1>FEVER2048 Privacy Policy</h1>
+            
+            <div class="info-box">
+                <p><strong>Last Updated</strong>: October 13, 2025</p>
+                <p><strong>Effective Date</strong>: October 13, 2025</p>
+            </div>
+
+            <h2>1. Overview</h2>
+            <p>10minute.studio ("we", "us", or "our") operates the FEVER2048 mobile game application (the "App"). This Privacy Policy explains how we collect, use, and protect your personal information.</p>
+
+            <h2>2. Information We Collect</h2>
+
+            <h3>2.1 Information You Provide</h3>
+            <ul>
+                <li><strong>User Identifier (UUID)</strong>: Auto-generated unique ID by Firebase</li>
+                <li><strong>Nickname</strong>: Randomly generated nickname (e.g., "GAMER_A4B2")</li>
+                <li><strong>Game Records</strong>: High score, highest tile, play time</li>
+                <li><strong>Game Statistics</strong>: Play count, power card usage, achievement records</li>
+            </ul>
+
+            <h3>2.2 Automatically Collected Information</h3>
+            <ul>
+                <li><strong>Device Information</strong>: Device model, OS version, language settings</li>
+                <li><strong>Game Play Data</strong>: Game events via Firebase Analytics (game start, completion, score achievements)</li>
+                <li><strong>Advertising Identifier</strong>: Ad ID (IDFA/AAID) for AdMob advertising</li>
+            </ul>
+
+            <h2>3. How We Use Your Information</h2>
+
+            <h3>3.1 Service Provision</h3>
+            <ul>
+                <li>Display global leaderboard rankings</li>
+                <li>Save and restore game progress</li>
+                <li>Manage achievement records</li>
+            </ul>
+
+            <h3>3.2 Service Improvement</h3>
+            <ul>
+                <li>Analyze gameplay patterns for game balance</li>
+                <li>Fix bugs and improve service quality</li>
+                <li>Enhance user experience</li>
+            </ul>
+
+            <h3>3.3 Advertising</h3>
+            <ul>
+                <li>Display personalized ads (AdMob)</li>
+                <li>Measure and analyze ad performance</li>
+            </ul>
+
+            <h2>4. Data Retention</h2>
+            <ul>
+                <li><strong>Retention Period</strong>: Until you uninstall the app</li>
+                <li><strong>Deletion Methods</strong>:
+                    <ul>
+                        <li>Automatic deletion upon app uninstall</li>
+                        <li>"Reset Game Data" in app settings</li>
+                        <li>Server data deletion request: <a href="mailto:10minute.studio2025@gmail.com">10minute.studio2025@gmail.com</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>5. Third-Party Sharing</h2>
+            <p>We do not share your personal information with third parties except as follows:</p>
+
+            <h3>5.1 Essential Service Providers</h3>
+            <ul>
+                <li><strong>Firebase (Google)</strong>: Leaderboard, data storage, analytics</li>
+                <li><strong>AdMob (Google)</strong>: Ad display and monetization</li>
+                <li><strong>Apple/Google</strong>: App store platform services</li>
+            </ul>
+
+            <h2>6. Data Processing Partners</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Partner</th>
+                        <th>Purpose</th>
+                        <th>Retention Period</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Google Firebase</td>
+                        <td>Data storage, analytics</td>
+                        <td>Until app deletion</td>
+                    </tr>
+                    <tr>
+                        <td>Google AdMob</td>
+                        <td>Ad display</td>
+                        <td>During ad display</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>7. Your Rights</h2>
+            <p>You may exercise the following rights at any time:</p>
+            <ul>
+                <li><strong>Access</strong>: View your data in "Leaderboard > MY STATS"</li>
+                <li><strong>Correction</strong>: Change nickname in settings (auto-generated in current version)</li>
+                <li><strong>Deletion</strong>: Settings > Reset Game Data or email <a href="mailto:10minute.studio2025@gmail.com">10minute.studio2025@gmail.com</a></li>
+                <li><strong>Opt-out</strong>: Uninstall app or email us</li>
+            </ul>
+
+            <h2>8. Data Security</h2>
+            <p>We implement appropriate technical and organizational measures to protect your personal information:</p>
+            <ul>
+                <li>Encrypted data transmission (HTTPS/TLS)</li>
+                <li>Secure Firebase Firestore storage</li>
+                <li>Access control and authentication</li>
+            </ul>
+
+            <h2>9. Privacy Contact</h2>
+            <p>For privacy-related inquiries, complaints, or requests:</p>
+            <ul>
+                <li><strong>Email</strong>: <a href="mailto:10minute.studio2025@gmail.com">10minute.studio2025@gmail.com</a></li>
+                <li><strong>Response Time</strong>: Within 7 business days</li>
+            </ul>
+
+            <h2>10. Children's Privacy</h2>
+            <p>Our App is not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13.</p>
+
+            <h2>11. Changes to This Policy</h2>
+            <p>We may update this Privacy Policy from time to time. Changes will be notified through in-app announcements or update notes.</p>
+
+            <h2>12. Governing Law</h2>
+            <p>This Privacy Policy shall be governed by and construed in accordance with the laws of the Republic of Korea.</p>
+
+            <hr>
+
+            <footer>
+                <p><strong>10minute.studio</strong></p>
+                <p>Last Updated: October 13, 2025</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        function showLanguage(lang) {
+            // 모든 언어 콘텐츠 숨기기
+            document.querySelectorAll('.language-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // 선택한 언어 표시
+            document.getElementById(lang === 'ko' ? 'korean' : 'english').classList.add('active');
+            
+            // 버튼 활성화 스타일 변경
+            document.querySelectorAll('.language-switch a').forEach(el => {
+                el.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
