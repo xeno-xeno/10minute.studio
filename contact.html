@@ -4,43 +4,180 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - 10minute.studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --color-bg: #fafafa;
+            --color-text: #1a1a1a;
+            --color-text-secondary: #666666;
+            --color-text-tertiary: #999999;
+            --color-primary: #2563eb;
+            --color-primary-hover: #1d4ed8;
+            --color-border: #e5e5e5;
+            --color-card-bg: #ffffff;
+            --spacing-xs: 8px;
+            --spacing-sm: 16px;
+            --spacing-md: 24px;
+            --spacing-lg: 48px;
+            --spacing-xl: 80px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.7;
+            color: var(--color-text);
+            background: var(--color-bg);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
             max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            line-height: 1.8;
+            margin: 0 auto;
+            padding: var(--spacing-xl) var(--spacing-md);
         }
-        h1 { color: #667eea; }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: var(--spacing-lg);
+            color: var(--color-text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9375rem;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--color-primary);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--color-text);
+            margin-bottom: var(--spacing-lg);
+        }
+
         .contact-box {
-            background: #f7fafc;
-            padding: 30px;
-            border-radius: 8px;
-            margin: 30px 0;
+            background: var(--color-card-bg);
+            border: 1px solid var(--color-border);
+            padding: var(--spacing-lg);
+            border-radius: 12px;
+            margin-bottom: var(--spacing-lg);
         }
-        .back-link { color: #667eea; text-decoration: none; }
+
+        .contact-box h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-text);
+        }
+
+        .contact-box p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .contact-box strong {
+            color: var(--color-text);
+            font-weight: 600;
+        }
+
+        .contact-box a {
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .contact-box a:hover {
+            color: var(--color-primary-hover);
+        }
+
+        .faq-section {
+            margin-top: var(--spacing-xl);
+        }
+
+        .faq-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: var(--spacing-lg);
+            color: var(--color-text);
+        }
+
+        .faq-item {
+            background: var(--color-card-bg);
+            border: 1px solid var(--color-border);
+            padding: var(--spacing-md);
+            border-radius: 12px;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .faq-item h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: var(--color-text);
+        }
+
+        .faq-item p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--color-text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .faq-section h2 {
+                font-size: 1.75rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <a href="index.html" class="back-link">← Back to Home</a>
-    
-    <h1>📬 Contact Us</h1>
-    
-    <div class="contact-box">
-        <h2>10minute.studio</h2>
-        <p><strong>Email:</strong> 10minute.studio2025@gmail.com </p>
-        <p><strong>Response Time:</strong> 1-2 business days</p>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Home</a>
+
+        <h1>📬 Contact Us</h1>
+
+        <div class="contact-box">
+            <h2>10minute.studio</h2>
+            <p><strong>Email:</strong> 10minute.studio2025@gmail.com</p>
+            <p><strong>Response Time:</strong> 1-2 business days</p>
+        </div>
+
+        <section class="faq-section">
+            <h2>자주 묻는 질문</h2>
+
+            <div class="faq-item">
+                <h3>Q. 게임이 작동하지 않아요</h3>
+                <p>A. 앱을 완전히 종료한 후 다시 실행해보세요. 문제가 지속되면 이메일로 문의주세요.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Q. 리더보드가 업데이트되지 않아요</h3>
+                <p>A. 인터넷 연결을 확인하고 앱을 재시작해보세요.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Q. 버그를 발견했어요</h3>
+                <p>A. 이메일로 상세한 내용과 스크린샷을 보내주시면 빠르게 수정하겠습니다.</p>
+            </div>
+        </section>
     </div>
-
-    <h2>자주 묻는 질문</h2>
-    <h3>Q. 게임이 작동하지 않아요</h3>
-    <p>A. 앱을 완전히 종료한 후 다시 실행해보세요. 문제가 지속되면 이메일로 문의주세요.</p>
-
-    <h3>Q. 리더보드가 업데이트되지 않아요</h3>
-    <p>A. 인터넷 연결을 확인하고 앱을 재시작해보세요.</p>
-
-    <h3>Q. 버그를 발견했어요</h3>
-    <p>A. 이메일로 상세한 내용과 스크린샷을 보내주시면 빠르게 수정하겠습니다.</p>
 </body>
 </html>

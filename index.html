@@ -4,143 +4,247 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>10minute.studio - Indie Game Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --color-bg: #fafafa;
+            --color-text: #1a1a1a;
+            --color-text-secondary: #666666;
+            --color-text-tertiary: #999999;
+            --color-primary: #2563eb;
+            --color-primary-hover: #1d4ed8;
+            --color-border: #e5e5e5;
+            --color-card-bg: #ffffff;
+            --spacing-xs: 8px;
+            --spacing-sm: 16px;
+            --spacing-md: 24px;
+            --spacing-lg: 48px;
+            --spacing-xl: 80px;
+            --spacing-xxl: 120px;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            line-height: 1.6;
-            color: #333;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.7;
+            color: var(--color-text);
+            background: var(--color-bg);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
+
         .container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 var(--spacing-md);
         }
+
         header {
+            padding: var(--spacing-xxl) 0 var(--spacing-xl);
             text-align: center;
-            padding: 80px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: var(--color-bg);
         }
-        header h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--color-text);
+            margin-bottom: var(--spacing-sm);
         }
-        header p {
-            font-size: 1.2em;
-            opacity: 0.9;
+
+        .tagline {
+            font-size: 1.0625rem;
+            font-weight: 400;
+            color: var(--color-text-secondary);
+            letter-spacing: -0.01em;
+            line-height: 1.8;
+            max-width: 680px;
+            margin: 0 auto;
         }
+
         .section {
-            padding: 60px 20px;
+            padding: var(--spacing-xl) 0;
         }
-        .section h2 {
-            font-size: 2em;
-            margin-bottom: 30px;
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: var(--spacing-lg);
             text-align: center;
-            color: #667eea;
+            color: var(--color-text);
         }
+
+        .about-text {
+            max-width: 680px;
+            margin: 0 auto;
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: var(--color-text-secondary);
+            text-align: center;
+        }
+
         .products {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            max-width: 800px;
+            margin: var(--spacing-lg) auto 0;
         }
-        .product-card {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+
+        .product-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-md);
+            padding: var(--spacing-lg) 0;
+            border-bottom: 1px solid var(--color-border);
+            transition: opacity 0.2s ease;
         }
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+
+        .product-item:last-child {
+            border-bottom: none;
         }
-        .product-card h3 {
-            font-size: 1.8em;
-            margin-bottom: 15px;
-            color: #FF6B35;
+
+        .product-item:hover {
+            opacity: 0.8;
         }
-        .product-card p {
-            color: #666;
-            margin-bottom: 20px;
+
+        .product-emoji {
+            font-size: 2rem;
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background: #667eea;
-            color: white;
+
+        .product-content {
+            flex: 1;
+        }
+
+        .product-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--color-text);
+            letter-spacing: -0.01em;
+        }
+
+        .product-content h3 a {
+            color: var(--color-text);
             text-decoration: none;
-            border-radius: 25px;
-            transition: background 0.3s;
+            transition: color 0.2s ease;
         }
-        .btn:hover {
-            background: #764ba2;
+
+        .product-content h3 a:hover {
+            color: var(--color-primary);
         }
+
+        .product-content p {
+            color: var(--color-text-secondary);
+            font-size: 0.9375rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .coming-soon {
+            opacity: 0.5;
+        }
+
+        .coming-soon-text {
+            font-style: italic;
+            color: var(--color-text-tertiary);
+        }
+
         footer {
-            background: #2d3748;
-            color: white;
+            background: var(--color-text);
+            color: rgba(255, 255, 255, 0.8);
             text-align: center;
-            padding: 40px 20px;
-            margin-top: 60px;
+            padding: var(--spacing-xl) var(--spacing-md);
+            margin-top: var(--spacing-xxl);
         }
+
+        footer p {
+            font-size: 0.9375rem;
+            line-height: 1.8;
+        }
+
         footer a {
-            color: #667eea;
+            color: rgba(255, 255, 255, 0.9);
             text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 0.9375rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .product-item {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+            }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>⏱️ 10minute.studio</h1>
-        <p>Creating games that fit into your 10 minutes</p>
+        <div class="container">
+            <h1 class="logo">⏱️ 10minute.studio</h1>
+            <p class="tagline">10minute.studio는 바쁜 현대인을 위해 간단한 서비스를 만드는 인디 개발 스튜디오입니다.<br>짧은 시간에 간단히 이용할 수 있는 가벼운 서비스를 추구합니다.</p>
+        </div>
     </header>
 
     <div class="container">
         <section class="section">
-            <h2>About Us</h2>
-            <p style="text-align: center; max-width: 600px; margin: 0 auto; font-size: 1.1em;">
-                10minute.studio는 <br>바쁜 현대인을 위해 간단한 서비스를 만드는 인디 개발 스튜디오입니다.<br>
-                짧은 시간에 간단히 이용할 수 있는 가벼운 서비스를 추구합니다.
-            </p>
-        </section>
-
-        <section class="section">
-            <h2>Our Games</h2>
+            <h2 class="section-title">Projects</h2>
             <div class="products">
-                <div class="product-card">
-                    <h3>🔥 FEVER2048</h3>
-                    <p>클래식 2048과 로그라이크 덱빌딩의 만남. 전략적 파워카드로 새로운 퍼즐 경험을 제공합니다.</p>
-                    <p><strong>Features:</strong></p>
-                    <ul style="margin-bottom: 20px; color: #666;">
-                        <li>12종 파워카드 시스템</li>
-                        <li>최대 8배 피버모드</li>
-                        <li>글로벌 리더보드</li>
-                    </ul>
-                    <a href="fever2048.html" class="btn">자세히 보기</a>
+                <div class="product-item">
+                    <span class="product-emoji">🔥</span>
+                    <div class="product-content">
+                        <h3><a href="fever2048.html">FEVER2048</a></h3>
+                        <p>클래식 2048과 로그라이크 덱빌딩의 만남. 전략적 파워카드로 새로운 퍼즐 경험을 제공합니다.</p>
+                    </div>
                 </div>
-                
-                <!-- 추후 Project 추가 -->
-                <div class="product-card" style="opacity: 0.6;">
-                    <h3>🎮 Coming Soon</h3>
-                    <p>새로운 프로젝트를 준비 중입니다.</p>
-                    <p style="font-style: italic; color: #999;">Stay tuned!</p>
+
+                <div class="product-item coming-soon">
+                    <span class="product-emoji">🎮</span>
+                    <div class="product-content">
+                        <h3>Coming Soon</h3>
+                        <p class="coming-soon-text">새로운 프로젝트를 준비 중입니다. Stay tuned!</p>
+                    </div>
                 </div>
             </div>
         </section>
     </div>
 
     <footer>
-        <p>© 2025 10minute.studio. All rights reserved.</p>
-        <p style="margin-top: 10px;">
-            <a href="privacy.html">Privacy Policy</a> | 
-            <a href="terms.html">Terms of Service</a> | 
-            <a href="contact.html">Contact</a>
-        </p>
+        <div class="container">
+            <p>© 2025 10minute.studio. All rights reserved.</p>
+            <p style="margin-top: 10px;">
+                <a href="privacy.html">Privacy Policy</a> |
+                <a href="terms.html">Terms of Service</a> |
+                <a href="contact.html">Contact</a>
+            </p>
+        </div>
     </footer>
 </body>
 </html>

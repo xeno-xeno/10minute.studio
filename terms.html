@@ -4,99 +4,263 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terms of Service - 10minute.studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            line-height: 1.8;
+        :root {
+            --color-bg: #fafafa;
+            --color-text: #1a1a1a;
+            --color-text-secondary: #666666;
+            --color-primary: #2563eb;
+            --color-primary-hover: #1d4ed8;
+            --color-border: #e5e5e5;
+            --color-card-bg: #ffffff;
+            --spacing-xs: 8px;
+            --spacing-sm: 16px;
+            --spacing-md: 24px;
+            --spacing-lg: 48px;
+            --spacing-xl: 80px;
         }
-        h1 { color: #667eea; }
-        h2 { color: #FF6B35; margin-top: 30px; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.7;
+            color: var(--color-text);
+            background: var(--color-bg);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--spacing-xl) var(--spacing-md);
+            background: var(--color-card-bg);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9375rem;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--color-primary);
+        }
+
         .language-switch {
             text-align: center;
-            margin: 20px 0;
+            margin: var(--spacing-lg) 0;
+            padding-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--color-border);
         }
+
         .language-switch a {
-            margin: 0 10px;
-            padding: 8px 20px;
-            background: #667eea;
+            display: inline-block;
+            margin: 0 var(--spacing-xs);
+            padding: 10px 24px;
+            background: var(--color-text);
             color: white;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.9375rem;
+            transition: all 0.2s ease;
         }
-        .back-link { color: #667eea; text-decoration: none; }
-        .language-content { display: none; }
-        .language-content.active { display: block; }
+
+        .language-switch a:hover {
+            background: var(--color-primary);
+            transform: translateY(-1px);
+        }
+
+        .language-switch a.active {
+            background: var(--color-primary);
+        }
+
+        .language-content {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .language-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h1 {
+            color: var(--color-text);
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .meta-info {
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .meta-info p {
+            font-size: 0.9375rem;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .meta-info strong {
+            color: var(--color-text);
+            font-weight: 600;
+        }
+
+        h2 {
+            color: var(--color-text);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        p {
+            margin-bottom: var(--spacing-sm);
+            font-size: 1rem;
+            color: var(--color-text-secondary);
+            line-height: 1.8;
+        }
+
+        ul {
+            margin-left: 24px;
+            margin-bottom: var(--spacing-md);
+        }
+
+        li {
+            margin-bottom: var(--spacing-xs);
+            color: var(--color-text-secondary);
+            line-height: 1.8;
+        }
+
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--color-primary-hover);
+        }
+
+        footer {
+            text-align: center;
+            padding: var(--spacing-xl) var(--spacing-md) 0;
+            margin-top: var(--spacing-xl);
+            color: var(--color-text-secondary);
+            border-top: 1px solid var(--color-border);
+        }
+
+        footer p {
+            font-size: 0.9375rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.25rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <a href="index.html" class="back-link">← Back to Home</a>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Home</a>
 
-    <div class="language-switch">
-        <a href="#" onclick="showLanguage('ko'); return false;">한국어</a>
-        <a href="#" onclick="showLanguage('en'); return false;">English</a>
-    </div>
+        <div class="language-switch">
+            <a href="#" class="active" onclick="showLanguage('ko'); return false;">한국어</a>
+            <a href="#" onclick="showLanguage('en'); return false;">English</a>
+        </div>
 
-    <!-- 한글 버전 -->
-    <div id="korean" class="language-content active">
-        <h1>이용약관</h1>
-        <p><strong>적용 대상:</strong> 10minute.studio의 모든 게임 및 서비스</p>
-        <p><strong>시행일:</strong> 2025년 1월 1일</p>
+        <!-- 한글 버전 -->
+        <div id="korean" class="language-content active">
+            <h1>이용약관</h1>
 
-        <h2>1. 서비스 이용</h2>
-        <p>10minute.studio의 게임은 무료로 제공되며, 광고가 포함될 수 있습니다.</p>
+            <div class="meta-info">
+                <p><strong>적용 대상:</strong> 10minute.studio의 모든 게임 및 서비스</p>
+                <p><strong>시행일:</strong> 2025년 1월 1일</p>
+            </div>
 
-        <h2>2. 사용자 규칙</h2>
-        <ul>
-            <li>부적절한 닉네임 사용 금지</li>
-            <li>치트, 핵 등 부정행위 금지</li>
-            <li>타인에게 피해를 주는 행위 금지</li>
-        </ul>
+            <h2>1. 서비스 이용</h2>
+            <p>10minute.studio의 게임은 무료로 제공되며, 광고가 포함될 수 있습니다.</p>
 
-        <h2>3. 서비스 변경</h2>
-        <p>게임은 사전 공지 없이 업데이트되거나 변경될 수 있습니다.</p>
+            <h2>2. 사용자 규칙</h2>
+            <ul>
+                <li>부적절한 닉네임 사용 금지</li>
+                <li>치트, 핵 등 부정행위 금지</li>
+                <li>타인에게 피해를 주는 행위 금지</li>
+            </ul>
 
-        <h2>4. 책임 제한</h2>
-        <p>게임 이용으로 인한 손해에 대해 회사는 책임지지 않습니다. 게임은 "있는 그대로" 제공됩니다.</p>
+            <h2>3. 서비스 변경</h2>
+            <p>게임은 사전 공지 없이 업데이트되거나 변경될 수 있습니다.</p>
 
-        <h2>5. 연락처</h2>
-        <p>Email: <a href="mailto:10minute.studio2025@gmail.com">10minute.studio2025@gmail.com</a></p>
+            <h2>4. 책임 제한</h2>
+            <p>게임 이용으로 인한 손해에 대해 회사는 책임지지 않습니다. 게임은 "있는 그대로" 제공됩니다.</p>
 
-        <footer style="margin-top: 60px; padding-top: 20px; border-top: 1px solid #e2e8f0; color: #666;">
-            <p>© 2025 10minute.studio. All rights reserved.</p>
-        </footer>
-    </div>
+            <h2>5. 연락처</h2>
+            <p>Email: 10minute.studio2025@gmail.com</p>
 
-    <!-- 영문 버전 -->
-    <div id="english" class="language-content">
-        <h1>Terms of Service</h1>
-        <p><strong>Applies to:</strong> All games and services by 10minute.studio</p>
-        <p><strong>Effective Date:</strong> January 1, 2025</p>
+            <footer>
+                <p>© 2025 10minute.studio. All rights reserved.</p>
+            </footer>
+        </div>
 
-        <h2>1. Service Use</h2>
-        <p>10minute.studio games are provided free of charge and may include advertisements.</p>
+        <!-- 영문 버전 -->
+        <div id="english" class="language-content">
+            <h1>Terms of Service</h1>
 
-        <h2>2. User Rules</h2>
-        <ul>
-            <li>No inappropriate nicknames</li>
-            <li>No cheating, hacking, or unfair play</li>
-            <li>No harmful behavior toward others</li>
-        </ul>
+            <div class="meta-info">
+                <p><strong>Applies to:</strong> All games and services by 10minute.studio</p>
+                <p><strong>Effective Date:</strong> January 1, 2025</p>
+            </div>
 
-        <h2>3. Service Changes</h2>
-        <p>Games may be updated or modified without prior notice.</p>
+            <h2>1. Service Use</h2>
+            <p>10minute.studio games are provided free of charge and may include advertisements.</p>
 
-        <h2>4. Limitation of Liability</h2>
-        <p>We are not liable for any damages arising from game use. Games are provided "as is".</p>
+            <h2>2. User Rules</h2>
+            <ul>
+                <li>No inappropriate nicknames</li>
+                <li>No cheating, hacking, or unfair play</li>
+                <li>No harmful behavior toward others</li>
+            </ul>
 
-        <h2>5. Contact</h2>
-        <p>Email: <a href="mailto:10minute.studio2025@gmail.com">10minute.studio2025@gmail.com</a></p>
+            <h2>3. Service Changes</h2>
+            <p>Games may be updated or modified without prior notice.</p>
 
-        <footer style="margin-top: 60px; padding-top: 20px; border-top: 1px solid #e2e8f0; color: #666;">
-            <p>© 2025 10minute.studio. All rights reserved.</p>
-        </footer>
+            <h2>4. Limitation of Liability</h2>
+            <p>We are not liable for any damages arising from game use. Games are provided "as is".</p>
+
+            <h2>5. Contact</h2>
+            <p>Email: 10minute.studio2025@gmail.com</p>
+
+            <footer>
+                <p>© 2025 10minute.studio. All rights reserved.</p>
+            </footer>
+        </div>
     </div>
 
     <script>
@@ -105,6 +269,11 @@
                 el.classList.remove('active');
             });
             document.getElementById(lang === 'ko' ? 'korean' : 'english').classList.add('active');
+
+            document.querySelectorAll('.language-switch a').forEach(el => {
+                el.classList.remove('active');
+            });
+            event.target.classList.add('active');
         }
     </script>
 </body>

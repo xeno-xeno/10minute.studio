@@ -4,161 +4,242 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - 10minute.studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --color-bg: #fafafa;
+            --color-text: #1a1a1a;
+            --color-text-secondary: #666666;
+            --color-text-tertiary: #999999;
+            --color-primary: #2563eb;
+            --color-primary-hover: #1d4ed8;
+            --color-border: #e5e5e5;
+            --color-card-bg: #ffffff;
+            --color-accent: #FF6B35;
+            --spacing-xs: 8px;
+            --spacing-sm: 16px;
+            --spacing-md: 24px;
+            --spacing-lg: 48px;
+            --spacing-xl: 80px;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            line-height: 1.8;
-            color: #333;
-            background: #f9fafb;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.7;
+            color: var(--color-text);
+            background: var(--color-bg);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
+
         .container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 40px 20px;
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: var(--spacing-xl) var(--spacing-md);
+            background: var(--color-card-bg);
         }
+
         .back-link {
             display: inline-block;
-            margin-bottom: 20px;
-            color: #667eea;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-text);
             text-decoration: none;
             font-weight: 500;
+            font-size: 0.9375rem;
+            transition: color 0.2s ease;
         }
+
         .back-link:hover {
-            text-decoration: underline;
+            color: var(--color-primary);
         }
+
         .language-switch {
             text-align: center;
-            margin: 30px 0;
-            padding: 20px 0;
-            border-bottom: 2px solid #e2e8f0;
+            margin: var(--spacing-lg) 0;
+            padding-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--color-border);
         }
+
         .language-switch a {
             display: inline-block;
-            margin: 0 10px;
-            padding: 10px 30px;
-            background: #667eea;
+            margin: 0 var(--spacing-xs);
+            padding: 10px 24px;
+            background: var(--color-text);
             color: white;
             text-decoration: none;
-            border-radius: 25px;
-            font-weight: 600;
-            transition: all 0.3s;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.9375rem;
+            transition: all 0.2s ease;
         }
+
         .language-switch a:hover {
-            background: #5568d3;
-            transform: translateY(-2px);
+            background: var(--color-primary);
+            transform: translateY(-1px);
         }
+
         .language-switch a.active {
-            background: #FF6B35;
+            background: var(--color-primary);
         }
+
         .language-content {
             display: none;
-            animation: fadeIn 0.5s;
+            animation: fadeIn 0.3s;
         }
+
         .language-content.active {
             display: block;
         }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
+
         h1 {
-            color: #667eea;
-            font-size: 2.5em;
-            margin-bottom: 20px;
+            color: var(--color-text);
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: var(--spacing-md);
             text-align: center;
         }
+
         h2 {
-            color: #FF6B35;
-            font-size: 1.8em;
-            margin-top: 40px;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #FF6B35;
+            color: var(--color-text);
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 2px solid var(--color-border);
         }
+
         h3 {
-            color: #667eea;
-            font-size: 1.3em;
-            margin-top: 25px;
-            margin-bottom: 15px;
+            color: var(--color-text);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-sm);
         }
+
         p {
-            margin-bottom: 15px;
-            font-size: 1.05em;
+            margin-bottom: var(--spacing-sm);
+            font-size: 1rem;
+            color: var(--color-text-secondary);
+            line-height: 1.8;
         }
+
         ul, ol {
-            margin-left: 30px;
-            margin-bottom: 20px;
+            margin-left: 24px;
+            margin-bottom: var(--spacing-md);
         }
+
         li {
-            margin-bottom: 10px;
+            margin-bottom: var(--spacing-xs);
+            color: var(--color-text-secondary);
+            line-height: 1.8;
         }
+
         strong {
-            color: #2d3748;
+            color: var(--color-text);
             font-weight: 600;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 25px 0;
-            background: #f7fafc;
+            margin: var(--spacing-md) 0;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            overflow: hidden;
         }
+
         th, td {
-            padding: 15px;
+            padding: var(--spacing-sm);
             text-align: left;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--color-border);
         }
+
         th {
-            background: #667eea;
+            background: var(--color-text);
             color: white;
             font-weight: 600;
+            font-size: 0.9375rem;
         }
+
+        td {
+            color: var(--color-text-secondary);
+            font-size: 0.9375rem;
+        }
+
         tr:nth-child(even) {
-            background: #f9fafb;
+            background: var(--color-bg);
         }
+
         a {
-            color: #667eea;
+            color: var(--color-primary);
             text-decoration: none;
-            font-weight: 500;
+            transition: color 0.2s ease;
         }
+
         a:hover {
-            text-decoration: underline;
+            color: var(--color-primary-hover);
         }
+
         .info-box {
-            background: #eef2ff;
-            border-left: 4px solid #667eea;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 4px;
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-left: 3px solid var(--color-primary);
+            padding: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            border-radius: 8px;
         }
-        .warning-box {
-            background: #fff5f5;
-            border-left: 4px solid #f56565;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 4px;
+
+        .info-box p {
+            margin-bottom: var(--spacing-xs);
         }
+
         hr {
-            margin: 40px 0;
+            margin: var(--spacing-xl) 0;
             border: none;
-            border-top: 2px solid #e2e8f0;
+            border-top: 1px solid var(--color-border);
         }
+
         footer {
             text-align: center;
-            padding: 40px 20px;
-            margin-top: 60px;
-            color: #718096;
-            border-top: 2px solid #e2e8f0;
+            padding: var(--spacing-xl) var(--spacing-md);
+            margin-top: var(--spacing-xl);
+            color: var(--color-text-secondary);
+            border-top: 1px solid var(--color-border);
         }
+
         footer strong {
-            color: #667eea;
-            font-size: 1.1em;
+            color: var(--color-text);
+            font-size: 1.0625rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.125rem;
+            }
         }
     </style>
 </head>
@@ -229,7 +310,7 @@
                     <ul>
                         <li>앱 삭제 시 로컬 데이터 자동 삭제</li>
                         <li>앱 내 설정에서 "게임 데이터 초기화" 기능 제공</li>
-                        <li>서버 데이터 삭제 요청: <a href="mailto:10minute.studio2025@gmail.com">10minute.studio2025@gmail.com</a></li>
+                        <li>서버 데이터 삭제 요청: 10minute.studio2025@gmail.com</li>
                     </ul>
                 </li>
             </ul>
@@ -272,7 +353,7 @@
             <ul>
                 <li><strong>열람 요구권</strong>: 앱 내 "리더보드 > MY STATS"에서 확인</li>
                 <li><strong>정정 요구권</strong>: 설정에서 닉네임 변경 (현재 버전에서는 자동 생성)</li>
-                <li><strong>삭제 요구권</strong>: 설정 > 게임 데이터 초기화 또는 <a href="mailto:10minute.studio2025@gmail.com">10minute.studio2025@gmail.com</a> 문의</li>
+                <li><strong>삭제 요구권</strong>: 설정 > 게임 데이터 초기화 또는 10minute.studio2025@gmail.com 문의</li>
                 <li><strong>처리정지 요구권</strong>: 앱 삭제 또는 이메일 문의</li>
             </ul>
 
@@ -290,7 +371,7 @@
             <h2>9. 개인정보 보호책임자</h2>
             <p>개인정보 관련 문의, 불만 처리, 피해 구제 등에 관한 사항은 아래로 문의해 주시기 바랍니다:</p>
             <ul>
-                <li><strong>이메일</strong>: <a href="mailto:10minute.studio2025@gmail.com">10minute.studio2025@gmail.com</a></li>
+                <li><strong>이메일</strong>: 10minute.studio2025@gmail.com</li>
                 <li><strong>회신 기간</strong>: 영업일 기준 7일 이내</li>
             </ul>
 
@@ -369,7 +450,7 @@
                     <ul>
                         <li>Automatic deletion upon app uninstall</li>
                         <li>"Reset Game Data" in app settings</li>
-                        <li>Server data deletion request: <a href="mailto:10minute.studio2025@gmail.com">10minute.studio2025@gmail.com</a></li>
+                        <li>Server data deletion request: 10minute.studio2025@gmail.com</li>
                     </ul>
                 </li>
             </ul>
@@ -412,7 +493,7 @@
             <ul>
                 <li><strong>Access</strong>: View your data in "Leaderboard > MY STATS"</li>
                 <li><strong>Correction</strong>: Change nickname in settings (auto-generated in current version)</li>
-                <li><strong>Deletion</strong>: Settings > Reset Game Data or email <a href="mailto:10minute.studio2025@gmail.com">10minute.studio2025@gmail.com</a></li>
+                <li><strong>Deletion</strong>: Settings > Reset Game Data or email 10minute.studio2025@gmail.com</li>
                 <li><strong>Opt-out</strong>: Uninstall app or email us</li>
             </ul>
 
@@ -427,7 +508,7 @@
             <h2>9. Privacy Contact</h2>
             <p>For privacy-related inquiries, complaints, or requests:</p>
             <ul>
-                <li><strong>Email</strong>: <a href="mailto:10minute.studio2025@gmail.com">10minute.studio2025@gmail.com</a></li>
+                <li><strong>Email</strong>: 10minute.studio2025@gmail.com</li>
                 <li><strong>Response Time</strong>: Within 7 business days</li>
             </ul>
 
