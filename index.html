@@ -3,7 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>10minute.studio</title>
+    <title>10minute.studio — 인디 게임 스튜디오</title>
+    <meta name="description" content="지하철 한 정거장, 커피 한 잔이 나오는 동안. 그 틈새를 채우는 작은 앱들을 만드는 인디 게임 스튜디오입니다.">
+    <meta name="keywords" content="인디게임, 모바일게임, 10minute studio, FEVER2048, 2048, 퍼즐게임, iOS, Android">
+    <meta name="author" content="10minute.studio">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://xeno-xeno.github.io/10minute.studio/">
+    <link rel="icon" type="image/svg+xml" href="assets/images/clock-10.svg">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://xeno-xeno.github.io/10minute.studio/">
+    <meta property="og:title" content="10minute.studio — 인디 게임 스튜디오">
+    <meta property="og:description" content="지하철 한 정거장, 커피 한 잔이 나오는 동안. 그 틈새를 채우는 작은 앱들을 만드는 인디 게임 스튜디오입니다.">
+    <meta property="og:image" content="https://xeno-xeno.github.io/10minute.studio/assets/images/timeart_icon.png">
+    <meta property="og:image:width" content="2048">
+    <meta property="og:image:height" content="2048">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:site_name" content="10minute.studio">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="10minute.studio — 인디 게임 스튜디오">
+    <meta name="twitter:description" content="지하철 한 정거장, 커피 한 잔이 나오는 동안. 그 틈새를 채우는 작은 앱들을 만드는 인디 게임 스튜디오입니다.">
+    <meta name="twitter:image" content="https://xeno-xeno.github.io/10minute.studio/assets/images/timeart_icon.png">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://xeno-xeno.github.io/10minute.studio/#organization",
+          "name": "10minute.studio",
+          "url": "https://xeno-xeno.github.io/10minute.studio/",
+          "description": "지하철 한 정거장, 커피 한 잔이 나오는 동안 즐길 수 있는 작은 앱들을 만드는 인디 게임 스튜디오",
+          "logo": "https://xeno-xeno.github.io/10minute.studio/assets/images/timeart_icon.png",
+          "sameAs": [
+            "https://apps.apple.com/us/app/fever2048/id6753706909",
+            "https://play.google.com/store/apps/details?id=com.tenminutestudio.fever2048.AOS"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://xeno-xeno.github.io/10minute.studio/#website",
+          "url": "https://xeno-xeno.github.io/10minute.studio/",
+          "name": "10minute.studio",
+          "publisher": { "@id": "https://xeno-xeno.github.io/10minute.studio/#organization" }
+        },
+        {
+          "@type": "ItemList",
+          "name": "10minute.studio 게임 목록",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "MobileApplication",
+                "name": "FEVER2048",
+                "description": "파워카드 시스템의 새로운 2048 퍼즐 게임",
+                "url": "https://xeno-xeno.github.io/10minute.studio/fever2048.html",
+                "image": "https://xeno-xeno.github.io/10minute.studio/assets/images/fever2048_icon.png",
+                "applicationCategory": "GameApplication",
+                "operatingSystem": "iOS, Android",
+                "author": { "@id": "https://xeno-xeno.github.io/10minute.studio/#organization" }
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -17,6 +90,21 @@
             --border: #e5e5e2;
             --radius: 16px;
             --nav-h: 60px;
+            --shadow-icon: 0px 12px 0px rgba(0, 0, 0, 0.15);
+            --shadow-icon-hover: 0px 16px 0px rgba(0, 0, 0, 0.18);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f0f0f;
+                --bg-subtle: #1a1a1a;
+                --text: #f0f0f0;
+                --text-2: #909090;
+                --text-3: #707070;
+                --border: #2a2a2a;
+                --shadow-icon: 0px 12px 0px rgba(0, 0, 0, 0.5);
+                --shadow-icon-hover: 0px 16px 0px rgba(0, 0, 0, 0.6);
+            }
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -113,12 +201,12 @@
 
         .work-card:not(.work-card--soon):hover .work-icon {
             transform: translateY(-6px);
-            box-shadow: 0px 12px 0px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-icon-hover);
         }
 
         .work-card:not(.work-card--soon):active .work-icon {
             transform: translateY(-2px);
-            box-shadow: 0px 12px 0px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-icon-hover);
         }
 
         .work-card--soon {
@@ -144,7 +232,7 @@
             border-radius: 36px;
             object-fit: cover;
             display: block;
-            box-shadow: 0px 12px 0px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-icon);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 

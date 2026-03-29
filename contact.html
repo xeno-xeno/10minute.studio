@@ -3,181 +3,332 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - 10minute.studio</title>
+    <title>Contact — 10minute.studio</title>
+    <meta name="description" content="10minute.studio에 문의하세요. 게임 관련 질문, 버그 제보, 제안사항을 환영합니다. 영업일 기준 1-2일 내 답변드립니다.">
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="https://xeno-xeno.github.io/10minute.studio/contact.html">
+    <link rel="icon" type="image/svg+xml" href="assets/images/clock-10.svg">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "ContactPage",
+          "name": "10minute.studio Contact",
+          "url": "https://xeno-xeno.github.io/10minute.studio/contact.html",
+          "description": "10minute.studio 문의 페이지",
+          "publisher": {
+            "@type": "Organization",
+            "name": "10minute.studio",
+            "email": "10minute.studio2025@gmail.com"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "게임이 작동하지 않아요",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "앱을 완전히 종료한 후 다시 실행해보세요. 문제가 지속되면 이메일로 문의주세요."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "리더보드가 업데이트되지 않아요",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "인터넷 연결을 확인하고 앱을 재시작해보세요."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "버그를 발견했어요",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "이메일로 상세한 내용과 스크린샷을 보내주시면 빠르게 수정하겠습니다."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-bg: #fafafa;
-            --color-text: #1a1a1a;
-            --color-text-secondary: #666666;
-            --color-text-tertiary: #999999;
-            --color-primary: #2563eb;
-            --color-primary-hover: #1d4ed8;
-            --color-border: #e5e5e5;
-            --color-card-bg: #ffffff;
-            --spacing-xs: 8px;
-            --spacing-sm: 16px;
-            --spacing-md: 24px;
-            --spacing-lg: 48px;
-            --spacing-xl: 80px;
+            --bg: #ffffff;
+            --bg-subtle: #f7f7f5;
+            --text: #0a0a0a;
+            --text-2: #5a5a5a;
+            --text-3: #9a9a9a;
+            --border: #e5e5e2;
+            --radius: 16px;
+            --nav-h: 60px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f0f0f;
+                --bg-subtle: #1a1a1a;
+                --text: #f0f0f0;
+                --text-2: #909090;
+                --text-3: #707070;
+                --border: #2a2a2a;
+            }
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            line-height: 1.7;
-            color: var(--color-text);
-            background: var(--color-bg);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
+        nav {
+            height: var(--nav-h);
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            z-index: 100;
+        }
+
+        .nav-back {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-3);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .nav-back:hover { color: var(--text); }
+
         .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: var(--spacing-xl) var(--spacing-md);
+            padding: 0 40px;
         }
 
-        .back-link {
-            display: inline-block;
-            margin-bottom: var(--spacing-lg);
-            color: var(--color-text);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9375rem;
-            transition: color 0.2s ease;
+        .page-header {
+            padding: 64px 0 48px;
         }
 
-        .back-link:hover {
-            color: var(--color-primary);
+        .eyebrow {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 16px;
         }
 
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            color: var(--color-text);
-            margin-bottom: var(--spacing-lg);
+        .page-title {
+            font-size: 64px;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 0.95;
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+
+        .page-desc {
+            font-size: 16px;
+            color: var(--text-2);
+            line-height: 1.65;
+        }
+
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .section-divider-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            white-space: nowrap;
+        }
+
+        .section-divider-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
         }
 
         .contact-box {
-            background: var(--color-card-bg);
-            border: 1px solid var(--color-border);
-            padding: var(--spacing-lg);
-            border-radius: 12px;
-            margin-bottom: var(--spacing-lg);
+            padding: 40px;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 64px;
         }
 
-        .contact-box h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: var(--spacing-md);
-            color: var(--color-text);
-        }
-
-        .contact-box p {
-            font-size: 1rem;
-            line-height: 1.8;
-            color: var(--color-text-secondary);
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .contact-box strong {
-            color: var(--color-text);
+        .contact-label {
+            font-size: 11px;
             font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 12px;
         }
 
-        .contact-box a {
-            color: var(--color-primary);
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        .contact-box a:hover {
-            color: var(--color-primary-hover);
-        }
-
-        .faq-section {
-            margin-top: var(--spacing-xl);
-        }
-
-        .faq-section h2 {
-            font-size: 2rem;
+        .contact-email {
+            display: block;
+            font-size: 20px;
             font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
             letter-spacing: -0.02em;
-            margin-bottom: var(--spacing-lg);
-            color: var(--color-text);
+            margin-bottom: 12px;
+            transition: color 0.15s;
+        }
+        .contact-email:hover { color: var(--text-2); }
+
+        .contact-note {
+            font-size: 13px;
+            color: var(--text-3);
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 40px;
         }
 
         .faq-item {
-            background: var(--color-card-bg);
-            border: 1px solid var(--color-border);
-            padding: var(--spacing-md);
-            border-radius: 12px;
-            margin-bottom: var(--spacing-md);
+            padding: 28px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .faq-item:first-child { border-top: 1px solid var(--border); }
+
+        .faq-q {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 10px;
+            letter-spacing: -0.01em;
         }
 
-        .faq-item h3 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: var(--spacing-sm);
-            color: var(--color-text);
+        .faq-a {
+            font-size: 15px;
+            color: var(--text-2);
+            line-height: 1.65;
         }
 
-        .faq-item p {
-            font-size: 1rem;
-            line-height: 1.7;
-            color: var(--color-text-secondary);
+        footer {
+            margin-top: 120px;
+            padding: 32px 0;
+            border-top: 1px solid var(--border);
         }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-copy {
+            font-size: 13px;
+            color: var(--text-3);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--text-3);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .footer-links a:hover { color: var(--text); }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-
-            .faq-section h2 {
-                font-size: 1.75rem;
+            nav { padding: 0 20px; }
+            .container { padding: 0 20px; }
+            .page-title { font-size: clamp(36px, 12vw, 56px); }
+            .contact-box { padding: 28px 24px; }
+            .footer-inner {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
             }
         }
     </style>
 </head>
 <body>
+    <nav>
+        <a href="index.html" class="nav-back">10minute.studio</a>
+    </nav>
+
     <div class="container">
-        <a href="index.html" class="back-link">← Back to Home</a>
+        <header class="page-header">
+            <span class="eyebrow">Support</span>
+            <h1 class="page-title">Contact</h1>
+            <p class="page-desc">문의사항이 있으시면 이메일로 연락주세요.<br>영업일 기준 1-2일 내 답변드립니다.</p>
+        </header>
 
-        <h1>📬 Contact Us</h1>
-
-        <div class="contact-box">
-            <h2>10minute.studio</h2>
-            <p><strong>Email:</strong> 10minute.studio2025@gmail.com</p>
-            <p><strong>Response Time:</strong> 1-2 business days</p>
+        <div class="section-divider">
+            <span class="section-divider-label">Contact</span>
+            <div class="section-divider-line"></div>
         </div>
 
-        <section class="faq-section">
-            <h2>자주 묻는 질문</h2>
+        <div class="contact-box">
+            <p class="contact-label">Email</p>
+            <a href="mailto:10minute.studio2025@gmail.com" class="contact-email">10minute.studio2025@gmail.com</a>
+            <p class="contact-note">Response time: 1-2 business days</p>
+        </div>
 
-            <div class="faq-item">
-                <h3>Q. 게임이 작동하지 않아요</h3>
-                <p>A. 앱을 완전히 종료한 후 다시 실행해보세요. 문제가 지속되면 이메일로 문의주세요.</p>
-            </div>
+        <div class="section-divider">
+            <span class="section-divider-label">FAQ</span>
+            <div class="section-divider-line"></div>
+        </div>
 
+        <div class="faq-list">
             <div class="faq-item">
-                <h3>Q. 리더보드가 업데이트되지 않아요</h3>
-                <p>A. 인터넷 연결을 확인하고 앱을 재시작해보세요.</p>
+                <h3 class="faq-q">게임이 작동하지 않아요</h3>
+                <p class="faq-a">앱을 완전히 종료한 후 다시 실행해보세요. 문제가 지속되면 이메일로 문의주세요.</p>
             </div>
+            <div class="faq-item">
+                <h3 class="faq-q">리더보드가 업데이트되지 않아요</h3>
+                <p class="faq-a">인터넷 연결을 확인하고 앱을 재시작해보세요.</p>
+            </div>
+            <div class="faq-item">
+                <h3 class="faq-q">버그를 발견했어요</h3>
+                <p class="faq-a">이메일로 상세한 내용과 스크린샷을 보내주시면 빠르게 수정하겠습니다.</p>
+            </div>
+        </div>
 
-            <div class="faq-item">
-                <h3>Q. 버그를 발견했어요</h3>
-                <p>A. 이메일로 상세한 내용과 스크린샷을 보내주시면 빠르게 수정하겠습니다.</p>
+        <footer>
+            <div class="footer-inner">
+                <p class="footer-copy">© 2025 10minute.studio. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="index.html">Works</a>
+                    <a href="privacy.html">Privacy</a>
+                    <a href="terms.html">Terms</a>
+                    <a href="contact.html">Contact</a>
+                </div>
             </div>
-        </section>
+        </footer>
     </div>
 </body>
 </html>

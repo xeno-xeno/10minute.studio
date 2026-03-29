@@ -3,7 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FEVER2048 - 10minute.studio</title>
+    <title>FEVER2048 — 파워카드 시스템의 새로운 2048 | 10minute.studio</title>
+    <meta name="description" content="파워카드 시스템이 더해진 완전히 새로운 2048 퍼즐 게임. 레벨업마다 12종 카드를 선택하고, 피버모드로 역전하세요. iOS & Android 무료 다운로드.">
+    <meta name="keywords" content="FEVER2048, 2048게임, 퍼즐게임, 파워카드, 피버모드, 모바일게임, iOS게임, 안드로이드게임, 10minute studio">
+    <meta name="author" content="10minute.studio">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://xeno-xeno.github.io/10minute.studio/fever2048.html">
+    <link rel="icon" type="image/svg+xml" href="assets/images/clock-10.svg">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://xeno-xeno.github.io/10minute.studio/fever2048.html">
+    <meta property="og:title" content="FEVER2048 — 파워카드 시스템의 새로운 2048">
+    <meta property="og:description" content="파워카드 시스템이 더해진 완전히 새로운 2048 퍼즐 게임. 레벨업마다 12종 카드를 선택하고, 피버모드로 역전하세요.">
+    <meta property="og:image" content="https://xeno-xeno.github.io/10minute.studio/assets/images/fever2048_icon.png">
+    <meta property="og:image:width" content="1024">
+    <meta property="og:image:height" content="1024">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:site_name" content="10minute.studio">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="FEVER2048 — 파워카드 시스템의 새로운 2048">
+    <meta name="twitter:description" content="파워카드 시스템이 더해진 완전히 새로운 2048 퍼즐 게임. iOS & Android 무료 다운로드.">
+    <meta name="twitter:image" content="https://xeno-xeno.github.io/10minute.studio/assets/images/fever2048_icon.png">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MobileApplication",
+      "name": "FEVER2048",
+      "description": "파워카드 시스템이 더해진 완전히 새로운 2048 퍼즐 게임. 레벨업마다 12종 파워카드를 선택하고, 피버모드로 역전하세요.",
+      "url": "https://xeno-xeno.github.io/10minute.studio/fever2048.html",
+      "image": "https://xeno-xeno.github.io/10minute.studio/assets/images/fever2048_icon.png",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "iOS, Android",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": {
+        "@type": "Organization",
+        "name": "10minute.studio",
+        "url": "https://xeno-xeno.github.io/10minute.studio/"
+      },
+      "installUrl": [
+        "https://apps.apple.com/us/app/fever2048/id6753706909",
+        "https://play.google.com/store/apps/details?id=com.tenminutestudio.fever2048.AOS"
+      ],
+      "screenshot": [
+        "https://xeno-xeno.github.io/10minute.studio/assets/images/fever2048_screen_03.png",
+        "https://xeno-xeno.github.io/10minute.studio/assets/images/fever2048_screen_04.png",
+        "https://xeno-xeno.github.io/10minute.studio/assets/images/fever2048_screen_05.png",
+        "https://xeno-xeno.github.io/10minute.studio/assets/images/fever2048_screen_06.png"
+      ]
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -12,6 +67,7 @@
             --bg: #ffffff;
             --bg-subtle: #f7f7f5;
             --bg-accent: #eef2f8;
+            --bg-card: #ffffff;
             --text: #0a0a0a;
             --text-2: #5a5a5a;
             --text-3: #9a9a9a;
@@ -20,6 +76,19 @@
             --accent-dark: #e05520;
             --radius: 16px;
             --nav-h: 60px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f0f0f;
+                --bg-subtle: #1a1a1a;
+                --bg-accent: #111827;
+                --bg-card: #1a1a1a;
+                --text: #f0f0f0;
+                --text-2: #909090;
+                --text-3: #707070;
+                --border: #2a2a2a;
+            }
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -148,7 +217,7 @@
             align-items: center;
             gap: 8px;
             padding: 14px 28px;
-            background: #ffffff;
+            background: var(--bg-card);
             color: var(--text);
             border: 1px solid var(--border);
             text-decoration: none;
@@ -428,7 +497,7 @@
             }
 
             .how-item {
-                padding: 24px 20px;
+                padding: 8px 0;
             }
 
             .download-section {
@@ -468,8 +537,8 @@
 
         <!-- Intro -->
         <section class="section">
-            <p class="intro-text">막혔던 그 순간, 파워카드 하나가 게임을 뒤집습니다.</p>
-            <p class="intro-sub">타일을 합치고, 레벨업하고, 파워카드로 역전하세요.<br>Fever2048은 알고 있는 2048이 아닙니다.</p>
+            <p class="intro-text">2048. 이제 누구나 쉽게 즐길 수 있습니다.</p>
+            <p class="intro-sub">Fever2048은 알고 있는 2048이 아닙니다.<br>막혔던 그 순간, 파워카드 하나가 게임을 뒤집습니다.<br>타일을 합치고, 레벨업하고, 파워카드로 역전하세요.</p>
         </section>
 
         <!-- Screenshots -->
@@ -485,22 +554,22 @@
         <!-- Feature 1 -->
         <div class="feature-section">
             <span class="feature-label">파워카드 시스템</span>
-            <h2 class="feature-heading">레벨업마다 선택.<br>12종 카드, 조합은 무한대.</h2>
-            <p class="feature-body">레벨업마다 3장 중 1장을 선택합니다. 보드에서 카드 타일을 발견하면 — 타이밍이 전부입니다. <br>낮은수제거·보드흔들기·연쇄합치기·연쇄폭발·점수3배·메가5배. 매 판 다른 전략, 다른 결말.</p>
+            <h2 class="feature-heading">레벨업하고 선택하세요.<br>12종 카드-무한대 조합이 도전을 새롭게 합니다.</h2>
+            <p class="feature-body">레벨업마다 3장 중 1장을 선택합니다. 보드에서 같은 카드 타일을 합치세요.<br>낮은수제거·보드흔들기·연쇄폭발·점수3배·메가5배...<br>매 판 다른 전략으로 플레이 할 수 있습니다.</p>
         </div>
 
         <!-- Feature 2 -->
         <div class="feature-section">
             <span class="feature-label">피버모드</span>
             <h2 class="feature-heading">한 번 터지면<br>판이 달라집니다.</h2>
-            <p class="feature-body">점수3배·메가5배 카드가 터지는 순간 발동. 2× → 4× → 8× 배율이 10초간 이어집니다. <br>미리 타일을 준비해두고, 피버가 켜지는 순간 연속 스와이프. 레벨 7에서는 Lucky 7 피버가 예고 없이 발동됩니다.</p>
+            <p class="feature-body">점수3배·메가5배 카드가 터지는 순간 발동.<br>피버가 발동되는 순간 2× → 4× → 8× 배율로 점수가 폭발합니다. <br>레벨 7에서는 Lucky 7 피버가 예고 없이 발동됩니다.</p>
         </div>
 
         <!-- Feature 3 -->
         <div class="feature-section">
             <span class="feature-label">글로벌 리더보드</span>
-            <h2 class="feature-heading">전 세계 플레이어와<br>실시간 순위 경쟁.</h2>
-            <p class="feature-body">27가지 도전과제로 진짜 실력을 증명하세요. 랭킹이 밀리면 알림이 옵니다 — 다시 올라올 이유가 생깁니다.</p>
+            <h2 class="feature-heading">전 세계 플레이어와<br>실시간 경쟁을 즐겨보세요.</h2>
+            <p class="feature-body">27가지 도전과제와 함께 리더보드에서 진짜 실력을 증명하세요.<br>랭킹이 밀리면 알림이 옵니다 — 나의 순위를 지키세요.</p>
         </div>
 
         <!-- How to Play -->
@@ -508,7 +577,7 @@
             <span class="feature-label">게임 방법</span>
             <ol class="how-list">
                 <li class="how-item"><span class="how-num">·</span><p class="how-text">상하좌우 스와이프로 타일을 이동하세요.</p></li>
-                <li class="how-item"><span class="how-num">·</span><p class="how-text">같은 숫자끼리 합치면 두 배: 2+2=4, 4+4=8. 더 높은 타일을 만들수록 더 높은 점수.</p></li>
+                <li class="how-item"><span class="how-num">·</span><p class="how-text">같은 숫자끼리 합치면 두 배: 2+2=4, 4+4=8. 더 높은 타일을 만들수록 더 높은 점수가 쌓입니다.</p></li>
                 <li class="how-item"><span class="how-num">·</span><p class="how-text">레벨업하며 파워카드를 획득하고, 3장 중 1장을 전략적으로 선택하세요.</p></li>
                 <li class="how-item"><span class="how-num">·</span><p class="how-text">보드에서 카드 타일을 발견하면 타이밍을 노려 발동하세요.</p></li>
                 <li class="how-item"><span class="how-num">·</span><p class="how-text">피버가 켜지는 순간 연속 스와이프 — 믿기 힘든 점수가 쌓입니다.</p></li>

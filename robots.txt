@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://xeno-xeno.github.io/10minute.studio/sitemap.xml

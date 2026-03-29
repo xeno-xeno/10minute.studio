@@ -3,249 +3,320 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - 10minute.studio</title>
+    <title>개인정보처리방침 — 10minute.studio</title>
+    <meta name="description" content="10minute.studio 개인정보처리방침. FEVER2048 등 앱에서 수집하는 정보, 이용 목적, 사용자 권리에 대해 안내합니다.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://xeno-xeno.github.io/10minute.studio/privacy.html">
+    <link rel="icon" type="image/svg+xml" href="assets/images/clock-10.svg">
+    <link rel="alternate" hreflang="ko" href="https://xeno-xeno.github.io/10minute.studio/privacy.html">
+    <link rel="alternate" hreflang="en" href="https://xeno-xeno.github.io/10minute.studio/privacy.html">
+    <link rel="alternate" hreflang="x-default" href="https://xeno-xeno.github.io/10minute.studio/privacy.html">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "10minute.studio 개인정보처리방침",
+      "url": "https://xeno-xeno.github.io/10minute.studio/privacy.html",
+      "description": "10minute.studio 서비스의 개인정보 수집, 이용, 보관 및 사용자 권리에 관한 방침",
+      "dateModified": "2026-03-31",
+      "publisher": {
+        "@type": "Organization",
+        "name": "10minute.studio",
+        "url": "https://xeno-xeno.github.io/10minute.studio/"
+      }
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-bg: #fafafa;
-            --color-text: #1a1a1a;
-            --color-text-secondary: #666666;
-            --color-text-tertiary: #999999;
-            --color-primary: #2563eb;
-            --color-primary-hover: #1d4ed8;
-            --color-border: #e5e5e5;
-            --color-card-bg: #ffffff;
-            --color-accent: #FF6B35;
-            --spacing-xs: 8px;
-            --spacing-sm: 16px;
-            --spacing-md: 24px;
-            --spacing-lg: 48px;
-            --spacing-xl: 80px;
+            --bg: #ffffff;
+            --bg-subtle: #f7f7f5;
+            --text: #0a0a0a;
+            --text-2: #5a5a5a;
+            --text-3: #9a9a9a;
+            --border: #e5e5e2;
+            --th-bg: #1a1a1a;
+            --radius: 16px;
+            --nav-h: 60px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f0f0f;
+                --bg-subtle: #1a1a1a;
+                --text: #f0f0f0;
+                --text-2: #909090;
+                --text-3: #707070;
+                --border: #2a2a2a;
+                --th-bg: #2a2a2a;
+            }
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            line-height: 1.7;
-            color: var(--color-text);
-            background: var(--color-bg);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
+        nav {
+            height: var(--nav-h);
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            z-index: 100;
+        }
+
+        .nav-back {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-3);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .nav-back:hover { color: var(--text); }
+
         .container {
             max-width: 900px;
             margin: 0 auto;
-            padding: var(--spacing-xl) var(--spacing-md);
-            background: var(--color-card-bg);
+            padding: 0 40px;
         }
 
-        .back-link {
-            display: inline-block;
-            margin-bottom: var(--spacing-md);
-            color: var(--color-text);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9375rem;
-            transition: color 0.2s ease;
+        .page-header {
+            padding: 64px 0 40px;
         }
 
-        .back-link:hover {
-            color: var(--color-primary);
+        .eyebrow {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 16px;
         }
 
+        /* ── Language Switch ── */
         .language-switch {
-            text-align: center;
-            margin: var(--spacing-lg) 0;
-            padding-bottom: var(--spacing-md);
-            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            gap: 8px;
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border);
         }
 
         .language-switch a {
             display: inline-block;
-            margin: 0 var(--spacing-xs);
-            padding: 10px 24px;
-            background: var(--color-text);
-            color: white;
+            padding: 8px 20px;
+            background: var(--bg-subtle);
+            color: var(--text-2);
             text-decoration: none;
-            border-radius: 6px;
-            font-weight: 500;
-            font-size: 0.9375rem;
-            transition: all 0.2s ease;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.15s;
         }
 
         .language-switch a:hover {
-            background: var(--color-primary);
-            transform: translateY(-1px);
+            color: var(--text);
+            border-color: var(--text-3);
         }
 
         .language-switch a.active {
-            background: var(--color-primary);
+            background: var(--text);
+            color: var(--bg);
+            border-color: var(--text);
         }
 
-        .language-content {
-            display: none;
-            animation: fadeIn 0.3s;
-        }
-
-        .language-content.active {
-            display: block;
-        }
+        .language-content { display: none; animation: fadeIn 0.3s; }
+        .language-content.active { display: block; }
 
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
 
+        /* ── Typography ── */
         h1 {
-            color: var(--color-text);
-            font-size: 2.5rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            margin-bottom: var(--spacing-md);
-            text-align: center;
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1.0;
+            color: var(--text);
+            margin-bottom: 32px;
         }
 
         h2 {
-            color: var(--color-text);
-            font-size: 1.75rem;
-            font-weight: 700;
+            font-size: 20px;
+            font-weight: 800;
             letter-spacing: -0.02em;
-            margin-top: var(--spacing-xl);
-            margin-bottom: var(--spacing-md);
-            padding-bottom: var(--spacing-sm);
-            border-bottom: 2px solid var(--color-border);
+            color: var(--text);
+            margin-top: 56px;
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border);
         }
 
         h3 {
-            color: var(--color-text);
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-top: var(--spacing-lg);
-            margin-bottom: var(--spacing-sm);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text);
+            margin-top: 24px;
+            margin-bottom: 10px;
+            letter-spacing: 0.01em;
+            text-transform: uppercase;
         }
 
         p {
-            margin-bottom: var(--spacing-sm);
-            font-size: 1rem;
-            color: var(--color-text-secondary);
+            font-size: 15px;
+            color: var(--text-2);
             line-height: 1.8;
+            margin-bottom: 16px;
         }
 
         ul, ol {
-            margin-left: 24px;
-            margin-bottom: var(--spacing-md);
+            margin-left: 20px;
+            margin-bottom: 20px;
         }
 
         li {
-            margin-bottom: var(--spacing-xs);
-            color: var(--color-text-secondary);
+            font-size: 15px;
+            color: var(--text-2);
             line-height: 1.8;
+            margin-bottom: 6px;
         }
 
-        strong {
-            color: var(--color-text);
-            font-weight: 600;
-        }
+        strong { color: var(--text); font-weight: 600; }
 
+        /* ── Table ── */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: var(--spacing-md) 0;
-            border: 1px solid var(--color-border);
+            margin: 20px 0;
+            border: 1px solid var(--border);
             border-radius: 8px;
             overflow: hidden;
         }
 
         th, td {
-            padding: var(--spacing-sm);
+            padding: 12px 16px;
             text-align: left;
-            border: 1px solid var(--color-border);
+            border: 1px solid var(--border);
         }
 
         th {
-            background: var(--color-text);
+            background: var(--th-bg);
             color: white;
             font-weight: 600;
-            font-size: 0.9375rem;
+            font-size: 13px;
         }
 
         td {
-            color: var(--color-text-secondary);
-            font-size: 0.9375rem;
+            font-size: 14px;
+            color: var(--text-2);
         }
 
-        tr:nth-child(even) {
-            background: var(--color-bg);
-        }
+        tr:nth-child(even) { background: var(--bg-subtle); }
 
         a {
-            color: var(--color-primary);
-            text-decoration: none;
-            transition: color 0.2s ease;
+            color: var(--text);
+            text-decoration: underline;
+            text-decoration-color: var(--border);
+            text-underline-offset: 3px;
+            transition: text-decoration-color 0.15s;
         }
+        a:hover { text-decoration-color: var(--text-2); }
 
-        a:hover {
-            color: var(--color-primary-hover);
-        }
-
+        /* ── Info Box ── */
         .info-box {
-            background: var(--color-bg);
-            border: 1px solid var(--color-border);
-            border-left: 3px solid var(--color-primary);
-            padding: var(--spacing-md);
-            margin: var(--spacing-md) 0;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--text-3);
+            padding: 24px;
+            margin: 24px 0;
             border-radius: 8px;
         }
-
-        .info-box p {
-            margin-bottom: var(--spacing-xs);
-        }
+        .info-box p { margin-bottom: 8px; }
 
         hr {
-            margin: var(--spacing-xl) 0;
+            margin: 64px 0;
             border: none;
-            border-top: 1px solid var(--color-border);
+            border-top: 1px solid var(--border);
         }
 
-        footer {
+        .doc-footer {
+            padding: 32px 0 0;
+            color: var(--text-3);
+            font-size: 13px;
             text-align: center;
-            padding: var(--spacing-xl) var(--spacing-md);
-            margin-top: var(--spacing-xl);
-            color: var(--color-text-secondary);
-            border-top: 1px solid var(--color-border);
         }
 
-        footer strong {
-            color: var(--color-text);
-            font-size: 1.0625rem;
+        /* ── Footer ── */
+        footer {
+            margin-top: 80px;
+            padding: 32px 0;
+            border-top: 1px solid var(--border);
         }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-copy {
+            font-size: 13px;
+            color: var(--text-3);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--text-3);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .footer-links a:hover { color: var(--text); }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-            }
-
-            h3 {
-                font-size: 1.125rem;
+            nav { padding: 0 20px; }
+            .container { padding: 0 20px; }
+            h1 { font-size: clamp(28px, 9vw, 40px); }
+            h2 { font-size: 17px; }
+            .footer-inner {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
             }
         }
     </style>
 </head>
 <body>
+    <nav>
+        <a href="index.html" class="nav-back">10minute.studio</a>
+    </nav>
+
     <div class="container">
-        <a href="index.html" class="back-link">← Back to Home</a>
+        <header class="page-header">
+            <span class="eyebrow">Legal</span>
+        </header>
 
         <div class="language-switch">
             <a href="#" class="active" onclick="showLanguage('ko'); return false;">한국어</a>
@@ -391,10 +462,10 @@
 
             <hr>
 
-            <footer>
+            <div class="doc-footer">
                 <p><strong>10minute.studio</strong></p>
                 <p>최종 수정일: 2026년 3월 31일</p>
-            </footer>
+            </div>
         </div>
 
         <!-- 영문 버전 -->
@@ -536,24 +607,31 @@
 
             <hr>
 
-            <footer>
+            <div class="doc-footer">
                 <p><strong>10minute.studio</strong></p>
                 <p>Last Updated: March 31, 2026</p>
-            </footer>
+            </div>
         </div>
+
+        <footer>
+            <div class="footer-inner">
+                <p class="footer-copy">© 2025 10minute.studio. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="index.html">Works</a>
+                    <a href="privacy.html">Privacy</a>
+                    <a href="terms.html">Terms</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+            </div>
+        </footer>
     </div>
 
     <script>
         function showLanguage(lang) {
-            // 모든 언어 콘텐츠 숨기기
             document.querySelectorAll('.language-content').forEach(el => {
                 el.classList.remove('active');
             });
-
-            // 선택한 언어 표시
             document.getElementById(lang === 'ko' ? 'korean' : 'english').classList.add('active');
-
-            // 버튼 활성화 스타일 변경
             document.querySelectorAll('.language-switch a').forEach(el => {
                 el.classList.remove('active');
             });
