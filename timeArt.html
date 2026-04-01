@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 시간이 예술이 된다 — 매 분 바뀌는 문학 시계 | 10minute.studio</title>
+    <meta name="description" content="소설·영화·음악 속 문장이 지금 이 시간을 채웁니다. 1,700개 이상의 인용구가 하루 1,440분마다 바뀌는 감성 문학 시계 앱.">
+    <meta name="keywords" content="나의 시간이 예술이 된다, 문학시계, literary clock, 한국소설, 영화인용구, 위젯, 잠금화면, 스탠바이, 10minute studio">
+    <meta name="author" content="10minute.studio">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://xeno-xeno.github.io/10minute.studio/timeArt.html">
+    <link rel="icon" type="image/svg+xml" href="assets/images/clock-10.svg">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://xeno-xeno.github.io/10minute.studio/timeArt.html">
+    <meta property="og:title" content="나의 시간이 예술이 된다 — 매 분 바뀌는 문학 시계">
+    <meta property="og:description" content="소설·영화·음악 속 문장이 지금 이 시간을 채웁니다. 하루 1,440분, 누군가 이미 당신의 이 순간을 예술로 남겼습니다.">
+    <meta property="og:image" content="https://xeno-xeno.github.io/10minute.studio/assets/images/timeart_icon.png">
+    <meta property="og:image:width" content="1024">
+    <meta property="og:image:height" content="1024">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:site_name" content="10minute.studio">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="나의 시간이 예술이 된다 — 매 분 바뀌는 문학 시계">
+    <meta name="twitter:description" content="소설·영화·음악 속 문장이 지금 이 시간을 채웁니다. iOS 앱.">
+    <meta name="twitter:image" content="https://xeno-xeno.github.io/10minute.studio/assets/images/timeart_icon.png">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MobileApplication",
+      "name": "나의 시간이 예술이 된다",
+      "description": "소설·한국고전·영화·음악 속 문장이 하루 1,440분, 지금 이 시간에 맞게 바뀌는 문학 시계 앱.",
+      "url": "https://xeno-xeno.github.io/10minute.studio/timeArt.html",
+      "image": "https://xeno-xeno.github.io/10minute.studio/assets/images/timeart_icon.png",
+      "applicationCategory": "LifestyleApplication",
+      "operatingSystem": "iOS",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": {
+        "@type": "Organization",
+        "name": "10minute.studio",
+        "url": "https://xeno-xeno.github.io/10minute.studio/"
+      },
+      "installUrl": [
+        "https://apps.apple.com/us/app/%EB%82%98%EC%9D%98-%EC%8B%9C%EA%B0%84%EC%9D%B4-%EC%98%88%EC%88%A0%EC%9D%B4-%EB%90%9C%EB%8B%A4/id6758903518"
+      ],
+      "screenshot": [
+        "https://xeno-xeno.github.io/10minute.studio/assets/images/timeart_screen_01.png",
+        "https://xeno-xeno.github.io/10minute.studio/assets/images/timeart_screen_03.png",
+        "https://xeno-xeno.github.io/10minute.studio/assets/images/timeart_screen_04.png",
+        "https://xeno-xeno.github.io/10minute.studio/assets/images/timeart_screen_standby.png"
+      ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-subtle: #f7f7f5;
+            --bg-accent: #eef2f8;
+            --bg-card: #ffffff;
+            --text: #0a0a0a;
+            --text-2: #5a5a5a;
+            --text-3: #9a9a9a;
+            --border: #e5e5e2;
+            --accent: #6B5BFF;
+            --accent-dark: #4e3ee0;
+            --radius: 16px;
+            --nav-h: 60px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f0f0f;
+                --bg-subtle: #1a1a1a;
+                --bg-accent: #111827;
+                --bg-card: #1a1a1a;
+                --text: #f0f0f0;
+                --text-2: #909090;
+                --text-3: #707070;
+                --border: #2a2a2a;
+            }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ── Navigation ── */
+        nav {
+            height: var(--nav-h);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            z-index: 100;
+        }
+
+        .nav-back {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-3);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .nav-back:hover { color: var(--text); }
+
+        .nav-store-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-store-link {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-3);
+            text-decoration: none;
+            border: 1px solid var(--border);
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: all 0.15s;
+        }
+
+        .nav-store-link:hover {
+            color: var(--text);
+            border-color: #c8c8c5;
+        }
+
+        /* ── Container ── */
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            background: var(--bg-accent);
+            border-bottom: 1px solid var(--border);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero-meta {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 32px;
+        }
+
+        .hero-meta span {
+            margin: 0 8px;
+        }
+
+        .hero-title {
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1.0;
+            color: var(--text);
+            margin-bottom: 20px;
+            word-break: keep-all;
+        }
+
+        .hero-tagline {
+            font-size: 18px;
+            color: var(--text-2);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .hero-platform {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 40px;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: var(--bg-card);
+            color: var(--text);
+            border: 1px solid var(--border);
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            transition: all 0.15s;
+        }
+
+        .cta-btn:hover {
+            border-color: #c8c8c5;
+            transform: translateY(-1px);
+        }
+
+        .cta-btn--dark {
+            background: var(--text);
+            color: #ffffff;
+            border-color: var(--text);
+        }
+
+        .cta-btn--dark:hover {
+            background: #333333;
+            border-color: #333333;
+        }
+
+        /* ── Section Divider ── */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .section-divider-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            white-space: nowrap;
+        }
+
+        .section-divider-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ── Intro ── */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section + .section {
+            padding-top: 0;
+        }
+
+        .intro-text {
+            font-size: 52px;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            color: var(--text);
+            line-height: 1.1;
+            margin-bottom: 24px;
+            word-break: keep-all;
+        }
+
+        .intro-sub {
+            font-size: 17px;
+            font-weight: 400;
+            color: var(--text-2);
+            line-height: 1.65;
+        }
+
+        /* ── Feature Sections ── */
+        .feature-section {
+            padding: 72px 0;
+        }
+
+        .feature-section::before {
+            content: '';
+            display: block;
+            width: 30%;
+            height: 1px;
+            background: var(--border);
+            margin-bottom: 32px;
+        }
+
+        .feature-label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 20px;
+        }
+
+        .feature-heading {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            color: var(--text);
+            margin-bottom: 20px;
+            word-break: keep-all;
+        }
+
+        .feature-body {
+            font-size: 17px;
+            font-weight: 400;
+            color: var(--text-2);
+            line-height: 1.7;
+        }
+
+        /* ── Screenshots Scroll ── */
+        .screenshots-scroll-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            margin: 0 -40px;
+            padding: 0 40px;
+        }
+
+        .screenshots-scroll-wrap::-webkit-scrollbar {
+            display: none;
+        }
+
+        .screenshots-scroll {
+            display: flex;
+            gap: 16px;
+            width: max-content;
+            padding-bottom: 4px;
+        }
+
+        .screenshot-img {
+            height: 320px;
+            width: auto;
+            border-radius: 16px;
+            display: block;
+            border: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .screenshots-scroll-wrap {
+                margin: 0 -20px;
+                padding: 0 20px;
+            }
+
+            .screenshot-img {
+                height: 220px;
+            }
+        }
+
+        /* ── Quote Timeline ── */
+        .quote-list {
+            list-style: none;
+            margin-top: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .quote-item {
+            display: flex;
+            align-items: baseline;
+            gap: 20px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .quote-item:first-child {
+            border-top: 1px solid var(--border);
+        }
+
+        .quote-time {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-3);
+            min-width: 90px;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.02em;
+        }
+
+        .quote-content {
+            flex: 1;
+        }
+
+        .quote-work {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-3);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .quote-text {
+            font-size: 16px;
+            color: var(--text-2);
+            line-height: 1.55;
+        }
+
+        /* ── Spec Grid ── */
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-top: 28px;
+        }
+
+        .spec-item {
+            background: var(--bg);
+            padding: 28px 24px;
+        }
+
+        .spec-num {
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .spec-label {
+            font-size: 13px;
+            color: var(--text-3);
+            line-height: 1.4;
+        }
+
+        /* ── How to Play ── */
+        .how-list {
+            list-style: none;
+            margin-top: 24px;
+        }
+
+        .how-item {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            padding: 6px 0;
+        }
+
+        .how-num {
+            font-size: 17px;
+            color: var(--text-3);
+            min-width: 12px;
+        }
+
+        .how-text {
+            font-size: 17px;
+            color: var(--text-2);
+            line-height: 1.6;
+        }
+
+        /* ── Download Section ── */
+        .download-section {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 56px 40px;
+            text-align: center;
+        }
+
+        .download-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 16px;
+        }
+
+        .download-title {
+            font-size: 40px;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            color: var(--text);
+            margin-bottom: 12px;
+            word-break: keep-all;
+        }
+
+        .download-subtitle {
+            font-size: 16px;
+            color: var(--text-2);
+            margin-bottom: 12px;
+        }
+
+        .download-trial {
+            font-size: 13px;
+            color: var(--text-3);
+            margin-bottom: 36px;
+        }
+
+        .download-btns {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ── Support ── */
+        .support-links {
+            font-size: 15px;
+            color: var(--text-2);
+            line-height: 2;
+        }
+
+        .support-links a {
+            color: var(--text);
+            text-decoration: none;
+            border-bottom: 1px solid var(--border);
+            transition: border-color 0.15s;
+        }
+
+        .support-links a:hover {
+            border-color: var(--text);
+        }
+
+        .support-divider {
+            color: var(--border);
+            margin: 0 12px;
+        }
+
+        /* ── Footer ── */
+        footer {
+            margin-top: 120px;
+            padding: 32px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-copy {
+            font-size: 13px;
+            color: var(--text-3);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--text-3);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .footer-links a:hover { color: var(--text); }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            nav { padding: 0 20px; }
+            .container { padding: 0 20px; }
+            .hero { padding: 56px 20px; }
+            .hero-title { font-size: clamp(36px, 10vw, 64px); }
+
+            .intro-text {
+                font-size: clamp(28px, 9vw, 52px);
+            }
+
+            .feature-heading {
+                font-size: 26px;
+            }
+
+            .spec-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .spec-grid .spec-item:last-child {
+                grid-column: 1 / -1;
+            }
+
+            .quote-item {
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .quote-time {
+                min-width: unset;
+            }
+
+            .download-section {
+                padding: 40px 24px;
+            }
+
+            .download-title { font-size: 28px; }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+
+            .nav-store-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="nav-back">10minute.studio</a>
+        <div class="nav-store-links">
+            <a href="https://apps.apple.com/us/app/%EB%82%98%EC%9D%98-%EC%8B%9C%EA%B0%84%EC%9D%B4-%EC%98%88%EC%88%A0%EC%9D%B4-%EB%90%9C%EB%8B%A4/id6758903518" class="nav-store-link">App Store</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero">
+        <div class="container">
+            <p class="hero-meta">APPx001 <span>·</span> Lifestyle <span>·</span> iOS</p>
+            <h1 class="hero-title">나의 시간이<br>예술이 된다</h1>
+            <p class="hero-tagline">매 시간, 당신의 일상이 예술이 됩니다.</p>
+            <div class="hero-cta">
+                <a href="https://apps.apple.com/us/app/%EB%82%98%EC%9D%98-%EC%8B%9C%EA%B0%84%EC%9D%B4-%EC%98%88%EC%88%A0%EC%9D%B4-%EB%90%9C%EB%8B%A4/id6758903518" class="cta-btn">App Store</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- Intro -->
+        <section class="section">
+            <p class="intro-text" id="current-time-title">밤 10시 4분</p>
+            <p class="intro-sub">당신의 일상적인 시간이 문학, 영화, 음악 속 예술이 됩니다.<br>
+            지금 이 순간, 누군가는 이미 당신의 시간을 예술로 남겼습니다.<br>
+            매 시간마다 예술 작품을 만나보세요.<br><br>
+            <strong>'나의 시간이 예술이 된다'</strong>는 시간이 언급된 문학·영화·음악의 순간을 소개하는 <strong>'큐레이션 앱'</strong>입니다.</p>
+        </section>
+
+        <!-- Screenshots -->
+        <section class="section">
+            <div class="screenshots-scroll-wrap">
+                <div class="screenshots-scroll">
+                    <img class="screenshot-img" src="assets/images/timeart_screen_01.png" alt="나의 시간이 예술이 된다 Screenshot 1">
+                    <img class="screenshot-img" src="assets/images/timeart_screen_03.png" alt="나의 시간이 예술이 된다 Screenshot 2">
+                    <img class="screenshot-img" src="assets/images/timeart_screen_04.png" alt="나의 시간이 예술이 된다 Screenshot 3">
+                    <img class="screenshot-img" src="assets/images/timeart_screen_standby.png" alt="나의 시간이 예술이 된다 Standby">
+                </div>
+            </div>
+        </section>
+
+        <!-- Quote Timeline -->
+        <section class="section">
+            <div class="section-divider">
+                <span class="section-divider-label">지금 몇 시인가요</span>
+                <div class="section-divider-line"></div>
+            </div>
+            <ul class="quote-list">
+                <li class="quote-item">
+                    <span class="quote-time">자정 00:00</span>
+                    <div class="quote-content">
+                        <p class="quote-work">음악 · BTS</p>
+                        <p class="quote-text">Zero O'Clock</p>
+                    </div>
+                </li>
+                <li class="quote-item">
+                    <span class="quote-time">새벽 06:00</span>
+                    <div class="quote-content">
+                        <p class="quote-work">영화 · 왕가위</p>
+                        <p class="quote-text">중경삼림</p>
+                    </div>
+                </li>
+                <li class="quote-item">
+                    <span class="quote-time">오전 10:31</span>
+                    <div class="quote-content">
+                        <p class="quote-work">영화 · 로버트 저메키스</p>
+                        <p class="quote-text">백 투 더 퓨처</p>
+                    </div>
+                </li>
+                <li class="quote-item">
+                    <span class="quote-time">오후 05:30</span>
+                    <div class="quote-content">
+                        <p class="quote-work">소설 · 이광수</p>
+                        <p class="quote-text">재생</p>
+                    </div>
+                </li>
+                <li class="quote-item">
+                    <span class="quote-time">오후 05:53</span>
+                    <div class="quote-content">
+                        <p class="quote-work">음악 · TXT</p>
+                        <p class="quote-text">5시 53분의 하늘에서 발견한 너와 나</p>
+                    </div>
+                </li>
+                <li class="quote-item">
+                    <span class="quote-time">밤 23:23</span>
+                    <div class="quote-content">
+                        <p class="quote-work">드라마 · 김은희</p>
+                        <p class="quote-text">시그널</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Stats -->
+        <section class="section">
+            <div class="spec-grid">
+                <div class="spec-item">
+                    <p class="spec-num" data-count="1700" data-suffix="+">0</p>
+                    <p class="spec-label">소설·영화·음악<br>인용구</p>
+                </div>
+                <div class="spec-item">
+                    <p class="spec-num" data-count="1440">0</p>
+                    <p class="spec-label">하루 —<br>매분 다른 문장</p>
+                </div>
+                <div class="spec-item">
+                    <p class="spec-num" data-count="4">0</p>
+                    <p class="spec-label">카테고리 —<br>소설 · 한국고전 · 영화 · 음악</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature 1 -->
+        <div class="feature-section">
+            <span class="feature-label">특별한 공간</span>
+            <h2 class="feature-heading">"1955년 11월 2일 10시 4분!<br>번개가 시계탑을 칠 거야!"</h2>
+            <p class="feature-body">시간의 단순한 숫자표시가 아닌, 그 시간 자체가 하나의 사건이 되는 순간.<br>
+            한글의 감성으로 표현되는 소설·영화·음악 속 문장이 매 분 이 시간을 채웁니다.<br><br>
+            집에서, 직장에서, 카페에서, 서점에서.<br>
+            숫자로 가득한 공간에 문학과 예술의 언어로 시간이 흐른다면, 그 공간은 특별하게 변할 것입니다.</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feature-section">
+            <span class="feature-label">문학시계</span>
+            <h2 class="feature-heading">1,700여개의 문학 인용구가<br>하루를 채웁니다.</h2>
+            <p class="feature-body">소설, 한국고전, 영화·드라마·음악. 하루 1,440분을 채우는 인용구.<br>
+            Find Hour... 비어있는 시간도 존재합니다.<br><br>
+            채워지지 않은 시간은 앞으로 꾸준히 채워나갈 시간입니다.</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feature-section">
+            <span class="feature-label">홈화면 · 잠금화면 · 스탠바이</span>
+            <h2 class="feature-heading">어디서든,<br>지금 이 순간.</h2>
+            <p class="feature-body">홈화면 위젯·잠금화면 위젯·스탠바이 모드를 모두 지원합니다.<br>
+            아이패드 디스플레이로도 즐길 수 있습니다.<br><br>
+            다크·라이트 모드, 원하는 폰트로 나만의 감성을 설정하세요.</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="feature-section">
+            <span class="feature-label">카테고리 · 공유</span>
+            <h2 class="feature-heading">나의 취향으로<br>채우는 시간.</h2>
+            <p class="feature-body">소설 / 한국고전 / 영화·음악 — 원하는 카테고리만 골라 표시할 수 있습니다.<br>
+            마음에 드는 문장은 이미지로 저장하고 공유하세요.<br><br>
+            오프라인에서도 완벽하게 작동합니다.</p>
+        </div>
+
+        <!-- What's included -->
+        <div class="feature-section">
+            <span class="feature-label">주요기능</span>
+            <ol class="how-list">
+                <li class="how-item"><span class="how-num">·</span><p class="how-text">소설 / 한국고전 / 영화·음악 인용구</p></li>
+                <li class="how-item"><span class="how-num">·</span><p class="how-text">홈화면·잠금화면 위젯 지원</p></li>
+                <li class="how-item"><span class="how-num">·</span><p class="how-text">스탠바이 모드 지원</p></li>
+                <li class="how-item"><span class="how-num">·</span><p class="how-text">카테고리별 인용구 선택</p></li>
+                <li class="how-item"><span class="how-num">·</span><p class="how-text">다크·라이트 모드 / 폰트 선택</p></li>
+                <li class="how-item"><span class="how-num">·</span><p class="how-text">인용구 이미지 저장 및 공유</p></li>
+                <li class="how-item"><span class="how-num">·</span><p class="how-text">오프라인 완벽 지원</p></li>
+            </ol>
+        </div>
+
+        <!-- Download -->
+        <section class="section">
+            <div class="download-section">
+                <p class="download-label">Download</p>
+                <h2 class="download-title">나의 시간이 예술이 된다</h2>
+                <p class="download-subtitle">매 시간, 당신의 일상이 예술이 됩니다.</p>
+                <div class="download-btns">
+                    <a href="https://apps.apple.com/us/app/%EB%82%98%EC%9D%98-%EC%8B%9C%EA%B0%84%EC%9D%B4-%EC%98%88%EC%88%A0%EC%9D%B4-%EB%90%9C%EB%8B%A4/id6758903518" class="cta-btn">App Store</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support -->
+        <section class="section">
+            <div class="section-divider">
+                <span class="section-divider-label">지원</span>
+                <div class="section-divider-line"></div>
+            </div>
+
+            <p class="support-links">
+                문의사항이 있으신가요? <a href="contact.html">Contact</a>로 연락주세요.
+                <span class="support-divider">|</span>
+                <a href="privacy.html">Privacy Policy</a>
+                <span class="support-divider">|</span>
+                <a href="terms.html">Terms of Service</a>
+            </p>
+            <p style="font-size: 12px; color: var(--text-3); margin-top: 16px; line-height: 1.6;">
+                본 앱은 문학·영화·음악 작품에서 시간이 언급된 짧은 구절을 출처와 함께 소개합니다. 저작권자의 요청 시 즉시 삭제 조치합니다. 문의: <a href="mailto:contact@literaryhours.com" style="color: var(--text-3); border-bottom: 1px solid var(--border);">contact@literaryhours.com</a>
+            </p>
+        </section>
+
+    </div>
+
+    <div class="container">
+        <footer>
+            <div class="footer-inner">
+                <p class="footer-copy">© 2025 10minute.studio. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="index.html">Works</a>
+                    <a href="privacy.html">Privacy</a>
+                    <a href="terms.html">Terms</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const h = now.getHours();
+            const m = now.getMinutes();
+            const period = h < 6 ? '새벽' : h < 12 ? '오전' : h < 18 ? '오후' : '밤';
+            const h12 = h % 12 === 0 ? 12 : h % 12;
+            const label = m === 0 ? `${period} ${h12}시` : `${period} ${h12}시 ${m}분`;
+            const title = document.getElementById('current-time-title');
+            if (title) title.textContent = label;
+        }
+
+        // ── Count-up animation ──
+        function animateCount(el) {
+            const target = parseInt(el.dataset.count, 10);
+            const suffix = el.dataset.suffix || '';
+            const duration = 900;
+            const start = performance.now();
+
+            function step(now) {
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                // easeOutExpo
+                const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+                const value = Math.floor(eased * target);
+                el.textContent = value.toLocaleString('ko-KR') + suffix;
+                if (progress < 1) requestAnimationFrame(step);
+            }
+
+            requestAnimationFrame(step);
+        }
+
+        const observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    animateCount(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.spec-num[data-count]').forEach(function (el) {
+            observer.observe(el);
+        });
+
+        updateTime();
+
+        // 다음 정각(분 바뀌는 시점)에 맞춰 시작 후 매 60초마다 갱신
+        const now = new Date();
+        const msUntilNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+        setTimeout(function () {
+            updateTime();
+            setInterval(updateTime, 60000);
+        }, msUntilNextMinute);
+    </script>
+</body>
+</html>
