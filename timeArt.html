@@ -280,6 +280,26 @@
             word-break: keep-all;
         }
 
+        .time-clip {
+            display: inline-block;
+            overflow: hidden;
+            vertical-align: bottom;
+        }
+
+        .time-part {
+            display: inline-block;
+            transform: translateY(110%);
+        }
+
+        @keyframes timeTicker {
+            from { transform: translateY(110%); }
+            to   { transform: translateY(0); }
+        }
+
+        .time-part.flip {
+            animation: timeTicker 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
         .intro-sub {
             font-size: 17px;
             font-weight: 400;
@@ -646,7 +666,7 @@
 
         <!-- Intro -->
         <section class="section">
-            <p class="intro-text" id="current-time-title">밤 10시 4분</p>
+            <p class="intro-text" id="current-time-title"><span class="time-clip"><span class="time-part" id="time-hour"></span></span><span class="time-clip"><span class="time-part" id="time-min"></span></span></p>
             <p class="intro-sub">당신의 일상적인 시간이 문학, 영화, 음악 속 예술이 됩니다.<br>
             지금 이 순간, 누군가는 이미 당신의 시간을 예술로 남겼습니다.<br>
             매 시간마다 예술 작품을 만나보세요.<br><br>
@@ -729,8 +749,8 @@
                     <p class="spec-label">하루 —<br>매분 다른 문장</p>
                 </div>
                 <div class="spec-item">
-                    <p class="spec-num" data-count="4">0</p>
-                    <p class="spec-label">카테고리 —<br>소설 · 한국고전 · 영화 · 음악</p>
+                    <p class="spec-num" data-count="3">0</p>
+                    <p class="spec-label">카테고리 —<br>소설 · 한국고전 · 영화-음악</p>
                 </div>
             </div>
         </section>
@@ -813,7 +833,7 @@
                 <a href="terms.html">Terms of Service</a>
             </p>
             <p style="font-size: 12px; color: var(--text-3); margin-top: 16px; line-height: 1.6;">
-                본 앱은 문학·영화·음악 작품에서 시간이 언급된 짧은 구절을 출처와 함께 소개합니다. 저작권자의 요청 시 즉시 삭제 조치합니다. 문의: <a href="mailto:10minute.studio2025@gmail.com" style="color: var(--text-3); border-bottom: 1px solid var(--border);">10minute.studio2025@gmail.com</a>
+                본 앱은 문학·영화·음악 작품에서 시간이 언급된 짧은 구절을 출처와 함께 소개합니다. 저작권자의 요청 시 즉시 삭제 조치합니다. 문의: <a href="contact.html" style="color: var(--text-3); border-bottom: 1px solid var(--border);">Contact</a>
             </p>
         </section>
 
@@ -833,15 +853,37 @@
         </footer>
     </div>
     <script>
-        function updateTime() {
+        let _prevH = -1;
+        let _prevM = -1;
+
+        function reflip(el, delay) {
+            el.classList.remove('flip');
+            void el.offsetWidth;
+            if (delay) setTimeout(() => el.classList.add('flip'), delay);
+            else el.classList.add('flip');
+        }
+
+        function updateTime(isInit) {
             const now = new Date();
             const h = now.getHours();
             const m = now.getMinutes();
             const period = h < 6 ? '새벽' : h < 12 ? '오전' : h < 18 ? '오후' : '밤';
             const h12 = h % 12 === 0 ? 12 : h % 12;
-            const label = m === 0 ? `${period} ${h12}시` : `${period} ${h12}시 ${m}분`;
-            const title = document.getElementById('current-time-title');
-            if (title) title.textContent = label;
+            const hourEl = document.getElementById('time-hour');
+            const minEl = document.getElementById('time-min');
+
+            if (h !== _prevH) {
+                if (hourEl) { hourEl.textContent = `${period} ${h12}시`; reflip(hourEl); }
+                _prevH = h;
+            }
+            if (m !== _prevM) {
+                if (minEl) {
+                    minEl.textContent = m === 0 ? '' : ` ${m}분`;
+                    if (m !== 0) reflip(minEl, isInit ? 280 : 0);
+                    else minEl.classList.remove('flip');
+                }
+                _prevM = m;
+            }
         }
 
         // ── Count-up animation ──
@@ -877,14 +919,14 @@
             observer.observe(el);
         });
 
-        updateTime();
+        updateTime(true);
 
         // 다음 정각(분 바뀌는 시점)에 맞춰 시작 후 매 60초마다 갱신
         const now = new Date();
         const msUntilNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
         setTimeout(function () {
-            updateTime();
-            setInterval(updateTime, 60000);
+            updateTime(false);
+            setInterval(() => updateTime(false), 60000);
         }, msUntilNextMinute);
     </script>
 </body>
