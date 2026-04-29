@@ -11,6 +11,15 @@
     <link rel="canonical" href="https://xeno-xeno.github.io/10minute.studio/fever2048.html">
     <link rel="icon" type="image/svg+xml" href="assets/images/clock-10.svg">
 
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8L3S8MLEGK"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8L3S8MLEGK');
+    </script>
+
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://xeno-xeno.github.io/10minute.studio/fever2048.html">
@@ -344,6 +353,42 @@
             line-height: 1.7;
         }
 
+        /* ── Feature with Video ── */
+        .feature-section--with-video {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .feature-video-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .feature-video-wrap iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        @media (max-width: 768px) {
+            .feature-section--with-video {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-video-wrap {
+                max-width: 260px;
+                margin: 0 auto;
+            }
+        }
+
         /* ── Screenshots Row ── */
         .screenshots-row {
             display: grid;
@@ -519,6 +564,10 @@
 <body>
     <nav>
         <a href="index.html" class="nav-back">10minute.studio</a>
+        <div class="nav-store-links">
+            <a href="https://apps.apple.com/us/app/fever2048/id6753706909" class="nav-store-link" onclick="gtag('event','app_store_click',{app_name:'fever2048',store:'app_store',location:'nav'})">App Store</a>
+            <a href="https://play.google.com/store/apps/details?id=com.tenminutestudio.fever2048.AOS" class="nav-store-link" onclick="gtag('event','app_store_click',{app_name:'fever2048',store:'google_play',location:'nav'})">Google Play</a>
+        </div>
     </nav>
 
     <!-- Hero -->
@@ -528,7 +577,7 @@
             <h1 class="hero-title">FEVER2048</h1>
             <p class="hero-tagline">파워카드 시스템의 새로운 2048</p>
 <div class="hero-cta">
-                <a href="https://apps.apple.com/us/app/fever2048/id6753706909" class="cta-btn">App Store</a>
+                <a href="https://apps.apple.com/us/app/fever2048/id6753706909" class="cta-btn" onclick="gtag('event','app_store_click',{app_name:'fever2048',store:'app_store',location:'hero'})">App Store</a>
             </div>
         </div>
     </div>
@@ -560,9 +609,16 @@
 
         <!-- Feature 2 -->
         <div class="feature-section">
-            <span class="feature-label">피버모드</span>
-            <h2 class="feature-heading">한 번 터지면<br>판이 달라집니다.</h2>
-            <p class="feature-body">점수3배·메가5배 카드가 터지는 순간 발동.<br>피버가 발동되는 순간 2× → 4× → 8× 배율로 점수가 폭발합니다. <br>레벨 7에서는 Lucky 7 피버가 예고 없이 발동됩니다.</p>
+            <div class="feature-section--with-video">
+                <div>
+                    <span class="feature-label">피버모드</span>
+                    <h2 class="feature-heading">한 번 터지면<br>판이 달라집니다.</h2>
+                    <p class="feature-body">점수3배·메가5배 카드가 터지는 순간 발동.<br>피버가 발동되는 순간 2× → 4× → 8× 배율로 점수가 폭발합니다. <br>레벨 7에서는 Lucky 7 피버가 예고 없이 발동됩니다.</p>
+                </div>
+                <div class="feature-video-wrap">
+                    <iframe src="https://www.youtube.com/embed/x0_7rp8YcNg" title="FEVER2048 피버모드 플레이 영상" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                </div>
+            </div>
         </div>
 
         <!-- Feature 3 -->
@@ -591,8 +647,8 @@
                 <h2 class="download-title">파워카드 시스템의 새로운 2048</h2>
                 <p class="download-subtitle">지금 다운로드하고 고득점으로 상위 랭킹에 도전하세요.</p>
                 <div class="download-btns">
-                    <a href="https://apps.apple.com/us/app/fever2048/id6753706909" class="cta-btn">App Store</a>
-                    <a href="https://play.google.com/store/apps/details?id=com.tenminutestudio.fever2048.AOS" class="cta-btn">Google Play</a>
+                    <a href="https://apps.apple.com/us/app/fever2048/id6753706909" class="cta-btn" onclick="gtag('event','app_store_click',{app_name:'fever2048',store:'app_store',location:'download'})">App Store</a>
+                    <a href="https://play.google.com/store/apps/details?id=com.tenminutestudio.fever2048.AOS" class="cta-btn" onclick="gtag('event','app_store_click',{app_name:'fever2048',store:'google_play',location:'download'})">Google Play</a>
                 </div>
             </div>
         </section>

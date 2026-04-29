@@ -11,6 +11,15 @@
     <link rel="canonical" href="https://xeno-xeno.github.io/10minute.studio/timeArt.html">
     <link rel="icon" type="image/svg+xml" href="assets/images/clock-10.svg">
 
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8L3S8MLEGK"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8L3S8MLEGK');
+    </script>
+
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://xeno-xeno.github.io/10minute.studio/timeArt.html">
@@ -348,6 +357,32 @@
             line-height: 1.7;
         }
 
+        /* ── Feature with Image ── */
+        .feature-section--with-image {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .feature-image {
+            width: 100%;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .feature-section--with-image {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-section--with-image .feature-image {
+                max-width: 260px;
+                margin: 0 auto;
+            }
+        }
+
         /* ── Screenshots Scroll ── */
         .screenshots-scroll-wrap {
             overflow-x: auto;
@@ -646,7 +681,7 @@
     <nav>
         <a href="index.html" class="nav-back">10minute.studio</a>
         <div class="nav-store-links">
-            <a href="https://apps.apple.com/us/app/%EB%82%98%EC%9D%98-%EC%8B%9C%EA%B0%84%EC%9D%B4-%EC%98%88%EC%88%A0%EC%9D%B4-%EB%90%9C%EB%8B%A4/id6758903518" class="nav-store-link">App Store</a>
+            <a href="https://apps.apple.com/us/app/%EB%82%98%EC%9D%98-%EC%8B%9C%EA%B0%84%EC%9D%B4-%EC%98%88%EC%88%A0%EC%9D%B4-%EB%90%9C%EB%8B%A4/id6758903518" class="nav-store-link" onclick="gtag('event','app_store_click',{app_name:'timeart',store:'app_store',location:'nav'})">App Store</a>
         </div>
     </nav>
 
@@ -657,7 +692,7 @@
             <h1 class="hero-title">나의 시간이<br>예술이 된다</h1>
             <p class="hero-tagline">매 시간, 당신의 일상이 예술이 됩니다.</p>
             <div class="hero-cta">
-                <a href="https://apps.apple.com/us/app/%EB%82%98%EC%9D%98-%EC%8B%9C%EA%B0%84%EC%9D%B4-%EC%98%88%EC%88%A0%EC%9D%B4-%EB%90%9C%EB%8B%A4/id6758903518" class="cta-btn">App Store</a>
+                <a href="https://apps.apple.com/us/app/%EB%82%98%EC%9D%98-%EC%8B%9C%EA%B0%84%EC%9D%B4-%EC%98%88%EC%88%A0%EC%9D%B4-%EB%90%9C%EB%8B%A4/id6758903518" class="cta-btn" onclick="gtag('event','app_store_click',{app_name:'timeart',store:'app_store',location:'hero'})">App Store</a>
             </div>
         </div>
     </div>
@@ -767,29 +802,44 @@
 
         <!-- Feature 2 -->
         <div class="feature-section">
-            <span class="feature-label">문학시계</span>
-            <h2 class="feature-heading">1,700여개의 문학 인용구가<br>하루를 채웁니다.</h2>
-            <p class="feature-body">소설, 한국고전, 영화·드라마·음악. 하루 1,440분을 채우는 인용구.<br>
-            Find Hour... 비어있는 시간도 존재합니다.<br><br>
-            채워지지 않은 시간은 앞으로 꾸준히 채워나갈 시간입니다.</p>
+            <div class="feature-section--with-image">
+                <div>
+                    <span class="feature-label">문학시계</span>
+                    <h2 class="feature-heading">1,700여개의 문학 인용구가<br>하루를 채웁니다.</h2>
+                    <p class="feature-body">소설, 한국고전, 영화·드라마·음악. 하루 1,440분을 채우는 인용구.<br>
+                    Find Hour... 비어있는 시간도 존재합니다.<br><br>
+                    채워지지 않은 시간은 앞으로 꾸준히 채워나갈 시간입니다.</p>
+                </div>
+                <img class="feature-image" src="assets/images/timeart_literary_feature.jpg" alt="나의 시간이 예술이 된다 문학시계">
+            </div>
         </div>
 
         <!-- Feature 3 -->
         <div class="feature-section">
-            <span class="feature-label">홈화면 · 잠금화면 · 스탠바이</span>
-            <h2 class="feature-heading">어디서든,<br>지금 이 순간.</h2>
-            <p class="feature-body">홈화면 위젯·잠금화면 위젯·스탠바이 모드를 모두 지원합니다.<br>
-            아이패드 디스플레이로도 즐길 수 있습니다.<br><br>
-            다크·라이트 모드, 원하는 폰트로 나만의 감성을 설정하세요.</p>
+            <div class="feature-section--with-image">
+                <div>
+                    <span class="feature-label">홈화면 · 잠금화면 · 스탠바이</span>
+                    <h2 class="feature-heading">어디서든,<br>지금 이 순간.</h2>
+                    <p class="feature-body">홈화면 위젯·잠금화면 위젯·스탠바이 모드를 모두 지원합니다.<br>
+                    아이패드 디스플레이로도 즐길 수 있습니다.<br><br>
+                    다크·라이트 모드, 원하는 폰트로 나만의 감성을 설정하세요.</p>
+                </div>
+                <img class="feature-image" src="assets/images/timeart_widget_feature.jpg" alt="나의 시간이 예술이 된다 홈화면 위젯">
+            </div>
         </div>
 
         <!-- Feature 4 -->
         <div class="feature-section">
-            <span class="feature-label">카테고리 · 공유</span>
-            <h2 class="feature-heading">나의 취향으로<br>채우는 시간.</h2>
-            <p class="feature-body">소설 / 한국고전 / 영화·음악 — 원하는 카테고리만 골라 표시할 수 있습니다.<br>
-            마음에 드는 문장은 이미지로 저장하고 공유하세요.<br><br>
-            오프라인에서도 완벽하게 작동합니다.</p>
+            <div class="feature-section--with-image">
+                <div>
+                    <span class="feature-label">카테고리 · 공유</span>
+                    <h2 class="feature-heading">나의 취향으로<br>채우는 시간.</h2>
+                    <p class="feature-body">소설 / 한국고전 / 영화·음악 — 원하는 카테고리만 골라 표시할 수 있습니다.<br>
+                    마음에 드는 문장은 이미지로 저장하고 공유하세요.<br><br>
+                    오프라인에서도 완벽하게 작동합니다.</p>
+                </div>
+                <img class="feature-image" src="assets/images/timeart_standby_feature.png" alt="나의 시간이 예술이 된다 스탠바이 모드">
+            </div>
         </div>
 
         <!-- What's included -->
@@ -813,7 +863,7 @@
                 <h2 class="download-title">나의 시간이 예술이 된다</h2>
                 <p class="download-subtitle">매 시간, 당신의 일상이 예술이 됩니다.</p>
                 <div class="download-btns">
-                    <a href="https://apps.apple.com/us/app/%EB%82%98%EC%9D%98-%EC%8B%9C%EA%B0%84%EC%9D%B4-%EC%98%88%EC%88%A0%EC%9D%B4-%EB%90%9C%EB%8B%A4/id6758903518" class="cta-btn">App Store</a>
+                    <a href="https://apps.apple.com/us/app/%EB%82%98%EC%9D%98-%EC%8B%9C%EA%B0%84%EC%9D%B4-%EC%98%88%EC%88%A0%EC%9D%B4-%EB%90%9C%EB%8B%A4/id6758903518" class="cta-btn" onclick="gtag('event','app_store_click',{app_name:'timeart',store:'app_store',location:'download'})">App Store</a>
                 </div>
             </div>
         </section>
