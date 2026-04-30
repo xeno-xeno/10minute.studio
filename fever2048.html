@@ -370,12 +370,13 @@
             border: 1px solid var(--border);
         }
 
-        .feature-video-wrap iframe {
+        .feature-video-wrap video {
             position: absolute;
             inset: 0;
             width: 100%;
             height: 100%;
             border: none;
+            object-fit: cover;
         }
 
         @media (max-width: 768px) {
@@ -616,7 +617,7 @@
                     <p class="feature-body">점수3배·메가5배 카드가 터지는 순간 발동.<br>피버가 발동되는 순간 2× → 4× → 8× 배율로 점수가 폭발합니다. <br>레벨 7에서는 Lucky 7 피버가 예고 없이 발동됩니다.</p>
                 </div>
                 <div class="feature-video-wrap">
-                    <iframe src="https://www.youtube.com/embed/x0_7rp8YcNg" title="FEVER2048 피버모드 플레이 영상" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                    <video src="assets/videos/fever2048_fever.mp4" autoplay muted loop playsinline></video>
                 </div>
             </div>
         </div>

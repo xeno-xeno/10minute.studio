@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"E:/Project_dev/DEV_APP/10minute.studio/assets/videos\")",
+      "Bash(cp \"C:/Users/xeno-win/Downloads/fever2048_fever.mp4\" \"E:/Project_dev/DEV_APP/10minute.studio/assets/videos/fever2048_fever.mp4\")"
+    ]
+  }
+}
