@@ -10,6 +10,8 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://xeno-xeno.github.io/10minute.studio/">
     <link rel="icon" type="image/svg+xml" href="assets/images/clock-10.svg">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0f0f0f" media="(prefers-color-scheme: dark)">
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8L3S8MLEGK"></script>
@@ -300,6 +302,13 @@
 
         .footer-links a:hover { color: var(--text); }
 
+        .footer-sep {
+            color: var(--text-3);
+            font-size: 16px;
+            opacity: 0.7;
+            user-select: none;
+        }
+
         /* ── Responsive ── */
         @media (max-width: 768px) {
             nav { padding: 0 20px; }
@@ -367,6 +376,9 @@
                     <a href="privacy.html">Privacy Policy</a>
                     <a href="terms.html">Terms of Service</a>
                     <a href="contact.html">Contact</a>
+                    <span class="footer-sep">·</span>
+                    <a href="https://medium.com/@xenologue" target="_blank" rel="noopener" aria-label="개인 블로그 (새 탭에서 열림)">Blog</a>
+                    <a href="https://x.com/thinkbigz" target="_blank" rel="noopener" aria-label="X (새 탭에서 열림)">x.com</a>
                 </div>
             </div>
         </footer>

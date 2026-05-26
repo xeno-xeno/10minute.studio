@@ -10,6 +10,8 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://xeno-xeno.github.io/10minute.studio/timeArt.html">
     <link rel="icon" type="image/svg+xml" href="assets/images/clock-10.svg">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0f0f0f" media="(prefers-color-scheme: dark)">
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8L3S8MLEGK"></script>
@@ -309,6 +311,10 @@
             animation: timeTicker 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
 
+        @media (prefers-reduced-motion: reduce) {
+            .time-part.flip { animation: none; transform: translateY(0); }
+        }
+
         .intro-sub {
             font-size: 17px;
             font-weight: 400;
@@ -528,6 +534,35 @@
             line-height: 1.6;
         }
 
+        /* ── Instagram CTA ── */
+        .instagram-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 24px;
+            padding: 14px 24px;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            color: var(--text-2);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.15s;
+        }
+
+        .instagram-cta:hover {
+            border-color: var(--text-3);
+            color: var(--text);
+        }
+
+        .instagram-eyebrow {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 4px;
+        }
+
         /* ── Download Section ── */
         .download-section {
             background: var(--bg-subtle);
@@ -628,6 +663,13 @@
         }
 
         .footer-links a:hover { color: var(--text); }
+
+        .footer-sep {
+            color: var(--text-3);
+            font-size: 16px;
+            opacity: 0.7;
+            user-select: none;
+        }
 
         /* ── Responsive ── */
         @media (max-width: 768px) {
@@ -856,6 +898,16 @@
             </ol>
         </div>
 
+        <!-- Instagram CTA -->
+        <div class="feature-section">
+            <p class="instagram-eyebrow">Follow</p>
+            <p style="font-size:22px; font-weight:700; letter-spacing:-0.02em; margin-bottom:0;">지금 이 순간의 문장, 인스타에서 이어집니다</p>
+            <a href="https://www.instagram.com/my.time.became.art" target="_blank" rel="noopener" class="instagram-cta" aria-label="Instagram에서 나의 시간이 예술이 된다 팔로우 (새 탭에서 열림)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+                @my.time.became.art
+            </a>
+        </div>
+
         <!-- Download -->
         <section class="section">
             <div class="download-section">
@@ -898,6 +950,9 @@
                     <a href="privacy.html">Privacy</a>
                     <a href="terms.html">Terms</a>
                     <a href="contact.html">Contact</a>
+                    <span class="footer-sep">·</span>
+                    <a href="https://medium.com/@xenologue" target="_blank" rel="noopener" aria-label="개인 블로그 (새 탭에서 열림)">Blog</a>
+                    <a href="https://x.com/thinkbigz" target="_blank" rel="noopener" aria-label="X (새 탭에서 열림)">x.com</a>
                 </div>
             </div>
         </footer>
