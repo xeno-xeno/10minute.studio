@@ -196,7 +196,7 @@
         /* ── Works Grid ── */
         .works-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 0;
         }
 
@@ -304,6 +304,12 @@
 
         .footer-links {
             display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .footer-links-group {
+            display: flex;
             gap: 24px;
         }
 
@@ -343,6 +349,13 @@
                 gap: 16px;
                 text-align: center;
             }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .footer-sep { display: none; }
         }
     </style>
 </head>
@@ -385,7 +398,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 12a1 1 0 1 1 0 9H9.006a7 7 0 1 1 6.702-9z"/><path d="M21.832 9A3 3 0 0 0 19 7h-2.207a5.5 5.5 0 0 0-10.72.61"/></svg>
                     </div>
                     <h2 class="work-title">Next Project</h2>
-                    <p class="work-tagline">새로운 프로젝트를 준비 중입니다. Stay tuned!</p>
+                    <p class="work-tagline">새로운 프로젝트를 준비 중입니다.<br>Stay tuned!</p>
                 </div>
             </div>
         </div>
@@ -396,13 +409,17 @@
             <div class="footer-inner">
                 <p class="footer-copy">© 2025 10minute.studio. All rights reserved.</p>
                 <div class="footer-links">
-                    <a href="privacy.html">Privacy Policy</a>
-                    <a href="terms.html">Terms of Service</a>
-                    <a href="contact.html">Contact</a>
+                    <div class="footer-links-group">
+                        <a href="privacy.html">Privacy Policy</a>
+                        <a href="terms.html">Terms of Service</a>
+                        <a href="contact.html">Contact</a>
+                    </div>
                     <span class="footer-sep">·</span>
-                    <a href="https://medium.com/@xenologue" target="_blank" rel="noopener" aria-label="개인 블로그 (새 탭에서 열림)">Blog</a>
-                    <a href="https://x.com/thinkbigz" target="_blank" rel="noopener" aria-label="X (새 탭에서 열림)">x.com</a>
-                    <a href="https://www.instagram.com/10minute.studio" target="_blank" rel="noopener" aria-label="Instagram (새 탭에서 열림)">Instagram</a>
+                    <div class="footer-links-group">
+                        <a href="https://medium.com/@xenologue" target="_blank" rel="noopener" aria-label="개인 블로그 (새 탭에서 열림)">Blog</a>
+                        <a href="https://x.com/thinkbigz" target="_blank" rel="noopener" aria-label="X (새 탭에서 열림)">x.com</a>
+                        <a href="https://www.instagram.com/10minute.studio" target="_blank" rel="noopener" aria-label="Instagram (새 탭에서 열림)">Instagram</a>
+                    </div>
                 </div>
             </div>
         </footer>
