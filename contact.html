@@ -262,6 +262,12 @@
 
         .footer-links {
             display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .footer-links-group {
+            display: flex;
             gap: 24px;
         }
 
@@ -290,6 +296,13 @@
                 gap: 16px;
                 text-align: center;
             }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .footer-sep { display: none; }
         }
     </style>
 </head>
@@ -340,14 +353,18 @@
             <div class="footer-inner">
                 <p class="footer-copy">© 2025 10minute.studio. All rights reserved.</p>
                 <div class="footer-links">
-                    <a href="index.html">Works</a>
-                    <a href="privacy.html">Privacy</a>
-                    <a href="terms.html">Terms</a>
-                    <a href="contact.html">Contact</a>
+                    <div class="footer-links-group">
+                        <a href="index.html">Product</a>
+                        <a href="privacy.html">Privacy</a>
+                        <a href="terms.html">Terms</a>
+                        <a href="contact.html">Contact</a>
+                    </div>
                     <span class="footer-sep">·</span>
-                    <a href="https://medium.com/@xenologue" target="_blank" rel="noopener" aria-label="개인 블로그 (새 탭에서 열림)">Blog</a>
-                    <a href="https://x.com/thinkbigz" target="_blank" rel="noopener" aria-label="X (새 탭에서 열림)">x.com</a>
-                    <a href="https://www.instagram.com/10minute.studio" target="_blank" rel="noopener" aria-label="Instagram (새 탭에서 열림)">Instagram</a>
+                    <div class="footer-links-group">
+                        <a href="https://medium.com/@xenologue" target="_blank" rel="noopener" aria-label="개인 블로그 (새 탭에서 열림)">Blog</a>
+                        <a href="https://x.com/thinkbigz" target="_blank" rel="noopener" aria-label="X (새 탭에서 열림)">x.com</a>
+                        <a href="https://www.instagram.com/10minute.studio" target="_blank" rel="noopener" aria-label="Instagram (새 탭에서 열림)">Instagram</a>
+                    </div>
                 </div>
             </div>
         </footer>

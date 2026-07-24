@@ -32,7 +32,7 @@
       "name": "10minute.studio 개인정보처리방침",
       "url": "https://xeno-xeno.github.io/10minute.studio/privacy.html",
       "description": "10minute.studio 서비스의 개인정보 수집, 이용, 보관 및 사용자 권리에 관한 방침",
-      "dateModified": "2026-03-31",
+      "dateModified": "2026-07-24",
       "publisher": {
         "@type": "Organization",
         "name": "10minute.studio",
@@ -296,6 +296,12 @@
 
         .footer-links {
             display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .footer-links-group {
+            display: flex;
             gap: 24px;
         }
 
@@ -324,6 +330,13 @@
                 gap: 16px;
                 text-align: center;
             }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .footer-sep { display: none; }
         }
     </style>
 </head>
@@ -347,11 +360,12 @@
             <h1>10minute.studio 개인정보 처리방침</h1>
 
             <div class="info-box">
-                <p><strong>최종 수정일</strong>: 2026년 3월 31일</p>
+                <p><strong>최종 수정일</strong>: 2026년 7월 24일</p>
                 <p>본 방침은 다음 서비스에 공통 적용됩니다:</p>
                 <ul>
                     <li><strong>FEVER2048</strong> — 모바일 게임</li>
                     <li><strong>나의 시간이 예술이 된다 (My Time Became Art)</strong> — 문학 인용구 앱</li>
+                    <li><strong>Tiny Cloud</strong> — 힐링 캐주얼 게임</li>
                 </ul>
             </div>
 
@@ -368,11 +382,6 @@
                 <li>사용자 식별자(UUID), 닉네임(무작위 생성), 게임 기록 및 통계</li>
                 <li>광고 식별자(IDFA): 광고 표시 목적</li>
                 <li>푸시 알림 토큰: 알림 발송 목적</li>
-            </ul>
-
-            <h3>나의 시간이 예술이 된다에 한함</h3>
-            <ul>
-                <li>수집 항목 없음</li>
             </ul>
 
             <h3>수집하지 않는 정보 (전 서비스 공통)</h3>
@@ -483,7 +492,7 @@
 
             <div class="doc-footer">
                 <p><strong>10minute.studio</strong></p>
-                <p>최종 수정일: 2026년 3월 31일</p>
+                <p>최종 수정일: 2026년 7월 24일</p>
             </div>
         </div>
 
@@ -492,11 +501,12 @@
             <h1>10minute.studio Privacy Policy</h1>
 
             <div class="info-box">
-                <p><strong>Last Updated</strong>: March 31, 2026</p>
+                <p><strong>Last Updated</strong>: July 24, 2026</p>
                 <p>This policy applies to the following services:</p>
                 <ul>
                     <li><strong>FEVER2048</strong> — Mobile game application</li>
                     <li><strong>My Time Became Art (나의 시간이 예술이 된다)</strong> — Literary quotes application</li>
+                    <li><strong>Tiny Cloud</strong> — Casual healing game</li>
                 </ul>
             </div>
 
@@ -513,11 +523,6 @@
                 <li>User Identifier (UUID), Nickname (randomly generated), Game records and statistics</li>
                 <li>Advertising Identifier (IDFA): For ad display</li>
                 <li>Push Notification Token: For push notifications</li>
-            </ul>
-
-            <h3>My Time Became Art only</h3>
-            <ul>
-                <li>No additional data collected</li>
             </ul>
 
             <h3>Not Collected (All Services)</h3>
@@ -628,7 +633,7 @@
 
             <div class="doc-footer">
                 <p><strong>10minute.studio</strong></p>
-                <p>Last Updated: March 31, 2026</p>
+                <p>Last Updated: July 24, 2026</p>
             </div>
         </div>
 
@@ -636,14 +641,18 @@
             <div class="footer-inner">
                 <p class="footer-copy">© 2025 10minute.studio. All rights reserved.</p>
                 <div class="footer-links">
-                    <a href="index.html">Works</a>
-                    <a href="privacy.html">Privacy</a>
-                    <a href="terms.html">Terms</a>
-                    <a href="contact.html">Contact</a>
+                    <div class="footer-links-group">
+                        <a href="index.html">Product</a>
+                        <a href="privacy.html">Privacy</a>
+                        <a href="terms.html">Terms</a>
+                        <a href="contact.html">Contact</a>
+                    </div>
                     <span class="footer-sep">·</span>
-                    <a href="https://medium.com/@xenologue" target="_blank" rel="noopener" aria-label="개인 블로그 (새 탭에서 열림)">Blog</a>
-                    <a href="https://x.com/thinkbigz" target="_blank" rel="noopener" aria-label="X (새 탭에서 열림)">x.com</a>
-                    <a href="https://www.instagram.com/10minute.studio" target="_blank" rel="noopener" aria-label="Instagram (새 탭에서 열림)">Instagram</a>
+                    <div class="footer-links-group">
+                        <a href="https://medium.com/@xenologue" target="_blank" rel="noopener" aria-label="개인 블로그 (새 탭에서 열림)">Blog</a>
+                        <a href="https://x.com/thinkbigz" target="_blank" rel="noopener" aria-label="X (새 탭에서 열림)">x.com</a>
+                        <a href="https://www.instagram.com/10minute.studio" target="_blank" rel="noopener" aria-label="Instagram (새 탭에서 열림)">Instagram</a>
+                    </div>
                 </div>
             </div>
         </footer>

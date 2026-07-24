@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny Cloud — Review Page | 10minute.studio</title>
+    <meta name="description" content="Tiny Cloud 소개 페이지 (비공개 · 심사/에디터 검토용).">
+    <meta name="author" content="10minute.studio">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/svg+xml" href="assets/images/clock-10.svg">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0f0f0f" media="(prefers-color-scheme: dark)">
+
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-subtle: #f7f7f5;
+            --bg-accent: #EDE9F7;
+            --bg-card: #ffffff;
+            --text: #0a0a0a;
+            --text-2: #5a5a5a;
+            --text-3: #9a9a9a;
+            --border: #e5e5e2;
+            --accent: #8B7BC7;
+            --accent-dark: #6E5DAD;
+            --radius: 16px;
+            --nav-h: 60px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f0f0f;
+                --bg-subtle: #1a1a1a;
+                --bg-accent: #201c2e;
+                --bg-card: #1a1a1a;
+                --text: #f0f0f0;
+                --text-2: #909090;
+                --text-3: #707070;
+                --border: #2a2a2a;
+            }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html[data-lang="ko"] .lang-en { display: none; }
+        html[data-lang="en"] .lang-ko { display: none; }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ── Unlisted banner ── */
+        .unlisted-bar {
+            background: var(--text);
+            color: var(--bg);
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            padding: 6px 12px;
+        }
+
+        /* ── Navigation ── */
+        nav {
+            height: var(--nav-h);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            z-index: 100;
+        }
+
+        .nav-back {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-3);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .nav-back:hover { color: var(--text); }
+
+        .lang-toggle {
+            display: inline-flex;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-3);
+            background: none;
+            border: 1px solid var(--border);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.15s;
+        }
+
+        .lang-toggle:hover {
+            color: var(--text);
+            border-color: #c8c8c5;
+        }
+
+        /* ── Container ── */
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            background: linear-gradient(160deg, var(--bg-accent) 0%, var(--bg) 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero-meta {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 32px;
+        }
+
+        .hero-meta span { margin: 0 8px; }
+
+        .hero-title {
+            font-size: 88px;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            line-height: 0.95;
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+
+        .hero-tagline {
+            font-size: 18px;
+            color: var(--text-2);
+            line-height: 1.6;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        /* ── Section Divider ── */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .section-divider-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            white-space: nowrap;
+        }
+
+        .section-divider-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ── Intro ── */
+        .section { padding: 80px 0; }
+        .section + .section { padding-top: 0; }
+
+        .intro-text {
+            font-size: 48px;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            color: var(--text);
+            line-height: 1.15;
+            margin-bottom: 24px;
+            word-break: keep-all;
+        }
+
+        .intro-sub {
+            font-size: 17px;
+            font-weight: 400;
+            color: var(--text-2);
+            line-height: 1.75;
+        }
+
+        .intro-sub + .intro-sub { margin-top: 16px; }
+
+        /* ── Media Row (app preview video + screenshots, one 4-up set) ── */
+        .media-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .media-cell {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--bg-subtle);
+        }
+
+        .media-cell video,
+        .media-cell img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            object-fit: cover;
+        }
+
+        .media-cell--video {
+            border-color: var(--accent);
+        }
+
+        .mute-toggle {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            z-index: 1;
+            width: 28px;
+            height: 28px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.15);
+            color: #e8e8e8;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mute-toggle svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        .media-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #ffffff;
+            background: var(--accent);
+            padding: 4px 8px;
+            border-radius: 100px;
+        }
+
+        /* ── Feature Sections ── */
+        .feature-section { padding: 72px 0; }
+
+        .feature-section::before {
+            content: '';
+            display: block;
+            width: 30%;
+            height: 1px;
+            background: var(--border);
+            margin-bottom: 32px;
+        }
+
+        .feature-label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 20px;
+        }
+
+        .feature-heading {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.25;
+            color: var(--text);
+            margin-bottom: 20px;
+            word-break: keep-all;
+        }
+
+        .feature-body {
+            font-size: 17px;
+            font-weight: 400;
+            color: var(--text-2);
+            line-height: 1.7;
+        }
+
+        .feature-section--with-image {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 48px;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .feature-section--with-image { grid-template-columns: 1fr; }
+            .feature-section--with-image .media-cell {
+                max-width: 240px;
+                margin: 0 auto;
+            }
+        }
+
+        /* ── Support ── */
+        .support-links {
+            font-size: 15px;
+            color: var(--text-2);
+            line-height: 2;
+        }
+
+        .support-links a {
+            color: var(--text);
+            text-decoration: none;
+            border-bottom: 1px solid var(--border);
+            transition: border-color 0.15s;
+        }
+
+        .support-links a:hover { border-color: var(--text); }
+
+        .support-divider {
+            color: var(--border);
+            margin: 0 12px;
+        }
+
+        /* ── Footer ── */
+        footer {
+            margin-top: 120px;
+            padding: 32px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-copy {
+            font-size: 13px;
+            color: var(--text-3);
+        }
+
+        .footer-links { display: flex; align-items: center; gap: 24px; }
+
+        .footer-links-group { display: flex; gap: 24px; }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--text-3);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .footer-links a:hover { color: var(--text); }
+
+        .footer-sep {
+            color: var(--text-3);
+            font-size: 16px;
+            opacity: 0.7;
+            user-select: none;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            nav { padding: 0 20px; }
+            .container { padding: 0 20px; }
+            .hero { padding: 56px 20px; }
+            .hero-title { font-size: clamp(40px, 15vw, 64px); }
+
+            .intro-text { font-size: clamp(28px, 9vw, 48px); }
+
+            .feature-heading { font-size: 26px; }
+
+            .media-row {
+                display: flex;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                margin: 0 -20px;
+                padding: 0 20px 4px;
+            }
+
+            .media-row::-webkit-scrollbar { display: none; }
+
+            .media-cell {
+                flex: 0 0 auto;
+                width: calc((100vw - 56px) / 1.1);
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .footer-sep { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="unlisted-bar">
+        <span class="lang-ko">비공개 리뷰 페이지 — 검색 노출 없음 (noindex)</span>
+        <span class="lang-en">Unlisted review page — not indexed by search engines</span>
+    </div>
+
+    <nav>
+        <a href="index.html" class="nav-back">10minute.studio</a>
+        <button type="button" class="lang-toggle" id="lang-toggle-btn" onclick="toggleLang()">한글</button>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero">
+        <div class="container">
+            <p class="hero-meta">GAMEx002 <span>·</span> Casual <span>·</span> iOS <span>·</span> Coming Soon</p>
+            <h1 class="hero-title">Tiny Cloud</h1>
+            <p class="hero-tagline">
+                <span class="lang-ko">작은 물방울의 조용한 여정을 담은 힐링 게임입니다.</span>
+                <span class="lang-en">One small droplet. One quiet, healing journey.</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- Intro hook -->
+        <section class="section">
+            <div class="lang-ko">
+                <p class="intro-text">작은 물방울의 여정에<br>함께 하세요.</p>
+                <p class="intro-sub">Tiny Cloud에서 당신은 작은 물방울이 됩니다. 주변의 물방울을 머금으며 자라, 조금씩 더 넓은 세계로 흘러갑니다. 거미줄에 이슬을 걸고, 개미의 갈증을 달래고, 씨앗을 적십니다. 여정이 이어질수록 넓은 세상의 메마른 강을 채우고 새들의 보금자리가 됩니다. 실패도 시간제한도 없으니, 서두를 이유가 없습니다. 여정이 짧아도 길어도 닿는 곳은 하나입니다. 어느새 당신은 비가 되어, 세상을 적십니다.</p>
+            </div>
+            <div class="lang-en">
+                <p class="intro-text">Come along on<br>a small droplet's journey.</p>
+                <p class="intro-sub">In Tiny Cloud, you are a small water droplet. You gather the droplets around you and grow, drifting toward ever wider worlds.</p>
+                <p class="intro-sub">Along the way, you hang dew on a spiderweb, ease an ant's thirst, wet a seed. And the farther you go, the wider your reach — filling a parched river, becoming a home for birds out in the wider world. No failure, no timer, no reason to hurry. Long or short, every journey arrives at the same place — before you know it, you have become the rain that waters the world.</p>
+            </div>
+        </section>
+
+        <!-- Media set: app preview video + screenshots 1, 2, 5 (storyboard order, md v2.28 기준) -->
+        <section class="section">
+            <div class="media-row">
+                <div class="media-cell media-cell--video">
+                    <span class="media-badge">PREVIEW</span>
+                    <video id="preview-video" src="assets/videos/Tiny_Cloud_review.mp4" autoplay muted loop playsinline></video>
+                    <button type="button" class="mute-toggle" id="mute-toggle-btn" onclick="toggleMute()" aria-label="Toggle sound">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="4 9 8 9 12 5 12 19 8 15 4 15 4 9"/><line x1="16" y1="9" x2="22" y2="15"/><line x1="22" y1="9" x2="16" y2="15"/></svg>
+                    </button>
+                </div>
+                <div class="media-cell">
+                    <img src="assets/images/tinycloud_screen_01_intro.png" alt="Tiny Cloud Screenshot 1 - Intro">
+                </div>
+                <div class="media-cell">
+                    <img class="lang-ko" src="assets/images/tinycloud_screen_02_ant_ko.png" alt="Tiny Cloud Screenshot 2 - Thirsty Ant">
+                    <img class="lang-en" src="assets/images/tinycloud_screen_02_ant_en.png" alt="Tiny Cloud Screenshot 2 - Thirsty Ant">
+                </div>
+                <div class="media-cell">
+                    <img class="lang-ko" src="assets/images/tinycloud_screen_04_marsh_ko.png" alt="Tiny Cloud zone 3 - marsh">
+                    <img class="lang-en" src="assets/images/tinycloud_screen_04_marsh_en.png" alt="Tiny Cloud zone 3 - marsh">
+                </div>
+            </div>
+        </section>
+
+        <!-- Who it's for -->
+        <div class="feature-section">
+            <span class="feature-label lang-ko">오늘 하루 어땠나요?</span>
+            <span class="feature-label lang-en">How was your day?</span>
+            <div class="lang-ko">
+                <h2 class="feature-heading">지친 하루를<br>포근함으로 채우세요.</h2>
+                <p class="feature-body">도파민을 노리는 피드, 자극적인 AI, 끝없는 쇼츠. 신경을 잡아끄는 세상에서 잠시 벗어나고 싶다면, 종이에 그린 듯한 그래픽과 차분한 사운드 속으로 들어오세요. 지하철 한 정거장, 커피를 기다리며, 그리고 잠들기 전 — 하루의 작은 틈이면 충분합니다.</p>
+            </div>
+            <div class="lang-en">
+                <h2 class="feature-heading">Fill a long day<br>with a little warmth.</h2>
+                <p class="feature-body">Dopamine-driven feeds, attention-hungry AI, endless short-form video. If you want to step away from a world that keeps grabbing at you, step into a quieter one — drawn as if by hand on paper, carried by soft sound.</p>
+                <p class="feature-body">One subway stop, the wait for a coffee, and before sleep: a small gap in a long day is all it takes.</p>
+            </div>
+        </div>
+
+        <!-- Feature 1 (with image) -->
+        <div class="feature-section">
+            <div class="feature-section--with-image">
+                <div>
+                    <span class="feature-label lang-ko">작지만 거대한 여정</span>
+                    <span class="feature-label lang-en">A small drop, a wide world</span>
+                    <div class="lang-ko">
+                        <h2 class="feature-heading">작은 여정에서<br>세상을 만나세요.</h2>
+                        <p class="feature-body">내 곁에서 시작한 여정은 동네로, 자연으로, 그리고 지구로 이어집니다. 골목을 씻고, 메마른 강을 되살리고, 새들의 쉼터가 되기까지 — 작은 물방울 하나가 닿는 곳마다 세상이 조금씩 달라집니다. 길 위에서 만난 친구들은 저마다 들려줄 이야기를 품고 있습니다. "수만 년 잘 참아왔는데, 왜 요즘 눈물이 많아졌을까요?" — 빙하 조각처럼요. 마음이 맞으면 물방울에 올라 함께 길을 갑니다. 그리고 때때로, 낯선 흔적이 곁을 조용히 스쳐 지나갑니다.</p>
+                    </div>
+                    <div class="lang-en">
+                        <h2 class="feature-heading">On a small journey,<br>meet a whole world.</h2>
+                        <p class="feature-body">A journey that starts right beside you reaches the town, then nature, then the earth itself. It washes an alley, revives a dried-up river, becomes a shelter for birds — wherever a single droplet lands, the world shifts a little.</p>
+                        <p class="feature-body">Every friend you meet along the way has a story to tell. "I held on for tens of thousands of years. Why have I been crying so much lately?" — that's the glacier fragment. The ones you take a liking to will climb aboard and travel with you. And now and then, a stranger's trace drifts quietly past.</p>
+                    </div>
+                </div>
+                <div class="media-cell">
+                    <img class="lang-ko" src="assets/images/tinycloud_screen_03_glacier_ko.png" alt="Tiny Cloud glacier fragment collectible">
+                    <img class="lang-en" src="assets/images/tinycloud_screen_03_glacier_en.png" alt="Tiny Cloud glacier fragment collectible">
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 2 (with image) -->
+        <div class="feature-section">
+            <div class="feature-section--with-image">
+                <div>
+                    <span class="feature-label lang-ko">방해받지 않는 시간</span>
+                    <span class="feature-label lang-en">Time with nothing in your way</span>
+                    <div class="lang-ko">
+                        <h2 class="feature-heading">오로지 눈과 귀로<br>여정을 느끼세요.</h2>
+                        <p class="feature-body">눈을 어지럽게 하는 숫자도, 집중해서 읽어야 할 복잡한 메세지도 없습니다. 종이 질감 위에 손으로 그린 듯한 그래픽과 그 위를 잔잔히 물들이는 컬러, 마음을 편하게 만드는 사운드까지. 구간마다 달라지는 그래픽과 사운드로 지금 어디쯤 왔는지 별도의 UI 없이 알려줍니다. 세상을 돌아다니는 내내, 마음을 포근하게 하는 풍경과 빗소리가 곁에 머물러요. 헤드폰을 끼면, 그 세계가 조금 더 가까워져요.</p>
+                    </div>
+                    <div class="lang-en">
+                        <h2 class="feature-heading">Let your eyes and ears<br>carry the journey.</h2>
+                        <p class="feature-body">No numbers to distract you, no dense text to work through. Hand-drawn lines on textured paper, ambient color washing gently over them, sound that puts you at ease. The graphics and sound shift with each zone, telling you how far you've come — no interface needed. Wherever you wander, gentle scenery and the sound of rain stay close beside you. Put on headphones, and the world draws a little nearer.</p>
+                    </div>
+                </div>
+                <div class="media-cell">
+                    <img class="lang-ko" src="assets/images/tinycloud_screen_05_earth_ko.png" alt="Tiny Cloud Screenshot 5 - Ends of the Earth">
+                    <img class="lang-en" src="assets/images/tinycloud_screen_05_earth_en.png" alt="Tiny Cloud Screenshot 5 - Ends of the Earth">
+                </div>
+            </div>
+        </div>
+
+        <!-- Support -->
+        <section class="section">
+            <div class="section-divider">
+                <span class="section-divider-label lang-ko">지원</span>
+                <span class="section-divider-label lang-en">Support</span>
+                <div class="section-divider-line"></div>
+            </div>
+
+            <p class="support-links lang-ko">
+                문의사항이 있으신가요? <a href="contact.html">Contact</a>로 연락주세요.
+                <span class="support-divider">|</span>
+                <a href="privacy.html">Privacy Policy</a>
+            </p>
+            <p class="support-links lang-en">
+                Questions? Reach out via <a href="contact.html">Contact</a>.
+                <span class="support-divider">|</span>
+                <a href="privacy.html">Privacy Policy</a>
+            </p>
+        </section>
+
+    </div>
+
+    <div class="container">
+        <footer>
+            <div class="footer-inner">
+                <p class="footer-copy">© 2025 10minute.studio. All rights reserved.</p>
+                <div class="footer-links">
+                    <div class="footer-links-group">
+                        <a href="index.html">Product</a>
+                        <a href="privacy.html">Privacy</a>
+                        <a href="terms.html">Terms</a>
+                        <a href="contact.html">Contact</a>
+                    </div>
+                    <span class="footer-sep">·</span>
+                    <div class="footer-links-group">
+                        <a href="https://medium.com/@xenologue" target="_blank" rel="noopener" aria-label="개인 블로그 (새 탭에서 열림)">Blog</a>
+                        <a href="https://x.com/thinkbigz" target="_blank" rel="noopener" aria-label="X (새 탭에서 열림)">x.com</a>
+                        <a href="https://www.instagram.com/10minute.studio" target="_blank" rel="noopener" aria-label="Instagram (새 탭에서 열림)">Instagram</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const previewVideo = document.getElementById('preview-video');
+        const muteToggleBtn = document.getElementById('mute-toggle-btn');
+        const iconMuted = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="4 9 8 9 12 5 12 19 8 15 4 15 4 9"/><line x1="16" y1="9" x2="22" y2="15"/><line x1="22" y1="9" x2="16" y2="15"/></svg>';
+        const iconUnmuted = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="4 9 8 9 12 5 12 19 8 15 4 15 4 9"/><path d="M16 8a5 5 0 0 1 0 8"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+
+        function toggleMute() {
+            previewVideo.muted = !previewVideo.muted;
+            muteToggleBtn.innerHTML = previewVideo.muted ? iconMuted : iconUnmuted;
+        }
+
+        const langToggleBtn = document.getElementById('lang-toggle-btn');
+
+        function applyLang(lang) {
+            document.documentElement.setAttribute('data-lang', lang);
+            document.documentElement.setAttribute('lang', lang === 'ko' ? 'ko' : 'en');
+            langToggleBtn.textContent = lang === 'ko' ? 'EN' : '한글';
+        }
+
+        function toggleLang() {
+            const current = document.documentElement.getAttribute('data-lang');
+            const next = current === 'ko' ? 'en' : 'ko';
+            applyLang(next);
+        }
+
+        applyLang(document.documentElement.getAttribute('data-lang') || 'en');
+    </script>
+</body>
+</html>
