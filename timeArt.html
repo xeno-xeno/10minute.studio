@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -103,6 +103,9 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        html[data-lang="ko"] .lang-en { display: none; }
+        html[data-lang="en"] .lang-ko { display: none; }
+
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             background: var(--bg);
@@ -152,6 +155,25 @@
         }
 
         .nav-store-link:hover {
+            color: var(--text);
+            border-color: #c8c8c5;
+        }
+
+        .lang-toggle {
+            display: inline-flex;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-3);
+            background: none;
+            border: 1px solid var(--border);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.15s;
+        }
+
+        .lang-toggle:hover {
             color: var(--text);
             border-color: #c8c8c5;
         }
@@ -728,7 +750,7 @@
 
             .footer-sep { display: none; }
 
-            .nav-store-links { display: none; }
+            .nav-store-links .nav-store-link { display: none; }
         }
     </style>
 </head>
@@ -737,6 +759,7 @@
         <a href="index.html" class="nav-back">10minute.studio</a>
         <div class="nav-store-links">
             <a href="https://apps.apple.com/kr/app/%EB%82%98%EC%9D%98-%EC%8B%9C%EA%B0%84%EC%9D%B4-%EC%98%88%EC%88%A0%EC%9D%B4-%EB%90%9C%EB%8B%A4/id6758903518" class="nav-store-link" onclick="gtag('event','app_store_click',{app_name:'timeart',store:'app_store',location:'nav'})">App Store</a>
+            <button type="button" class="lang-toggle" id="lang-toggle-btn" onclick="toggleLang()">EN</button>
         </div>
     </nav>
 
@@ -744,8 +767,14 @@
     <div class="hero">
         <div class="container">
             <p class="hero-meta">APPx001 <span>·</span> Lifestyle <span>·</span> iOS</p>
-            <h1 class="hero-title">나의 시간이<br>예술이 된다</h1>
-            <p class="hero-tagline">매 시간, 당신의 일상이 예술이 됩니다.</p>
+            <h1 class="hero-title">
+                <span class="lang-ko">나의 시간이<br>예술이 된다</span>
+                <span class="lang-en">My Time<br>Became Art</span>
+            </h1>
+            <p class="hero-tagline">
+                <span class="lang-ko">매 시간, 당신의 일상이 예술이 됩니다.</span>
+                <span class="lang-en">Every hour, your everyday life becomes art.</span>
+            </p>
             <div class="hero-cta">
                 <a href="https://apps.apple.com/kr/app/%EB%82%98%EC%9D%98-%EC%8B%9C%EA%B0%84%EC%9D%B4-%EC%98%88%EC%88%A0%EC%9D%B4-%EB%90%9C%EB%8B%A4/id6758903518" class="cta-btn" onclick="gtag('event','app_store_click',{app_name:'timeart',store:'app_store',location:'hero'})">App Store</a>
             </div>
@@ -757,10 +786,13 @@
         <!-- Intro -->
         <section class="section">
             <p class="intro-text" id="current-time-title"><span class="time-clip"><span class="time-part" id="time-hour"></span></span><span class="time-clip"><span class="time-part" id="time-min"></span></span></p>
-            <p class="intro-sub">당신의 일상적인 시간이 문학, 영화, 음악 속 예술이 됩니다.<br>
+            <p class="intro-sub lang-ko">당신의 일상적인 시간이 문학, 영화, 음악 속 예술이 됩니다.<br>
             지금 이 순간, 누군가는 이미 당신의 시간을 예술로 남겼습니다.<br>
             매 시간마다 예술 작품을 만나보세요.<br><br>
             <strong>'나의 시간이 예술이 된다'</strong>는 시간이 언급된 문학·영화·음악의 순간을 소개하는 <strong>'큐레이션 앱'</strong>입니다.</p>
+            <p class="intro-sub lang-en">Every day, ordinary moments turn into art — drawn from literature, film, and music.<br>
+            Right now, someone has already turned this hour into art. Every one of the day's 1,440 minutes gets a line that fits.<br><br>
+            <strong>'My Time Became Art'</strong> is a <strong>curation app</strong> that gathers lines from literature, film, and music, each one built around a moment in time.</p>
         </section>
 
         <!-- Screenshots -->
@@ -778,10 +810,11 @@
         <!-- Quote Timeline -->
         <section class="section">
             <div class="section-divider">
-                <span class="section-divider-label">지금 몇 시인가요</span>
+                <span class="section-divider-label lang-ko">지금 몇 시인가요</span>
+                <span class="section-divider-label lang-en">What time is it right now?</span>
                 <div class="section-divider-line"></div>
             </div>
-            <ul class="quote-list">
+            <ul class="quote-list lang-ko">
                 <li class="quote-item">
                     <span class="quote-time">자정 00:00</span>
                     <div class="quote-content">
@@ -825,6 +858,50 @@
                     </div>
                 </li>
             </ul>
+            <ul class="quote-list lang-en">
+                <li class="quote-item">
+                    <span class="quote-time">12:00 AM</span>
+                    <div class="quote-content">
+                        <p class="quote-work">Music · BTS</p>
+                        <p class="quote-text">Zero O'Clock</p>
+                    </div>
+                </li>
+                <li class="quote-item">
+                    <span class="quote-time">6:00 AM</span>
+                    <div class="quote-content">
+                        <p class="quote-work">Film · Wong Kar-wai</p>
+                        <p class="quote-text">Chungking Express</p>
+                    </div>
+                </li>
+                <li class="quote-item">
+                    <span class="quote-time">10:31 AM</span>
+                    <div class="quote-content">
+                        <p class="quote-work">Film · Robert Zemeckis</p>
+                        <p class="quote-text">Back to the Future</p>
+                    </div>
+                </li>
+                <li class="quote-item">
+                    <span class="quote-time">5:30 PM</span>
+                    <div class="quote-content">
+                        <p class="quote-work">Novel · Lee Gwang-su</p>
+                        <p class="quote-text">Resurrection</p>
+                    </div>
+                </li>
+                <li class="quote-item">
+                    <span class="quote-time">5:53 PM</span>
+                    <div class="quote-content">
+                        <p class="quote-work">Music · TXT</p>
+                        <p class="quote-text">The Lullaby of Awakening</p>
+                    </div>
+                </li>
+                <li class="quote-item">
+                    <span class="quote-time">11:23 PM</span>
+                    <div class="quote-content">
+                        <p class="quote-work">Drama · Kim Eun-hee</p>
+                        <p class="quote-text">Signal</p>
+                    </div>
+                </li>
+            </ul>
         </section>
 
         <!-- Stats -->
@@ -832,38 +909,60 @@
             <div class="spec-grid">
                 <div class="spec-item">
                     <p class="spec-num" data-count="1700" data-suffix="+">0</p>
-                    <p class="spec-label">소설·영화·음악<br>인용구</p>
+                    <p class="spec-label lang-ko">소설·영화·음악<br>인용구</p>
+                    <p class="spec-label lang-en">Novels · Film · Music<br>Curated Quotes</p>
                 </div>
                 <div class="spec-item">
                     <p class="spec-num" data-count="1440">0</p>
-                    <p class="spec-label">하루 —<br>매분 다른 문장</p>
+                    <p class="spec-label lang-ko">하루 —<br>매분 다른 문장</p>
+                    <p class="spec-label lang-en">A Day —<br>A Different Quote Every Minute</p>
                 </div>
                 <div class="spec-item">
                     <p class="spec-num" data-count="3">0</p>
-                    <p class="spec-label">카테고리 —<br>소설 · 한국고전 · 영화-음악</p>
+                    <p class="spec-label lang-ko">카테고리 —<br>소설 · 한국고전 · 영화-음악</p>
+                    <p class="spec-label lang-en">Categories —<br>Novel · Korean Classics · Film & Music</p>
                 </div>
             </div>
         </section>
 
         <!-- Feature 1 -->
         <div class="feature-section">
-            <span class="feature-label">특별한 공간</span>
-            <h2 class="feature-heading">"1955년 11월 2일 10시 4분!<br>번개가 시계탑을 칠 거야!"</h2>
-            <p class="feature-body">시간의 단순한 숫자표시가 아닌, 그 시간 자체가 하나의 사건이 되는 순간.<br>
-            한글의 감성으로 표현되는 소설·영화·음악 속 문장이 매 분 이 시간을 채웁니다.<br><br>
-            집에서, 직장에서, 카페에서, 서점에서.<br>
-            숫자로 가득한 공간에 문학과 예술의 언어로 시간이 흐른다면, 그 공간은 특별하게 변할 것입니다.</p>
+            <span class="feature-label lang-ko">특별한 공간</span>
+            <span class="feature-label lang-en">A Special Space</span>
+            <div class="lang-ko">
+                <h2 class="feature-heading">"1955년 11월 2일 10시 4분!<br>번개가 시계탑을 칠 거야!"</h2>
+                <p class="feature-body">시간의 단순한 숫자표시가 아닌, 그 시간 자체가 하나의 사건이 되는 순간.<br>
+                한글의 감성으로 표현되는 소설·영화·음악 속 문장이 매 분 이 시간을 채웁니다.<br><br>
+                집에서, 직장에서, 카페에서, 서점에서.<br>
+                숫자로 가득한 공간에 문학과 예술의 언어로 시간이 흐른다면, 그 공간은 특별하게 변할 것입니다.</p>
+            </div>
+            <div class="lang-en">
+                <h2 class="feature-heading">"November 2, 1955, 10:04 —<br>lightning's about to strike the clock tower!"</h2>
+                <p class="feature-body">Every minute is an event — not just a number on a clock.<br>
+                Lines from novels, films, and music fill this very moment, minute by minute — each one chosen for how it feels.<br><br>
+                At home, at work, in a café, in a bookstore —<br>
+                wherever plain digits give way to art, that space becomes something special.</p>
+            </div>
         </div>
 
         <!-- Feature 2 -->
         <div class="feature-section">
             <div class="feature-section--with-image">
                 <div>
-                    <span class="feature-label">문학시계</span>
-                    <h2 class="feature-heading">1,700여개의 문학 인용구가<br>하루를 채웁니다.</h2>
-                    <p class="feature-body">소설, 한국고전, 영화·드라마·음악. 하루 1,440분을 채우는 인용구.<br>
-                    Find Hour... 비어있는 시간도 존재합니다.<br><br>
-                    채워지지 않은 시간은 앞으로 꾸준히 채워나갈 시간입니다.</p>
+                    <span class="feature-label lang-ko">문학시계</span>
+                    <span class="feature-label lang-en">Literary Clock</span>
+                    <div class="lang-ko">
+                        <h2 class="feature-heading">1,700여개의 문학 인용구가<br>하루를 채웁니다.</h2>
+                        <p class="feature-body">소설, 한국고전, 영화·드라마·음악. 하루 1,440분을 채우는 인용구.<br>
+                        Find Hour... 비어있는 시간도 존재합니다.<br><br>
+                        채워지지 않은 시간은 앞으로 꾸준히 채워나갈 시간입니다.</p>
+                    </div>
+                    <div class="lang-en">
+                        <h2 class="feature-heading">1,700 lines, curated<br>from thousands of works.</h2>
+                        <p class="feature-body">We picked lines from novels, Korean classics, film, drama, and music to fill all 1,440 minutes of the day.<br>
+                        Find Hour... a few minutes are still waiting to be filled.<br><br>
+                        With the lines and strokes of Hangul, more quotes will fill your time, one by one.</p>
+                    </div>
                 </div>
                 <img class="feature-image" src="assets/images/timeart_literary_feature.jpg" alt="나의 시간이 예술이 된다 문학시계">
             </div>
@@ -873,11 +972,20 @@
         <div class="feature-section">
             <div class="feature-section--with-image">
                 <div>
-                    <span class="feature-label">홈화면 · 잠금화면 · 스탠바이</span>
-                    <h2 class="feature-heading">어디서든,<br>지금 이 순간.</h2>
-                    <p class="feature-body">홈화면 위젯·잠금화면 위젯·스탠바이 모드를 모두 지원합니다.<br>
-                    아이패드 디스플레이로도 즐길 수 있습니다.<br><br>
-                    다크·라이트 모드, 원하는 폰트로 나만의 감성을 설정하세요.</p>
+                    <span class="feature-label lang-ko">홈화면 · 잠금화면 · 스탠바이</span>
+                    <span class="feature-label lang-en">Home Screen · Lock Screen · StandBy</span>
+                    <div class="lang-ko">
+                        <h2 class="feature-heading">어디서든,<br>지금 이 순간.</h2>
+                        <p class="feature-body">홈화면 위젯·잠금화면 위젯·스탠바이 모드를 모두 지원합니다.<br>
+                        아이패드 디스플레이로도 즐길 수 있습니다.<br><br>
+                        다크·라이트 모드, 원하는 폰트로 나만의 감성을 설정하세요.</p>
+                    </div>
+                    <div class="lang-en">
+                        <h2 class="feature-heading">Anywhere,<br>right this moment.</h2>
+                        <p class="feature-body">Home screen widgets, lock screen widgets, and StandBy mode — all supported.<br>
+                        Works beautifully on your iPad display, too.<br><br>
+                        Make it yours with dark or light mode and a font that fits your mood.</p>
+                    </div>
                 </div>
                 <img class="feature-image" src="assets/images/timeart_widget_feature.jpg" alt="나의 시간이 예술이 된다 홈화면 위젯">
             </div>
@@ -887,11 +995,20 @@
         <div class="feature-section">
             <div class="feature-section--with-image">
                 <div>
-                    <span class="feature-label">카테고리 · 공유</span>
-                    <h2 class="feature-heading">나의 취향으로<br>채우는 시간.</h2>
-                    <p class="feature-body">소설 / 한국고전 / 영화·음악 — 원하는 카테고리만 골라 표시할 수 있습니다.<br>
-                    마음에 드는 문장은 이미지로 저장하고 공유하세요.<br><br>
-                    오프라인에서도 완벽하게 작동합니다.</p>
+                    <span class="feature-label lang-ko">카테고리 · 공유</span>
+                    <span class="feature-label lang-en">Categories · Sharing</span>
+                    <div class="lang-ko">
+                        <h2 class="feature-heading">나의 취향으로<br>채우는 시간.</h2>
+                        <p class="feature-body">소설 / 한국고전 / 영화·음악 — 원하는 카테고리만 골라 표시할 수 있습니다.<br>
+                        마음에 드는 문장은 이미지로 저장하고 공유하세요.<br><br>
+                        오프라인에서도 완벽하게 작동합니다.</p>
+                    </div>
+                    <div class="lang-en">
+                        <h2 class="feature-heading">Fill your time<br>with your own taste.</h2>
+                        <p class="feature-body">Novel / Korean Classics / Film & Music — show only the categories you like.<br>
+                        Save your favorite lines as images and share them.<br><br>
+                        Works perfectly offline, too.</p>
+                    </div>
                 </div>
                 <img class="feature-image" src="assets/images/timeart_standby_feature.png" alt="나의 시간이 예술이 된다 스탠바이 모드">
             </div>
@@ -899,8 +1016,9 @@
 
         <!-- What's included -->
         <div class="feature-section">
-            <span class="feature-label">주요기능</span>
-            <ol class="how-list">
+            <span class="feature-label lang-ko">주요기능</span>
+            <span class="feature-label lang-en">Key Features</span>
+            <ol class="how-list lang-ko">
                 <li class="how-item"><span class="how-num">·</span><p class="how-text">소설 / 한국고전 / 영화·음악 인용구</p></li>
                 <li class="how-item"><span class="how-num">·</span><p class="how-text">홈화면·잠금화면 위젯 지원</p></li>
                 <li class="how-item"><span class="how-num">·</span><p class="how-text">스탠바이 모드 지원</p></li>
@@ -909,12 +1027,22 @@
                 <li class="how-item"><span class="how-num">·</span><p class="how-text">인용구 이미지 저장 및 공유</p></li>
                 <li class="how-item"><span class="how-num">·</span><p class="how-text">오프라인 완벽 지원</p></li>
             </ol>
+            <ol class="how-list lang-en">
+                <li class="how-item"><span class="how-num">·</span><p class="how-text">1,700+ curated quotes from novels, Korean classics, and film & music</p></li>
+                <li class="how-item"><span class="how-num">·</span><p class="how-text">Home screen & Lock screen widget support</p></li>
+                <li class="how-item"><span class="how-num">·</span><p class="how-text">StandBy mode support</p></li>
+                <li class="how-item"><span class="how-num">·</span><p class="how-text">Filter quotes by category</p></li>
+                <li class="how-item"><span class="how-num">·</span><p class="how-text">Dark & Light mode / Font selection</p></li>
+                <li class="how-item"><span class="how-num">·</span><p class="how-text">Save and share quotes as images</p></li>
+                <li class="how-item"><span class="how-num">·</span><p class="how-text">Fully offline</p></li>
+            </ol>
         </div>
 
         <!-- Instagram CTA -->
         <div class="feature-section">
             <p class="instagram-eyebrow">Follow</p>
-            <p style="font-size:22px; font-weight:700; letter-spacing:-0.02em; margin-bottom:0;">지금 이 순간의 문장, 인스타에서 이어집니다</p>
+            <p class="lang-ko" style="font-size:22px; font-weight:700; letter-spacing:-0.02em; margin-bottom:0;">지금 이 순간의 문장, 인스타에서 이어집니다</p>
+            <p class="lang-en" style="font-size:22px; font-weight:700; letter-spacing:-0.02em; margin-bottom:0;">The line for this moment continues on Instagram</p>
             <a href="https://www.instagram.com/10minute.studio" target="_blank" rel="noopener" class="instagram-cta" aria-label="Instagram에서 10minute.studio 팔로우 (새 탭에서 열림)">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
                 @10minute.studio
@@ -925,8 +1053,10 @@
         <section class="section">
             <div class="download-section">
                 <p class="download-label">Download</p>
-                <h2 class="download-title">나의 시간이 예술이 된다</h2>
-                <p class="download-subtitle">매 시간, 당신의 일상이 예술이 됩니다.</p>
+                <h2 class="download-title lang-ko">나의 시간이 예술이 된다</h2>
+                <h2 class="download-title lang-en">My Time Became Art</h2>
+                <p class="download-subtitle lang-ko">매 시간, 당신의 일상이 예술이 됩니다.</p>
+                <p class="download-subtitle lang-en">Every hour, your everyday life becomes art.</p>
                 <div class="download-btns">
                     <a href="https://apps.apple.com/kr/app/%EB%82%98%EC%9D%98-%EC%8B%9C%EA%B0%84%EC%9D%B4-%EC%98%88%EC%88%A0%EC%9D%B4-%EB%90%9C%EB%8B%A4/id6758903518" class="cta-btn" onclick="gtag('event','app_store_click',{app_name:'timeart',store:'app_store',location:'download'})">App Store</a>
                 </div>
@@ -936,19 +1066,30 @@
         <!-- Support -->
         <section class="section">
             <div class="section-divider">
-                <span class="section-divider-label">지원</span>
+                <span class="section-divider-label lang-ko">지원</span>
+                <span class="section-divider-label lang-en">Support</span>
                 <div class="section-divider-line"></div>
             </div>
 
-            <p class="support-links">
+            <p class="support-links lang-ko">
                 문의사항이 있으신가요? <a href="contact.html">Contact</a>로 연락주세요.
                 <span class="support-divider">|</span>
                 <a href="privacy.html">Privacy Policy</a>
                 <span class="support-divider">|</span>
                 <a href="terms.html">Terms of Service</a>
             </p>
-            <p style="font-size: 12px; color: var(--text-3); margin-top: 16px; line-height: 1.6;">
+            <p class="support-links lang-en">
+                Questions? Reach out via <a href="contact.html">Contact</a>.
+                <span class="support-divider">|</span>
+                <a href="privacy.html">Privacy Policy</a>
+                <span class="support-divider">|</span>
+                <a href="terms.html">Terms of Service</a>
+            </p>
+            <p class="lang-ko" style="font-size: 12px; color: var(--text-3); margin-top: 16px; line-height: 1.6;">
                 본 앱은 문학·영화·음악 작품에서 시간이 언급된 짧은 구절을 출처와 함께 소개합니다. 저작권자의 요청 시 즉시 삭제 조치합니다. 문의: <a href="contact.html" style="color: var(--text-3); border-bottom: 1px solid var(--border);">Contact</a>
+            </p>
+            <p class="lang-en" style="font-size: 12px; color: var(--text-3); margin-top: 16px; line-height: 1.6;">
+                This app shares short excerpts — with their sources — from literary, film, and music works that mention a specific time. If a copyright holder asks us to, we'll remove it right away. Inquiries: <a href="contact.html" style="color: var(--text-3); border-bottom: 1px solid var(--border);">Contact</a>
             </p>
         </section>
 
@@ -978,6 +1119,7 @@
     <script>
         let _prevH = -1;
         let _prevM = -1;
+        let _prevLang = null;
 
         function reflip(el, delay) {
             el.classList.remove('flip');
@@ -990,23 +1132,34 @@
             const now = new Date();
             const h = now.getHours();
             const m = now.getMinutes();
-            const period = h < 6 ? '새벽' : h < 12 ? '오전' : h < 18 ? '오후' : '밤';
+            const lang = document.documentElement.getAttribute('data-lang') || 'ko';
             const h12 = h % 12 === 0 ? 12 : h % 12;
             const hourEl = document.getElementById('time-hour');
             const minEl = document.getElementById('time-min');
 
-            if (h !== _prevH) {
-                if (hourEl) { hourEl.textContent = `${period} ${h12}시`; reflip(hourEl); }
+            const hourText = lang === 'ko'
+                ? `${h < 6 ? '새벽' : h < 12 ? '오전' : h < 18 ? '오후' : '밤'} ${h12}시`
+                : `${h12}`;
+            const minText = lang === 'ko'
+                ? (m === 0 ? '' : ` ${m}분`)
+                : `:${String(m).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`;
+            const minFlips = lang === 'ko' ? m !== 0 : true;
+
+            const langChanged = lang !== _prevLang;
+
+            if (h !== _prevH || langChanged) {
+                if (hourEl) { hourEl.textContent = hourText; reflip(hourEl); }
                 _prevH = h;
             }
-            if (m !== _prevM) {
+            if (m !== _prevM || langChanged) {
                 if (minEl) {
-                    minEl.textContent = m === 0 ? '' : ` ${m}분`;
-                    if (m !== 0) reflip(minEl, isInit ? 280 : 0);
+                    minEl.textContent = minText;
+                    if (minFlips) reflip(minEl, isInit ? 280 : 0);
                     else minEl.classList.remove('flip');
                 }
                 _prevM = m;
             }
+            _prevLang = lang;
         }
 
         // ── Count-up animation ──
@@ -1041,6 +1194,24 @@
         document.querySelectorAll('.spec-num[data-count]').forEach(function (el) {
             observer.observe(el);
         });
+
+        // ── Language toggle ──
+        const langToggleBtn = document.getElementById('lang-toggle-btn');
+
+        function applyLang(lang) {
+            document.documentElement.setAttribute('data-lang', lang);
+            document.documentElement.setAttribute('lang', lang === 'ko' ? 'ko' : 'en');
+            langToggleBtn.textContent = lang === 'ko' ? 'EN' : '한글';
+            updateTime(false);
+        }
+
+        function toggleLang() {
+            const current = document.documentElement.getAttribute('data-lang');
+            const next = current === 'ko' ? 'en' : 'ko';
+            applyLang(next);
+        }
+
+        applyLang(document.documentElement.getAttribute('data-lang') || 'ko');
 
         updateTime(true);
 
