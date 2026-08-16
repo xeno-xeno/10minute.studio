@@ -53,8 +53,12 @@
           "description": "지하철 한 정거장, 커피 한 잔이 나오는 동안 즐길 수 있는 작은 앱들을 만드는 인디 개발 스튜디오",
           "logo": "https://xeno-xeno.github.io/10minute.studio/assets/images/timeart_icon.png",
           "sameAs": [
+            "https://www.instagram.com/10minute.studio",
+            "https://x.com/thinkbigz",
+            "https://medium.com/@xenologue",
             "https://apps.apple.com/us/app/fever2048/id6753706909",
-            "https://play.google.com/store/apps/details?id=com.tenminutestudio.fever2048.AOS"
+            "https://play.google.com/store/apps/details?id=com.tenminutestudio.fever2048.AOS",
+            "https://apps.apple.com/kr/app/%EB%82%98%EC%9D%98-%EC%8B%9C%EA%B0%84%EC%9D%B4-%EC%98%88%EC%88%A0%EC%9D%B4-%EB%90%9C%EB%8B%A4/id6758903518"
           ]
         },
         {
@@ -66,19 +70,55 @@
         },
         {
           "@type": "ItemList",
-          "name": "10minute.studio 게임 목록",
+          "name": "10minute.studio 앱·게임 목록",
           "itemListElement": [
             {
               "@type": "ListItem",
               "position": 1,
               "item": {
                 "@type": "MobileApplication",
+                "name": "나의 시간이 예술이 된다",
+                "alternateName": ["My Time Became Art", "문학시계"],
+                "description": "소설·한국고전·영화·드라마·음악 속 문장으로 현재 시각을 알려주는 문학시계 앱. 1,700개 이상의 인용구가 하루 1,440분을 채웁니다.",
+                "url": "https://xeno-xeno.github.io/10minute.studio/timeArt.html",
+                "image": "https://xeno-xeno.github.io/10minute.studio/assets/images/timeart_icon.png",
+                "applicationCategory": "LifestyleApplication",
+                "operatingSystem": ["iOS"],
+                "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+                "author": { "@id": "https://xeno-xeno.github.io/10minute.studio/#organization" }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "VideoGame",
                 "name": "FEVER2048",
-                "description": "파워카드 시스템의 새로운 2048 퍼즐 게임",
+                "description": "원조 2048에 파워카드 시스템을 더한 변형 퍼즐 게임. 레벨업마다 12종 파워카드 중 1장을 선택하고, 피버모드로 점수를 폭발시킵니다.",
                 "url": "https://xeno-xeno.github.io/10minute.studio/fever2048.html",
                 "image": "https://xeno-xeno.github.io/10minute.studio/assets/images/fever2048_icon.png",
                 "applicationCategory": "GameApplication",
-                "operatingSystem": "iOS, Android",
+                "genre": ["Puzzle", "Casual"],
+                "operatingSystem": ["iOS", "Android"],
+                "gamePlatform": ["iOS", "Android"],
+                "playMode": "SinglePlayer",
+                "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+                "author": { "@id": "https://xeno-xeno.github.io/10minute.studio/#organization" }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                "@type": "VideoGame",
+                "name": "Tiny Cloud",
+                "description": "작은 물방울의 조용한 여정을 담은 힐링 캐주얼 게임. 실패도 시간제한도 없습니다.",
+                "image": "https://xeno-xeno.github.io/10minute.studio/assets/images/next_prj.png",
+                "applicationCategory": "GameApplication",
+                "genre": ["Casual"],
+                "operatingSystem": ["iOS"],
+                "gamePlatform": ["iOS"],
+                "playMode": "SinglePlayer",
                 "author": { "@id": "https://xeno-xeno.github.io/10minute.studio/#organization" }
               }
             }
