@@ -1,1 +1,4 @@
 Claude-Code-Usage-Monitor/
+
+# Claude Code 기기별 로컬 설정 (권한 허용 목록 등) — 공유 설정은 .claude/settings.json
+.claude/settings.local.json
