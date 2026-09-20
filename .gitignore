@@ -2,3 +2,7 @@ Claude-Code-Usage-Monitor/
 
 # Claude Code 기기별 로컬 설정 (권한 허용 목록 등) — 공유 설정은 .claude/settings.json
 .claude/settings.local.json
+
+# 내부 작업 문서 (공개 레포 — 커밋 금지)
+claude.md
+issue.md
