@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" id="tc" content="#f4f6f9">
+<script>try{const t=localStorage.getItem('pension-alchemist:theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;}catch(e){}</script>
+<title>퇴직 연금술사 · 연금 계산기 모음 | 10minute.studio</title>
+<meta name="description" content="퇴직금·DC·IRP·연금저축을 한 솥에 녹여 월 실수령액으로 바꿔주는 퇴직 연금술사. 법정 인출순서와 세법상 한도를 그대로 적용한 연금 계산기를 모았습니다. 2026년 개정 세법 기준.">
+<link rel="canonical" href="https://xeno-xeno.github.io/10minute.studio/pension/">
+<meta property="og:title" content="퇴직 연금술사 · 연금 계산기 모음 | 10minute.studio">
+<meta property="og:description" content="퇴직금·DC·IRP·연금저축을 한 솥에 녹여 월 실수령액으로 바꿔주는 연금 계산기 모음.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="https://xeno-xeno.github.io/10minute.studio/pension/">
+<meta property="og:site_name" content="10minute.studio">
+<meta property="og:image" content="https://xeno-xeno.github.io/10minute.studio/assets/images/pension_hero.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="800">
+<meta name="robots" content="index, follow">
+<style>
+:root{color-scheme:light dark;
+  --bg:#f4f6f9;--surface2:#eef1f5;--card:#ffffff;--text:#161a20;--text2:#454c56;--muted:#66707c;
+  --line:rgba(20,32,52,.14);--line-soft:rgba(20,32,52,.08);
+  --blue:#1b4f9c;--blue-soft:#eaf1fb;--on-blue:#ffffff;}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0d1014;--surface2:#232830;--card:#171b21;--text:#eef1f5;--text2:#c5cbd3;--muted:#98a1ad;
+  --line:rgba(255,255,255,.16);--line-soft:rgba(255,255,255,.09);
+  --blue:#7db2ff;--blue-soft:rgba(125,178,255,.14);--on-blue:#0d1014;}}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#0d1014;--surface2:#232830;--card:#171b21;--text:#eef1f5;--text2:#c5cbd3;--muted:#98a1ad;
+  --line:rgba(255,255,255,.16);--line-soft:rgba(255,255,255,.09);
+  --blue:#7db2ff;--blue-soft:rgba(125,178,255,.14);--on-blue:#0d1014;}
+:root[data-theme="light"]{color-scheme:light;}
+@media(prefers-contrast:more){:root{--line:rgba(0,0,0,.5);--line-soft:rgba(0,0,0,.35);--muted:#404040;}}
+@media(prefers-contrast:more) and (prefers-color-scheme:dark){:root:not([data-theme="light"]){--line:rgba(255,255,255,.6);--line-soft:rgba(255,255,255,.4);--muted:#d0d0d4;}}
+@media(prefers-contrast:more){:root[data-theme="dark"]{--line:rgba(255,255,255,.6);--line-soft:rgba(255,255,255,.4);--muted:#d0d0d4;}}
+.theme-anim,.theme-anim *{transition:background-color .25s ease,color .25s ease,border-color .25s ease!important;}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);-webkit-text-size-adjust:100%;line-height:1.5;word-break:keep-all;overflow-wrap:break-word;}
+.wrap{max-width:720px;margin:0 auto;padding:.75rem 1rem 3rem;}
+.brandbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;}
+.brandbar a{font-size:.8125rem;color:var(--muted);text-decoration:none;}
+.brandbar a:hover{color:var(--text);}
+.themebtn{flex:none;width:44px;height:44px;margin:-8px -10px -8px 0;display:grid;place-items:center;border:0;border-radius:50%;background:none;color:var(--text2);cursor:pointer;transition:background-color .15s ease,transform .1s ease-out;}
+.themebtn:hover{background:var(--line-soft);}
+.themebtn:active{transform:scale(.92);}
+.themebtn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+.banner{margin:0;border-radius:16px;overflow:hidden;border:.5px solid var(--line);background:var(--card);}
+.banner img{display:block;width:100%;height:auto;}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .banner img{filter:brightness(.88);}}
+:root[data-theme="dark"] .banner img{filter:brightness(.88);}
+.hero{padding:1.25rem 0 1.25rem;}
+h1{font-size:clamp(1.75rem,7vw,2.25rem);font-weight:700;letter-spacing:-.02em;line-height:1.15;margin-bottom:.6rem;}
+.lead{font-size:1rem;color:var(--text2);line-height:1.6;}
+.asof{font-size:.75rem;color:var(--muted);margin-top:.7rem;}
+h2{font-size:1.0625rem;font-weight:700;margin:1.6rem 0 .7rem;}
+
+.cards{list-style:none;display:grid;gap:.75rem;}
+.card{background:var(--card);border:.5px solid var(--line);border-radius:14px;padding:1.1rem 1.25rem;display:flex;flex-direction:column;align-items:flex-start;gap:.35rem;}
+.card h3{font-size:1rem;font-weight:600;}
+.card p{font-size:.875rem;color:var(--text2);line-height:1.6;}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 1.3rem;margin-top:.5rem;border-radius:10px;background:var(--blue);color:var(--on-blue);font-size:.9375rem;font-weight:600;text-decoration:none;transition:transform .1s ease-out;}
+.btn:active{transform:scale(.97);}
+.card.soon{opacity:.75;}
+.card.soon .btn{background:transparent;color:var(--muted);border:.5px solid var(--line);}
+
+.points{list-style:none;display:grid;gap:.6rem;}
+.points li{background:var(--card);border:.5px solid var(--line);border-radius:14px;padding:.8rem 1rem;font-size:.875rem;color:var(--text2);line-height:1.6;}
+.points b{color:var(--text);font-weight:600;}
+.note{font-size:.8125rem;color:var(--muted);line-height:1.6;margin-top:1.4rem;}
+footer{margin-top:2rem;padding-top:1rem;border-top:.5px solid var(--line-soft);font-size:.8125rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:.4rem 1rem;}
+footer a{color:var(--muted);text-decoration:none;}
+footer a:hover{color:var(--text);}
+
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="brandbar"><a href="https://xeno-xeno.github.io/10minute.studio/">⏱️ 10minute.studio</a><button type="button" class="themebtn" id="themebtn" aria-label="다크 모드로 전환"></button></div>
+
+<figure class="banner">
+  <img src="../assets/images/pension_hero.jpg" width="1200" height="800" fetchpriority="high" alt="파란 마법사 모자를 쓴 노인 연금술사가 황금빛 플라스크에 물약을 떨어뜨리는 일러스트. 책상 위에는 안정성·수익성·노후생활비 병과 퇴직연금·자산배분·세제혜택·장기투자 책이 놓여 있다.">
+</figure>
+
+<header class="hero">
+  <h1>퇴직 연금술사</h1>
+  <p class="lead">퇴직금·연금저축·IRP를 한 솥에 넣으면, 세금과 한도 규칙을 그대로 적용해 매달 손에 들어오는 돈을 알려드립니다.</p>
+  <p class="asof">2026년 1월 1일 시행 세법 기준</p>
+</header>
+
+<main>
+  <h2>계산기</h2>
+  <ul class="cards">
+    <li class="card">
+      <h3>연금 수령 계산기</h3>
+      <p>내가 가진 퇴직금·연금저축·IRP로 몇 세부터 몇 세까지 월 얼마를 받을 수 있는지 계산합니다. 단계별 수령액, 세금, 남은 돈이 어떻게 줄어드는지 한눈에 볼 수 있습니다.</p>
+      <a class="btn" href="pension-alchemist.html">계산하기</a>
+    </li>
+    <li class="card soon">
+      <h3>목표 역산 계산기</h3>
+      <p>받고 싶은 월 금액에서 거꾸로, 지금부터 얼마를 준비해야 하는지 계산합니다.</p>
+      <span class="btn" aria-disabled="true">준비 중</span>
+    </li>
+    <li class="card soon">
+      <h3>연금 세금 가이드</h3>
+      <p>연금 수령 시 세금이 어떻게 매겨지는지, 인출 순서와 세율, 연 1,500만원 한도를 정리한 글입니다.</p>
+      <span class="btn" aria-disabled="true">준비 중</span>
+    </li>
+  </ul>
+
+  <h2>이런 점이 다릅니다</h2>
+  <ul class="points">
+    <li><b>한 번에 통합</b> — 퇴직금(DC·DB), 연금저축, IRP를 따로 계산하지 않고 하나의 흐름으로 묶어 계산합니다.</li>
+    <li><b>돈이 나가는 순서를 법대로</b> — 세금 없는 돈, 퇴직금, 세금 혜택을 받은 돈과 수익 순서를 그대로 따릅니다.</li>
+    <li><b>연 1,500만원 한도 반영</b> — 연금을 1년에 1,500만원 넘게 받으면 세금이 크게 달라집니다. 그 차이를 미리 보여줍니다.</li>
+    <li><b>내 브라우저 안에서 계산</b> — 입력한 값은 서버로 전송되지 않습니다.</li>
+  </ul>
+
+  <p class="note">계산 결과는 참고용이며 개별 세무상담을 대신하지 않습니다. 연금 세제는 자주 바뀌므로 각 계산기에 표시된 기준일을 함께 확인해 주세요.</p>
+</main>
+
+<footer>
+  <a href="https://xeno-xeno.github.io/10minute.studio/">10minute.studio</a>
+  <a href="../privacy.html">개인정보처리방침</a>
+  <a href="../terms.html">이용약관</a>
+  <a href="../contact.html">문의</a>
+</footer>
+
+</div>
+
+<script>
+/* 라이트/다크 — 계산기 페이지와 같은 저장 키를 써서 선택이 페이지 간에 이어진다 */
+const THEME_KEY = 'pension-alchemist:theme';
+const darkMQ = matchMedia('(prefers-color-scheme: dark)');
+const ICON_SUN  = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+const ICON_MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+const btn = document.getElementById('themebtn');
+const isDark = () => document.documentElement.dataset.theme
+  ? document.documentElement.dataset.theme === 'dark' : darkMQ.matches;
+function syncThemeUI(){
+  const d = isDark();
+  btn.innerHTML = d ? ICON_SUN : ICON_MOON;
+  btn.setAttribute('aria-label', d ? '라이트 모드로 전환' : '다크 모드로 전환');
+  document.getElementById('tc').content = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
+}
+btn.addEventListener('click', ()=>{
+  const next = isDark() ? 'light' : 'dark';
+  const root = document.documentElement;
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){ root.classList.add('theme-anim'); setTimeout(()=>root.classList.remove('theme-anim'), 300); }
+  root.dataset.theme = next;
+  try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
+  syncThemeUI();
+});
+darkMQ.addEventListener('change', syncThemeUI);
+syncThemeUI();
+</script>
+</body>
+</html>

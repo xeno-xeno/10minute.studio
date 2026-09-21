@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" id="tc" content="#f4f6f9">
+<script>try{const t=localStorage.getItem('pension-alchemist:theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;}catch(e){}</script>
+<title>연금 수령 계산기 (퇴직금·IRP·연금저축) | 퇴직 연금술사</title>
+<meta name="description" content="퇴직금·IRP·연금저축으로 몇 세부터 매달 얼마를 받고 세금은 얼마인지 계산하는 연금수령 계산기. 법정 인출순서와 연 1,500만원 한도를 반영한 2026년 세법 기준.">
+<link rel="canonical" href="https://xeno-xeno.github.io/10minute.studio/pension/pension-alchemist.html">
+<meta property="og:title" content="연금 수령 계산기 (퇴직금·IRP·연금저축) | 퇴직 연금술사">
+<meta property="og:description" content="퇴직금·IRP·연금저축의 월 수령액과 세금을 계산하는 연금수령 계산기. 2026년 세법 기준.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="https://xeno-xeno.github.io/10minute.studio/pension/pension-alchemist.html">
+<meta property="og:site_name" content="10minute.studio">
+<meta name="robots" content="index, follow">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<!-- AdSense: 광고 단위 ID(data-ad-slot)를 발급받아 XXXXXXXXXX 자리에 넣으면 그 슬롯이 켜진다. 발급 전 슬롯은 자리 자체를 만들지 않는다 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2292328325141579" crossorigin="anonymous"></script>
+<style>
+:root{color-scheme:light dark;
+  --bg:#f4f6f9;--surface2:#eef1f5;--card:#ffffff;--text:#161a20;--text2:#454c56;--muted:#66707c;
+  --line:rgba(20,32,52,.14);--line-soft:rgba(20,32,52,.08);
+  --blue:#1b4f9c;--blue-soft:#eaf1fb;--on-blue:#ffffff;
+  --amber:#8a5a0a;--amber-soft:#fff5e0;--green:#0f7a58;--red:#b3261e;--red-soft:#fdeceb;--gray:#8a929c;
+  --info-bg:var(--blue-soft);--info-text:var(--blue);--warn-bg:var(--amber-soft);--chg-bg:var(--amber-soft);--chg-text:var(--amber);}
+/* 다크: 사용자가 라이트를 고르지 않았고 시스템이 다크일 때 + 사용자가 다크를 직접 고른 때 */
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0d1014;--surface2:#232830;--card:#171b21;--text:#eef1f5;--text2:#c5cbd3;--muted:#98a1ad;
+  --line:rgba(255,255,255,.16);--line-soft:rgba(255,255,255,.09);
+  --blue:#7db2ff;--blue-soft:rgba(125,178,255,.14);--on-blue:#0d1014;
+  --amber:#e8b25a;--amber-soft:rgba(232,178,90,.14);--green:#4cd3a4;--red:#ff8f86;--red-soft:rgba(255,143,134,.13);--gray:#8b939e;}}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#0d1014;--surface2:#232830;--card:#171b21;--text:#eef1f5;--text2:#c5cbd3;--muted:#98a1ad;
+  --line:rgba(255,255,255,.16);--line-soft:rgba(255,255,255,.09);
+  --blue:#7db2ff;--blue-soft:rgba(125,178,255,.14);--on-blue:#0d1014;
+  --amber:#e8b25a;--amber-soft:rgba(232,178,90,.14);--green:#4cd3a4;--red:#ff8f86;--red-soft:rgba(255,143,134,.13);--gray:#8b939e;}
+:root[data-theme="light"]{color-scheme:light;}
+@media(prefers-contrast:more){:root{--line:rgba(0,0,0,.5);--line-soft:rgba(0,0,0,.35);--muted:#404040;}}
+@media(prefers-contrast:more) and (prefers-color-scheme:dark){:root:not([data-theme="light"]){--line:rgba(255,255,255,.6);--line-soft:rgba(255,255,255,.4);--muted:#d0d0d4;}}
+@media(prefers-contrast:more){:root[data-theme="dark"]{--line:rgba(255,255,255,.6);--line-soft:rgba(255,255,255,.4);--muted:#d0d0d4;}}
+/* 테마를 바꾸는 순간만 색이 부드럽게 넘어가게 한다 */
+.theme-anim,.theme-anim *{transition:background-color .25s ease,color .25s ease,border-color .25s ease!important;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html.lock{overflow:hidden;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);-webkit-text-size-adjust:100%;line-height:1.5;word-break:keep-all;}
+.page{max-width:760px;margin:0 auto;padding:1.25rem 1rem 3rem;}
+.off{display:none !important;}
+.brandbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;}
+.brandbar a{font-size:.8125rem;color:var(--muted);text-decoration:none;}
+.brandbar a:hover{color:var(--text);}
+/* 이전 버튼 '‹ 퇴직 연금술사'(PC·모바일 공통, 부모=랜딩). 기존 경로 표시는 이 버튼으로 대체한다.
+   이전 페이지가 검색 결과여도 사이트 안에 머물도록 history.back() 대신 링크 */
+.brandbar a.back{display:inline-flex;align-items:center;gap:2px;min-height:44px;margin:-8px 0 -8px -8px;padding:0 10px 0 4px;font-size:.9375rem;font-weight:500;color:var(--blue);border-radius:10px;}
+.back svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+.brandbar a.back:hover{color:var(--blue);background:var(--line-soft);}
+.themebtn{flex:none;width:40px;height:40px;margin:-6px -8px -6px 0;display:grid;place-items:center;border:0;border-radius:50%;background:none;color:var(--text2);cursor:pointer;transition:background-color .15s ease,transform .1s ease-out;}
+.themebtn:hover{background:var(--line-soft);}
+.themebtn:active{transform:scale(.92);}
+.themebtn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+h1{font-size:clamp(1.25rem,4.6vw,1.5rem);font-weight:700;letter-spacing:-.02em;line-height:1.25;margin-bottom:.3rem;}
+.sub{font-size:.875rem;color:var(--text2);}
+.asof{font-size:.75rem;color:var(--muted);margin:.35rem 0 1rem;}
+.asof.stale{color:var(--red);}
+
+/* 탭 */
+.tabs{display:flex;gap:4px;margin-bottom:1rem;border-bottom:.5px solid var(--line);}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;font:inherit;font-size:.9375rem;color:var(--muted);padding:9px 14px;cursor:pointer;margin-bottom:-.5px;}
+.tabs button[aria-selected="true"]{color:var(--blue);font-weight:600;border-bottom-color:var(--blue);}
+
+/* 카드·제목 */
+.card{background:var(--card);border:.5px solid var(--line);border-radius:14px;padding:1.1rem 1.25rem;margin-bottom:1rem;}
+.st{font-size:.8125rem;font-weight:600;color:var(--text2);margin:0 0 10px;}
+.st.title{font-size:1.0625rem;font-weight:700;color:var(--text);margin:0 0 .9rem;display:flex;align-items:center;}
+.st.title small{font-size:.75rem;font-weight:500;color:var(--muted);margin-left:8px;}
+.num{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--text);color:var(--card);font-size:.75rem;font-weight:700;margin-right:8px;}
+.hint{font-size:.8125rem;color:var(--muted);line-height:1.55;margin:-.35rem 0 .9rem;}
+.hint:empty{display:none;}
+.note{font-size:.8125rem;color:var(--muted);margin-top:8px;line-height:1.6;}
+.lnk{background:none;border:0;font:inherit;font-size:.8125rem;color:var(--blue);cursor:pointer;padding:.25rem 0;text-decoration:underline;text-underline-offset:3px;}
+.help{flex:none;width:20px;height:20px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--muted);font:inherit;font-size:.6875rem;font-weight:700;line-height:1;cursor:pointer;display:inline-grid;place-items:center;}
+.help:hover{color:var(--blue);border-color:var(--blue);}
+
+/* 슬라이더 행 — 라벨(왼)·값(오) 한 줄 + 그 아래 슬라이더. PC(769px~)는 한 줄에 라벨|슬라이더|값 */
+.sr{display:grid;grid-template-columns:1fr auto;grid-template-areas:"label value" "range range" "cap cap";align-items:center;column-gap:12px;margin-bottom:.9rem;}
+.lb{grid-area:label;display:flex;align-items:center;gap:6px;min-width:0;}
+.lb label{font-size:.9375rem;font-weight:500;color:var(--text);line-height:1.35;}
+.sv{grid-area:value;font-size:.9375rem;font-weight:700;color:var(--blue);text-align:right;}
+.sr input[type=range]{grid-area:range;}
+.sr .lim{grid-area:cap;margin:0;}
+.sr .lim:empty{display:none;}
+.lim{color:var(--red);font-size:.75rem;margin-left:3px;}
+.mid{color:var(--red);font-size:.6875rem;margin-left:2px;}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;min-width:0;height:44px;margin:0;background:transparent;cursor:pointer;}
+input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(to right,var(--blue) var(--p,0%),var(--line) var(--p,0%));}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;margin-top:-12px;border-radius:50%;background:#fff;border:2px solid var(--blue);box-shadow:0 1px 4px rgba(0,0,0,.25);}
+input[type=range]::-moz-range-track{height:4px;border-radius:2px;background:var(--line);}
+input[type=range]::-moz-range-progress{height:4px;border-radius:2px;background:var(--blue);}
+input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:#fff;border:2px solid var(--blue);box-shadow:0 1px 4px rgba(0,0,0,.25);}
+@media(min-width:769px){
+  .sr{grid-template-columns:230px 1fr 96px;grid-template-areas:"label range value" ". cap cap";column-gap:14px;margin-bottom:.35rem;}
+  input[type=range]{height:32px;}
+}
+
+/* 체크 행 — 사실 확인·항목 선택이라 체크박스. 행 전체가 눌린다 */
+.chk{display:flex;align-items:center;gap:12px;min-height:48px;padding:.35rem 0;font-size:.9375rem;line-height:1.35;color:var(--text);margin:0;cursor:pointer;}
+.chk input[type=checkbox]{flex:none;-webkit-appearance:none;appearance:none;position:relative;width:24px;height:24px;margin:0;border-radius:7px;border:1.5px solid var(--muted);background:transparent;cursor:pointer;transition:background-color .15s ease,border-color .15s ease;}
+.chk input[type=checkbox]::after{content:'';position:absolute;left:7.5px;top:2.5px;width:6px;height:12px;border:solid var(--on-blue);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) scale(0);transition:transform .15s cubic-bezier(.2,.8,.2,1);}
+.chk input[type=checkbox]:checked{background:var(--blue);border-color:var(--blue);}
+.chk input[type=checkbox]:checked::after{transform:rotate(45deg) scale(1);}
+
+/* 선택 칩 (세그먼트·투자성향) */
+.seg,.chips{display:inline-flex;border:.5px solid var(--line);border-radius:10px;overflow:hidden;margin:2px 0 8px;max-width:100%;}
+.chips{display:flex;}
+.chips button{flex:1;}
+.seg button,.chips button{background:var(--card);border:0;font:inherit;font-size:.875rem;color:var(--text2);padding:9px 14px;cursor:pointer;white-space:nowrap;}
+.seg button+button,.chips button+button{border-left:.5px solid var(--line);}
+.seg button[aria-pressed="true"],.chips button[aria-pressed="true"]{background:var(--blue);color:var(--on-blue);font-weight:600;}
+.optlabel{display:flex;align-items:center;gap:6px;font-size:.9375rem;font-weight:500;margin:.5rem 0 4px;}
+
+/* 안내 박스(가입 5년) */
+.calcbox{background:var(--blue-soft);border-radius:10px;padding:.65rem .85rem;margin:.3rem 0 .6rem;font-size:.8125rem;color:var(--text2);line-height:1.65;}
+.calcbox b{font-weight:600;color:var(--text);}
+.calcbox .warnline{color:var(--amber);}
+
+/* 결과 히어로 — 가장 궁금한 답을 가장 크게 */
+.hero{background:var(--card);border:.5px solid var(--line);border-radius:14px;padding:1.1rem 1.25rem;margin-bottom:1rem;}
+.hero:empty{display:none;}
+.hero-l{font-size:.8125rem;color:var(--muted);margin:0 0 .2rem;}
+.hero-v{font-size:clamp(2rem,9vw,2.75rem);font-weight:700;letter-spacing:-.03em;line-height:1.1;margin:0;color:var(--blue);}
+.hero-s{font-size:.875rem;color:var(--text2);margin:.5rem 0 0;}
+.warn{background:var(--warn-bg);border-radius:10px;padding:10px 14px;font-size:.8125rem;color:var(--text2);margin-bottom:1rem;line-height:1.6;}
+.warn:empty{display:none;}
+.warn p{margin:0 0 6px;}.warn p:last-child{margin-bottom:0;}
+.warn b{color:var(--text);}
+
+/* 결과 요약 목록 — 라벨 왼쪽·값 오른쪽 */
+#sum4,#sum3{display:block;margin-bottom:1rem;}
+#sum4 .metric,#sum3 .metric{display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:baseline;padding:.7rem 0;border-bottom:.5px solid var(--line-soft);}
+#sum4 .metric:last-child,#sum3 .metric:last-child{border-bottom:0;}
+.ml{font-size:.8125rem;color:var(--text2);margin:0;}
+.mv{font-size:.9375rem;font-weight:600;color:var(--text);margin:0;text-align:right;}
+.ms{grid-column:1/-1;font-size:.75rem;color:var(--muted);margin:0;line-height:1.45;}
+.kv{display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:baseline;padding:.6rem 0;border-bottom:.5px solid var(--line-soft);font-size:.875rem;}
+.kv:last-child{border-bottom:0;}
+.kv .k{color:var(--text2);}
+.kv .v{font-weight:600;text-align:right;}
+.kv .s{grid-column:1/-1;font-size:.75rem;color:var(--muted);}
+
+/* 표 */
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+table{width:100%;border-collapse:collapse;font-size:.8125rem;}
+th{background:var(--surface2);padding:5px 7px;text-align:right;font-weight:500;color:var(--text2);border-bottom:.5px solid var(--line-soft);white-space:nowrap;font-size:.75rem;}
+th:first-child{text-align:left;}
+td{padding:4px 7px;text-align:right;border-bottom:.5px solid var(--line-soft);white-space:nowrap;font-size:.8125rem;}
+td:first-child{text-align:left;color:var(--text2);}
+.tag{display:inline-block;font-size:.6875rem;padding:1px 7px;border-radius:99px;font-weight:500;}
+.t1{background:var(--blue-soft);color:var(--blue);}
+.t2{background:var(--amber-soft);color:var(--amber);}
+.t3{background:var(--surface2);color:var(--text2);}
+.lr{display:flex;gap:12px;font-size:.75rem;color:var(--text2);flex-wrap:wrap;margin-bottom:8px;}
+.ld{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:middle;margin-right:4px;}
+
+/* 아코디언 — 세부 설정·자세한 결과 */
+details.acc{background:var(--card);border:.5px solid var(--line);border-radius:14px;margin-bottom:8px;overflow:hidden;}
+details.acc>summary{list-style:none;cursor:pointer;padding:.95rem 1.1rem;font-size:.9375rem;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+details.acc>summary::-webkit-details-marker{display:none;}
+details.acc>summary::after{content:'+';color:var(--muted);font-size:1.125rem;font-weight:400;}
+details.acc[open]>summary::after{content:'−';}
+details.acc[open]>summary{border-bottom:.5px solid var(--line-soft);}
+.accbody{padding:1rem 1.1rem 1.1rem;font-size:.84375rem;line-height:1.7;color:var(--text2);}
+details.acc[open]>.accbody{animation:accIn .18s ease-out;}
+@keyframes accIn{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
+.accbody p{margin-bottom:.6rem;}
+.accbody p:last-child{margin-bottom:0;}
+.accbody ul{margin:.35rem 0 .7rem 1.05rem;}
+.accbody li{margin-bottom:.28rem;}
+.accbody table{font-size:.8125rem;margin:.4rem 0 .7rem;}
+.accbody td,.accbody th{text-align:left;white-space:normal;}
+.src{font-size:.75rem;color:var(--muted);border-top:.5px solid var(--line-soft);padding-top:.5rem;margin-top:.7rem;}
+.chg{display:inline-block;font-size:.6875rem;font-weight:500;background:var(--chg-bg);color:var(--chg-text);border-radius:99px;padding:1px 8px;margin-left:6px;vertical-align:1px;}
+.subhead{font-size:.9375rem;font-weight:600;color:var(--text);margin:1.1rem 0 .5rem;}
+.subhead:first-child{margin-top:0;}
+
+/* 연도별 내역 — 모바일용 카드 목록(PC는 표) */
+.yearlist{display:none;}
+.yr{border-top:.5px solid var(--line-soft);}
+.yr:first-child{border-top:0;}
+.yr>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:baseline;padding:.7rem 0;min-height:44px;}
+.yr>summary::-webkit-details-marker{display:none;}
+.yr-a{font-size:.9375rem;font-weight:500;}
+.yr-a small{font-size:.75rem;color:var(--muted);font-weight:400;margin:0 6px 0 4px;}
+.yr-n{font-size:1rem;font-weight:600;color:var(--blue);text-align:right;}
+.yr-f{grid-column:1/-1;}
+.yr-f:empty{display:none;}
+.yr-b{padding:0 0 .8rem;font-size:.8125rem;}
+.yr-b>div{display:flex;justify-content:space-between;gap:12px;padding:.25rem 0;color:var(--text2);}
+.yr-b b{font-weight:500;color:var(--text);text-align:right;}
+@media(min-width:769px){.yearlist{display:none !important;}}
+@media(max-width:768px){.tw{display:none;}.yearlist{display:block;}}
+
+details.more{margin-top:.5rem;border-top:.5px solid var(--line-soft);}
+details.more>summary{list-style:none;cursor:pointer;padding:.75rem 0 .6rem;font-size:.875rem;font-weight:600;color:var(--blue);display:flex;align-items:center;gap:6px;}
+details.more>summary::-webkit-details-marker{display:none;}
+details.more>summary::after{content:'▾';font-size:.7rem;}
+details.more[open]>summary::after{content:'▴';}
+details.more[open]>.morebody{animation:accIn .18s ease-out;}
+.card>.chk:last-of-type{margin-bottom:.2rem;}
+.fwarn{font-size:.8125rem;color:var(--amber);line-height:1.55;margin:-.4rem 0 .9rem;}
+.fwarn:empty{display:none;}
+.fwarn.hintlike{color:var(--muted);}
+.sitefoot{margin-top:2rem;padding-top:1rem;border-top:.5px solid var(--line-soft);font-size:.8125rem;color:var(--muted);}
+.sitefoot .disclaimer{line-height:1.6;margin-bottom:.7rem;}
+.sitefoot nav{display:flex;flex-wrap:wrap;gap:.4rem 1rem;}
+.sitefoot a{color:var(--muted);text-decoration:none;}
+.sitefoot a:hover{color:var(--text);}
+.foot{display:flex;justify-content:center;margin:1rem 0 .5rem;}
+.foot .lnk{color:var(--muted);}
+
+/* 하단 고정 요약 바 (모바일, 결과 카드가 화면 밖일 때) */
+.livebar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:none;align-items:center;justify-content:space-between;gap:12px;padding:.7rem 1rem calc(.7rem + env(safe-area-inset-bottom));background:var(--card);border-top:.5px solid var(--line);box-shadow:0 -6px 24px rgba(10,20,40,.12);transform:translateY(110%);transition:transform .2s ease;}
+.livebar.on{transform:none;}
+.livebar b{font-size:1.125rem;color:var(--blue);letter-spacing:-.02em;}
+.livebar span{font-size:.8125rem;color:var(--text2);}
+.livebar button{flex:none;font:inherit;font-size:.875rem;font-weight:600;padding:9px 16px;border-radius:10px;border:0;background:var(--blue);color:var(--on-blue);cursor:pointer;}
+@media(max-width:768px){.livebar{display:flex;}.page{padding-bottom:5.5rem;}}
+
+/* 바텀시트 — 설명은 접지 않고 시트로 연다. 모바일=하단에서, PC=가운데 카드 */
+dialog.sheet{border:0;padding:0;background:var(--card);color:var(--text);width:min(600px,100%);max-height:86dvh;border-radius:18px 18px 0 0;margin:auto auto 0;overflow:hidden;}
+dialog.sheet[open]{display:flex;flex-direction:column;animation:sheetUp .24s cubic-bezier(.2,.8,.2,1);}
+dialog.sheet::backdrop{background:rgba(8,12,20,.5);}
+@keyframes sheetUp{from{transform:translateY(28px);opacity:0;}to{transform:none;opacity:1;}}
+@media(min-width:769px){dialog.sheet{margin:auto;border-radius:18px;max-height:80dvh;}}
+.sheet-h{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:1rem 1.1rem .8rem;border-bottom:.5px solid var(--line-soft);}
+.sheet-h h2{font-size:1.0625rem;font-weight:700;}
+.sheet-x{flex:none;width:36px;height:36px;border:0;border-radius:50%;background:var(--surface2);color:var(--text2);font:inherit;font-size:1.25rem;line-height:1;cursor:pointer;}
+.sheet-b{overflow:auto;padding:1rem 1.1rem calc(1.4rem + env(safe-area-inset-bottom));font-size:.875rem;line-height:1.75;color:var(--text2);overscroll-behavior:contain;}
+.sheet-b p{margin-bottom:.7rem;}
+.sheet-b p:last-child{margin-bottom:0;}
+.sheet-b b{color:var(--text);font-weight:600;}
+.sheet-b table{font-size:.8125rem;margin:.3rem 0 .8rem;}
+.sheet-b th,.sheet-b td{text-align:left;white-space:normal;padding:5px 6px;background:none;}
+.sheet-b th{color:var(--muted);font-weight:500;}
+.sheet-b td:first-child{color:var(--muted);width:5.5em;}
+.sheet-act{display:flex;gap:10px;margin-top:1.1rem;}
+.sheet-act button{flex:1;font:inherit;font-size:.9375rem;font-weight:600;padding:13px;border-radius:12px;border:.5px solid var(--line);background:var(--card);color:var(--text2);cursor:pointer;}
+.sheet-act button.main{background:var(--blue);border-color:var(--blue);color:var(--on-blue);}
+
+.st.title:focus,#results:focus{outline:none;}
+/* 광고 — 콘텐츠보다 먼저 보이지 않게(상단 배너는 PC만), 다크에서 iframe 뒤가 흰 박스로 칠해지지 않게 color-scheme 고정 */
+.adsbygoogle,.adsbygoogle *{color-scheme:light;}
+.adwrap{background:var(--card);border-radius:10px;overflow:hidden;}
+.adwrap[hidden]{display:none;}
+.ad-top{display:none;margin-bottom:1rem;min-height:90px;}
+.ad-infeed{margin-bottom:1rem;min-height:100px;}
+.ad-rail{display:none;}
+.shell{max-width:760px;margin:0 auto;}
+@media(min-width:769px){.ad-top{display:block;}}
+@media(min-width:1140px){
+  .shell{display:grid;grid-template-columns:minmax(160px,1fr) 760px minmax(160px,1fr);gap:20px;max-width:1240px;align-items:start;}
+  .shell>.page{grid-column:2;grid-row:1;width:100%;margin:0;}   /* margin:auto면 그리드 칸을 채우지 않고 내용물 폭으로 줄어든다 */
+  .ad-rail{display:flex;justify-content:center;grid-row:1;position:sticky;top:16px;min-height:600px;padding-top:1.25rem;background:none;}
+  .ad-left{grid-column:1;}.ad-right{grid-column:3;}
+}
+.sv,.mv,.hero-v,.livebar b,td{font-variant-numeric:tabular-nums;}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.seg button,.chips button,.tabs button{transition:background-color .15s ease,color .15s ease,transform .1s ease-out;}
+.seg button:active,.chips button:active,.tabs button:active{transform:scale(.96);}
+@media(pointer:coarse){
+  .themebtn{width:44px;height:44px;}
+  .seg button,.chips button,.tabs button{min-height:44px;}
+  details.acc>summary{min-height:48px;}
+  .help{width:24px;height:24px;}
+}
+@media(max-width:768px){.page{padding:.75rem .8rem calc(5.5rem + env(safe-area-inset-bottom));}.card{padding:1rem;}.foot{display:none;}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+@media(prefers-reduced-transparency:reduce){dialog.sheet::backdrop{background:rgba(8,12,20,.8);}}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+<aside class="adwrap ad-rail ad-left"><ins class="adsbygoogle" style="display:inline-block;width:160px;height:600px" data-ad-client="ca-pub-2292328325141579" data-ad-slot="XXXXXXXXXX"></ins></aside>
+
+<div class="page">
+
+<div class="brandbar"><a class="back" href="./" aria-label="퇴직 연금술사 소개로 돌아가기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span>퇴직 연금술사</span></a><button type="button" class="themebtn" id="themebtn" aria-label="다크 모드로 전환"></button></div>
+
+<h1>연금 수령 계산기</h1>
+<p class="sub">퇴직금·IRP·연금저축을 합쳐, 매달 얼마 받고 세금은 얼마인지 계산합니다.</p>
+<p class="asof" id="asof"></p>
+
+<div class="adwrap ad-top"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2292328325141579" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+
+<nav class="tabs" role="tablist" aria-label="계산기와 세법 정보">
+  <button role="tab" id="tb-calc" aria-selected="true" aria-controls="tab-calc">계산기</button>
+  <button role="tab" id="tb-law" aria-selected="false" aria-controls="tab-law" tabindex="-1">세법 정보</button>
+</nav>
+
+<!-- ══════════ 계산기 ══════════ -->
+<section id="tab-calc" role="tabpanel" aria-labelledby="tb-calc">
+
+<!-- 1. 기본 정보(필수) — 나이 + 가진 연금. 고른 계좌만 아래에 입력 카드가 생긴다 -->
+<div class="card">
+  <p class="st title"><span class="num">1</span>기본 정보<small>필수</small></p>
+  <div class="sr"><span class="lb"><label for="now">현재 나이 (만)</label></span><input type="range" id="now" min="25" max="70" step="1" value="25"><span class="sv" aria-hidden="true" id="now-o"></span></div>
+  <div class="sr"><span class="lb"><label for="age">연금 받기 시작할 나이 (만)</label></span><input type="range" id="age" min="55" max="80" step="1" value="55"><span class="sv" aria-hidden="true" id="age-o"></span></div>
+  <p class="fwarn" id="age-warn"></p>
+  <p class="optlabel" style="margin-top:.2rem;">가진 연금 <small style="font-weight:400;color:var(--muted);">해당하는 것을 고르세요</small></p>
+  <label class="chk"><input type="checkbox" id="has-dc" checked> 퇴직금(DC·DB)을 연금으로 받을 예정입니다</label>
+  <label class="chk"><input type="checkbox" id="has-ps"> 연금저축 계좌가 있습니다</label>
+  <label class="chk"><input type="checkbox" id="has-irp"> IRP에 앞으로 납입할 계획입니다</label>
+  <p class="fwarn" id="acct-warn"></p>
+  <button type="button" class="lnk" data-help="ps-irp">연금저축과 IRP, 뭐가 다른가요?</button>
+  <label class="chk off" id="five-year-row"><input type="checkbox" id="five-year-check"> 가입한 지 이미 5년이 지났습니다</label>
+  <div class="calcbox off" id="elig-info-simple"></div>
+</div>
+
+<div class="card off" id="card-dc">
+  <p class="st title">퇴직금</p>
+  <div class="sr"><span class="lb"><label for="dc">받을 때 예상 금액</label></span><input type="range" id="dc" min="0" max="30000" step="500" value="0"><span class="sv" aria-hidden="true" id="dc-o"></span></div>
+  <div class="sr"><span class="lb"><label for="wy">일한 근속연수</label></span><input type="range" id="wy" min="1" max="40" step="1" value="1"><span class="sv" aria-hidden="true" id="wy-o"></span></div>
+  <p class="hint" id="dc-line" style="margin-bottom:.2rem;"></p>
+  <button type="button" class="lnk" data-help="dc-tax">퇴직금 세금이 줄어드는 방식</button>
+</div>
+
+<div class="card off" id="card-ps">
+  <p class="st title">연금저축</p>
+  <div class="sr"><span class="lb"><label for="seed">지금 계좌 잔액</label><button type="button" class="help" data-help="ps-calc" aria-label="연금저축 설명">?</button></span><input type="range" id="seed" min="0" max="20000" step="100" value="0"><span class="sv" aria-hidden="true" id="seed-o"></span></div>
+  <details class="more">
+    <summary>자세히 설정</summary>
+    <div class="morebody">
+      <div class="sr"><span class="lb"><label for="seed-t1">그중 세금 없이 뺄 수 있는 돈</label></span><input type="range" id="seed-t1" min="0" max="10000" step="100" value="0"><span class="sv" aria-hidden="true" id="seed-t1-o"></span></div>
+      <p class="hint">과세제외금액입니다. 모르면 0으로 두세요.</p>
+      <label class="chk"><input type="checkbox" id="ps-legacy-simple"> 2013년 3월 1일 이전에 가입했습니다</label>
+    </div>
+  </details>
+</div>
+
+<div class="card off" id="card-irp">
+  <p class="st title">IRP 추가 납입</p>
+  <div class="sr"><span class="lb"><label for="pay">납입금액 (연간)</label><button type="button" class="help" data-help="irp-limit" aria-label="납입 한도 설명">?</button></span><input type="range" id="pay" min="0" max="1800" step="100" value="0"><span class="sv" aria-hidden="true" id="pay-o"></span></div>
+  <p class="fwarn hintlike" id="pay-warn"></p>
+  <div class="sr"><span class="lb"><label for="payyr">납입 기간</label></span><input type="range" id="payyr" min="0" max="20" step="1" value="0"><span class="sv" aria-hidden="true" id="payyr-o"></span></div>
+  <p class="fwarn" id="payyr-warn"></p>
+  <p class="hint" id="acc-line" style="margin-bottom:0;"></p>
+</div>
+
+<!-- 2. 연금 수령 방법 -->
+<div class="card">
+  <p class="st title"><span class="num">2</span>연금 수령 방법</p>
+  <div class="sr"><span class="lb"><label for="goal">매달 받고 싶은 금액 (세후)</label></span><input type="range" id="goal" min="50" max="400" step="5" value="50"><span class="sv" aria-hidden="true" id="goal-o"></span></div>
+  <p class="optlabel">기대수익률 <button type="button" class="help" data-help="rate" aria-label="수익률 설명">?</button></p>
+  <div class="chips" role="group" aria-label="기대수익률" id="chips-risk">
+    <button type="button" data-v="3" aria-pressed="false">안정형 3%</button>
+    <button type="button" data-v="5" aria-pressed="true">균형형 5%</button>
+    <button type="button" data-v="7" aria-pressed="false">적극형 7%</button>
+  </div>
+  <details class="more">
+    <summary>자세히 설정</summary>
+    <div class="morebody">
+      <p class="optlabel" style="margin-top:0;">수령 방식 <button type="button" class="help" data-help="paytype" aria-label="수령 방식 설명">?</button></p>
+      <div class="seg" role="group" aria-label="수령 방식" id="seg-type">
+        <button type="button" data-v="life" aria-pressed="true">종신형</button>
+        <button type="button" data-v="term" aria-pressed="false">확정기간형</button>
+      </div>
+      <p class="optlabel">연 1,500만원 한도 <button type="button" class="help" data-help="cap" aria-label="1,500만원 한도 설명">?</button></p>
+      <div class="seg" role="group" aria-label="연 1,500만원 한도 처리" id="seg-cap">
+        <button type="button" data-v="keep" aria-pressed="true">한도 안에서 수령</button>
+        <button type="button" data-v="over" aria-pressed="false">초과 허용</button>
+      </div>
+      <label class="chk" style="margin-top:.2rem;"><input type="checkbox" id="goal-split"> 돈의 종류별로 목표를 따로 정하기 <button type="button" class="help" data-help="goal" aria-label="단계별 목표 설명">?</button></label>
+      <div id="split-rows" class="off">
+        <div class="sr"><span class="lb"><label for="s1">1단계 · 세금 없는 돈</label></span><input type="range" id="s1" min="50" max="400" step="5" value="50"><span class="sv" aria-hidden="true" id="s1-o"></span><span class="lim" id="s1-cap"></span></div>
+        <div class="sr" id="row-s2"><span class="lb"><label for="s2">2단계 · 퇴직금</label></span><input type="range" id="s2" min="50" max="400" step="5" value="50"><span class="sv" aria-hidden="true" id="s2-o"></span><span class="lim" id="s2-cap"></span></div>
+        <div class="sr"><span class="lb"><label for="s3">3단계 · 세금혜택분+수익</label></span><input type="range" id="s3" min="50" max="400" step="5" value="50"><span class="sv" aria-hidden="true" id="s3-o"></span><span class="lim" id="s3-cap"></span></div>
+      </div>
+      <div id="split-info"></div>
+      <p class="optlabel">기대수익률 직접 설정</p>
+      <div class="seg" role="group" aria-label="투자 수익률 입력 방식" id="seg-rate">
+        <button type="button" data-v="basic" aria-pressed="true">하나로</button>
+        <button type="button" data-v="detail" aria-pressed="false">모으는·받는 기간 따로</button>
+      </div>
+      <div class="sr" id="row-rate-basic"><span class="lb"><label for="rate-basic">연 수익률</label></span><input type="range" id="rate-basic" min="0" max="15" step="0.5" value="5"><span class="sv" aria-hidden="true" id="rate-basic-o"></span></div>
+      <div class="sr off" id="row-rate-acc"><span class="lb"><label for="irp-r">모으는 기간 (연)</label></span><input type="range" id="irp-r" min="0" max="15" step="0.5" value="6"><span class="sv" aria-hidden="true" id="irp-r-o"></span></div>
+      <div class="sr off" id="row-rate-draw"><span class="lb"><label for="draw-r">받는 기간 (연)</label></span><input type="range" id="draw-r" min="0" max="15" step="0.5" value="5"><span class="sv" aria-hidden="true" id="draw-r-o"></span></div>
+      <p class="optlabel">물가상승률 <button type="button" class="help" data-help="infl" aria-label="물가상승률 설명">?</button></p>
+      <div class="seg" role="group" aria-label="물가상승률" id="seg-infl">
+        <button type="button" data-v="2.0" aria-pressed="false">2.0%</button>
+        <button type="button" data-v="2.5" aria-pressed="true">2.5%</button>
+        <button type="button" data-v="3.0" aria-pressed="false">3.0%</button>
+      </div>
+    </div>
+  </details>
+</div>
+
+<!-- 3. 결과 (입력하면 바로 갱신) -->
+<p class="st title" style="margin-top:1.4rem;"><span class="num">3</span>결과</p>
+<div id="results" tabindex="-1">
+  <div class="hero" id="hero"></div>
+  <div id="warn" class="warn" role="status"></div>
+  <div class="card">
+    <p class="st">전체 잔액 추이 <span style="font-weight:400;color:var(--muted);">(만원)</span></p>
+    <div style="position:relative;width:100%;height:220px;"><canvas id="c1" role="img" aria-label="전체 잔액 추이 차트"></canvas></div>
+  </div>
+  <div class="adwrap ad-infeed"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2292328325141579" data-ad-slot="XXXXXXXXXX" data-ad-format="fluid" data-ad-layout-key="-6t+ed+2i-1n-4w"></ins></div>
+  <details class="acc" id="detail">
+    <summary>자세한 결과 (돈의 종류별·연도별)</summary>
+    <div class="accbody">
+      <div id="sum4"></div>
+      <div id="sum3"></div>
+      <p class="subhead">월 실수령액 추이</p>
+      <div class="lr">
+        <span><span class="ld" style="background:var(--blue);"></span>연금저축</span>
+        <span><span class="ld" style="background:var(--blue);opacity:.6;"></span>세금 없는 돈</span>
+        <span><span class="ld" style="background:var(--gray);"></span>퇴직금</span>
+        <span><span class="ld" style="background:var(--blue);opacity:.3;"></span>세금혜택분+수익</span>
+        <span>┄ 지금 돈 가치</span>
+      </div>
+      <div style="position:relative;width:100%;height:200px;"><canvas id="c2" role="img" aria-label="월 실수령액 추이 차트"></canvas></div>
+      <p class="subhead">연도별 수령 내역 <button type="button" class="help" data-help="legend" aria-label="표 기호 설명">?</button></p>
+      <div class="yearlist" id="yearlist"></div>
+      <div class="tw">
+        <table>
+          <thead><tr>
+            <th>나이</th><th>연금 연차</th><th>세율</th>
+            <th>연금저축</th><th class="col-opt">연금저축 잔액</th>
+            <th class="col-opt">세금 없는 돈</th><th class="col-opt">세금 없는 돈 잔액</th>
+            <th>퇴직금</th><th class="col-opt">퇴직금 잔액</th>
+            <th class="col-opt">세금혜택분+수익</th><th class="col-opt">세금혜택분 잔액</th>
+            <th>월 세금</th><th>월 실수령</th><th>지금 돈 가치</th><th class="col-opt">단계</th>
+          </tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </details>
+</div>
+
+<div class="foot"><button type="button" class="lnk" id="resetall">다시 계산</button></div>
+
+</section>
+
+<!-- ══════════ 세법 정보 ══════════ -->
+<section id="tab-law" role="tabpanel" aria-labelledby="tb-law" hidden>
+
+<p class="sub" style="margin-bottom:1rem;">이 계산기가 적용한 세법을 항목별로 정리했습니다. <span style="color:var(--chg-text);font-weight:500;">개정</span> 표시는 2026년 1월 1일부터 달라진 내용입니다.</p>
+
+<details class="acc" open>
+  <summary>이연퇴직소득 연금수령 감면<span class="chg">2026 개정</span></summary>
+  <div class="accbody">
+    <p>퇴직금을 IRP로 받아 연금으로 나눠 받으면 퇴직소득세의 일부만 원천징수합니다. 2026년부터 20년 초과 구간이 신설되어 2단계가 3단계가 됐습니다.</p>
+    <table>
+      <tr><th>연금수령연차</th><th>원천징수</th><th>감면</th></tr>
+      <tr><td>10년 이하</td><td>퇴직소득세의 70%</td><td>30%</td></tr>
+      <tr><td>10년 초과 ~ 20년 이하</td><td>60%</td><td>40%</td></tr>
+      <tr><td>20년 초과</td><td>50%</td><td>50%</td></tr>
+    </table>
+    <p>2026년 1월 1일 이후 연금 수령분부터 적용됩니다. 오래 나눠 받을수록 유리한 구조라, 55세 이상이라면 퇴직 후 연금을 빨리 개시해 수령 기간을 늘리는 쪽이 절세에 도움이 됩니다.</p>
+    <p>이연퇴직소득에서 나온 인출은 <b>연 1,500만원 한도와 무관</b>합니다. 다만 이 재원을 굴려 생긴 운용수익은 연금소득으로 분류되어 한도에 포함됩니다.</p>
+    <p class="src">국세청 「연금소득 원천징수 방법」 · 기획재정부 2025년 세제개편</p>
+  </div>
+</details>
+
+<details class="acc">
+  <summary>연금수령연차는 언제부터 세나</summary>
+  <div class="accbody">
+    <p>연금을 받은 햇수(연금수령연차)는 <b>'받을 수 있게 된 해'를 1년차</b>로 셉니다. 실제로 돈을 빼기 시작한 해가 1년차가 아닙니다. <b>예: 55세에 조건을 채우고 65세에 처음 받으면, 첫 수령이 벌써 11년차입니다.</b></p>
+    <p>"받을 수 있는 날"은 만 55세와 가입 후 5년이 지나는 시점 중 늦은 쪽입니다. 계좌에 이연퇴직소득이 있으면 5년 요건은 면제됩니다.</p>
+    <p>따라서 55세에 요건을 채우고 65세에 개시하면 개시 시점이 이미 11년차입니다. 이것이 두 가지를 바꿉니다.</p>
+    <ul>
+      <li>연금수령연차가 11년 이상이면 <b>연금수령한도가 적용되지 않습니다</b>. 인출액 전체를 연금수령으로 봅니다.</li>
+      <li>이연퇴직소득 감면이 30%가 아니라 40%(20년 초과면 50%)에서 시작합니다.</li>
+    </ul>
+    <p>2013년 3월 1일 이전에 가입한 연금계좌는 특례로 <b>6년차부터</b> 기산합니다.</p>
+    <p class="src">소득세법 시행령 §40의2 ③④ · 국세청 「연금소득의 범위」</p>
+  </div>
+</details>
+
+<details class="acc">
+  <summary>사적연금 연 1,500만원 분리과세 한도</summary>
+  <div class="accbody">
+    <p>연금저축·IRP에서 받는 연금 중 <b>세액공제를 받은 원금과 운용수익</b>의 합계가 연 1,500만원 이하면, 나이에 따라 3.3~5.5%로 원천징수하고 과세가 끝납니다.</p>
+    <p>1원이라도 넘으면 넘은 부분만이 아니라 <b>그해 받은 연금 전부</b>에 세금이 다시 매겨집니다. 종합과세(6.6~49.5%)와 분리과세(16.5%) 중 유리한 쪽을 고릅니다. 한도를 살짝 넘기는 게 가장 손해라서 월 125만원 선을 지키라는 말이 나옵니다.</p>
+    <p>한도 계산에서 빠지는 것:</p>
+    <ul>
+      <li>과세제외금액 (세액공제를 받지 않고 넣은 원금)</li>
+      <li>이연퇴직소득 재원에서 나온 인출</li>
+      <li>국민연금 등 공적연금 (별도 체계)</li>
+    </ul>
+    <p>기준금액은 2023년에 1,200만원에서 1,500만원으로 올랐고, 같은 시기부터 초과 시 분리과세 선택이 가능해졌습니다.</p>
+    <p class="src">소득세법 §14 ③ 9호 · §129</p>
+  </div>
+</details>
+
+<details class="acc">
+  <summary>나이별 연금소득세율</summary>
+  <div class="accbody">
+    <table>
+      <tr><th>수령 나이</th><th>확정기간형</th><th>종신형</th></tr>
+      <tr><td>55 ~ 69세</td><td>5.5%</td><td>3.3%</td></tr>
+      <tr><td>70 ~ 79세</td><td>4.4%</td><td>3.3%</td></tr>
+      <tr><td>80세 이상</td><td>3.3%</td><td>3.3%</td></tr>
+    </table>
+    <p>모두 지방소득세 10%를 포함한 세율입니다. 나이는 만 나이 기준이며, 수령 도중 생일이 지나 구간이 바뀌면 그때부터 낮은 세율이 적용됩니다. 개시를 늦추실 수 있다면 그 자체로 절세가 됩니다.</p>
+    <p>종신형은 사망할 때까지 받고 중도 해지할 수 없는 계약이라 나이와 관계없이 3.3%입니다. 확정기간형보다 70세 미만은 2.2%p, 70~79세는 1.1%p 낮습니다. 2025년까지는 종신형이 4.4%였고, 2026년 1월 1일 이후 받는 연금부터 3.3%로 내렸습니다.</p>
+    <p class="src">소득세법 §143의2</p>
+  </div>
+</details>
+
+<details class="acc">
+  <summary>연금수령한도 (120% 룰)</summary>
+  <div class="accbody">
+    <p>한 해에 연금으로 인정받고 뺄 수 있는 금액에는 상한이 있습니다.</p>
+    <p style="background:var(--surface2);border-radius:8px;padding:.7rem .9rem;font-size:.84375rem;">연금수령한도 = 그해 1월 1일 현재 평가액 ÷ (11 − 연금수령연차) × 120%<br><span style="color:var(--muted);">예: 잔액 1억원, 1년차면 1억 ÷ 10 × 1.2 = 1,200만원</span></p>
+    <p>연차가 오를수록 분모가 작아져 한도가 커지고, <b>11년차부터는 한도 자체가 사라집니다</b>. 한도를 넘겨 뺀 금액은 연금수령이 아니라 연금외수령으로 봐서, 자기납입분은 기타소득세 16.5%, 이연퇴직소득은 감면 없는 퇴직소득세가 붙습니다.</p>
+    <p>계좌별로 각각 계산합니다. 연금저축에서 뺀 금액은 IRP 한도를 잠식하지 않습니다.</p>
+    <p class="src">소득세법 시행령 §40의2 ③ 3호</p>
+  </div>
+</details>
+
+<details class="acc">
+  <summary>법정 인출순서</summary>
+  <div class="accbody">
+    <p>연금계좌에서 돈을 빼면 재원의 성격에 따라 정해진 순서대로 나갑니다. 본인이 고를 수 없습니다.</p>
+    <table>
+      <tr><th>순위</th><th>재원</th><th>과세</th></tr>
+      <tr><td>1</td><td>과세제외금액 (세액공제 안 받은 원금)</td><td>비과세</td></tr>
+      <tr><td>2</td><td>이연퇴직소득 (퇴직금)</td><td>퇴직소득세 × 감면</td></tr>
+      <tr><td>3</td><td>세액공제 받은 원금 + 운용수익</td><td>연금소득세 3.3~5.5%</td></tr>
+    </table>
+    <p>세금이 싼 돈부터 빠져나가는 구조입니다. 그래서 받기 시작한 초반에는 세금 비율이 낮다가 후반으로 갈수록 올라갑니다. 이 계산기가 목표 실수령액을 단계별로 나눠 받는 이유이기도 합니다.</p>
+    <p>주의하실 점은 1순위와 2순위 재원에서 발생한 <b>운용수익은 3순위로 귀속</b>된다는 것입니다. 원금만 앞 순위에 남습니다.</p>
+    <p class="src">소득세법 시행령 §40의3</p>
+  </div>
+</details>
+
+<details class="acc">
+  <summary>퇴직소득세 계산 구조</summary>
+  <div class="accbody">
+    <p>퇴직소득세는 일한 햇수가 길수록 세금이 줄도록 설계돼 있습니다. 계산은 네 단계입니다. (결과만 궁금하면 건너뛰세요. 계산기가 알아서 계산합니다.)</p>
+    <p><b>① 근속연수공제</b></p>
+    <table>
+      <tr><th>근속연수</th><th>공제액</th></tr>
+      <tr><td>5년 이하</td><td>100만원 × 근속연수</td></tr>
+      <tr><td>5년 초과 10년 이하</td><td>500만원 + 200만원 × (근속−5)</td></tr>
+      <tr><td>10년 초과 20년 이하</td><td>1,500만원 + 250만원 × (근속−10)</td></tr>
+      <tr><td>20년 초과</td><td>4,000만원 + 300만원 × (근속−20)</td></tr>
+    </table>
+    <p><b>② 환산급여</b> = (퇴직급여 − 근속연수공제) × 12 ÷ 근속연수</p>
+    <p><b>③ 환산급여공제</b></p>
+    <table>
+      <tr><th>환산급여</th><th>공제액</th></tr>
+      <tr><td>800만원 이하</td><td>전액</td></tr>
+      <tr><td>~ 7,000만원</td><td>800만원 + 초과분의 60%</td></tr>
+      <tr><td>~ 1억원</td><td>4,520만원 + 초과분의 55%</td></tr>
+      <tr><td>~ 3억원</td><td>6,170만원 + 초과분의 45%</td></tr>
+      <tr><td>3억원 초과</td><td>1억 5,170만원 + 초과분의 35%</td></tr>
+    </table>
+    <p><b>④ 산출세액</b> = 기본세율 적용 후 × 근속연수 ÷ 12, 여기에 지방소득세 10%를 더합니다.</p>
+    <p class="src">소득세법 §48 · §55</p>
+  </div>
+</details>
+
+<details class="acc">
+  <summary>연금저축 · IRP · DC는 어떻게 다른가</summary>
+  <div class="accbody">
+    <p>이름이 비슷해서 헷갈리기 쉬운데, 성격이 셋 다 다릅니다.</p>
+    <table>
+      <tr><th></th><th>DC 퇴직연금</th><th>연금저축</th><th>IRP</th></tr>
+      <tr><td>돈의 출처</td><td>회사가 넣는 퇴직금</td><td>내가 넣는 돈</td><td>내가 넣는 돈 + 퇴직금 이전</td></tr>
+      <tr><td>가입 자격</td><td>회사가 DC를 도입한 근로자</td><td>누구나</td><td>소득이 있는 사람</td></tr>
+      <tr><td>납입 한도</td><td>회사 규정에 따름</td><td colspan="2" style="text-align:center;">둘을 합쳐 연 1,800만원</td></tr>
+      <tr><td>세액공제</td><td>없음 (회사 부담분)</td><td>그중 600만원까지</td><td>그중 900만원까지 (연금저축 포함)</td></tr>
+      <tr><td>주식형 비중</td><td>70%까지</td><td>100% 가능</td><td>70%까지</td></tr>
+      <tr><td>중도인출</td><td>법정 사유만</td><td>비교적 자유</td><td>법정 사유만</td></tr>
+      <tr><td>인출 시 과세</td><td>퇴직소득세 × 감면</td><td>연금소득세 3.3~5.5%</td><td>재원별로 다름</td></tr>
+    </table>
+    <p><b>DC</b>는 회사가 매년 퇴직금을 넣어주고 운용은 본인이 하는 제도입니다. 퇴직하면 이 돈은 만 55세 전이라면 원칙적으로 IRP 계좌로 옮겨지고, 그때부터 <b>이연퇴직소득</b>이라는 이름으로 불립니다. 퇴직소득세를 연금 수령 시점까지 미루는 과세이연 효과가 있습니다.</p>
+    <p><b>연금저축</b>과 <b>IRP</b>는 둘 다 세액공제를 받는 개인 연금입니다. 가장 큰 차이는 유연성과 공제 한도의 맞교환입니다. 연금저축은 주식형 100% 운용이 가능하고 급할 때 꺼내 쓰기도 쉽지만 공제는 600만원까지입니다. IRP는 300만원을 더 공제받는 대신 30%를 안전자산에 묶어야 하고 중도인출이 법정 사유로 제한됩니다.</p>
+    <p>그래서 일반적으로는 <b>연금저축 600만원을 먼저 채우고 남는 300만원을 IRP에 넣는</b> 순서를 권합니다. 다만 그 돈을 중간에 쓸 가능성이 있다면 순서를 바꾸는 편이 안전하고, 반대로 "중간에 못 깨는" 구조가 오히려 도움이 되는 분도 있습니다. 정답은 본인의 인출 가능성에 달려 있습니다.</p>
+    <p>세액공제율은 총급여 5,500만원(종합소득금액 4,500만원) 이하면 16.5%, 초과하면 13.2%입니다. 900만원을 다 채우면 16.5% 구간에서 연 148만 5천원을 돌려받습니다. 1,800만원 한도까지 그 이상 넣는 것 자체는 가능하며, 세액공제를 못 받는 대신 그 원금은 <b>인출할 때 비과세</b>로 처리됩니다.</p>
+    <p class="src">근로자퇴직급여 보장법 · 소득세법 §59의3 · 퇴직연금감독규정(위험자산 70% 한도)</p>
+  </div>
+</details>
+
+<details class="acc">
+  <summary>납입 한도와 세액공제</summary>
+  <div class="accbody">
+    <ul>
+      <li><b>납입 한도</b> 연 1,800만원 — 연금저축과 IRP를 합산한 개인 단위 한도입니다. 부부는 각자 1,800만원씩 가능합니다.</li>
+      <li><b>세액공제 한도</b> 연 900만원 — 다만 연금저축 단독으로는 600만원까지만 공제됩니다. IRP에 900만원을 전부 넣거나, 연금저축 600 + IRP 300 조합이어야 한도를 꽉 채웁니다.</li>
+      <li><b>공제율</b> 총급여 5,500만원 이하 16.5%, 초과 시 13.2%.</li>
+      <li>ISA 만기자금 전환분과 퇴직금 이전액은 1,800만원 한도와 별도로 들어갑니다.</li>
+    </ul>
+    <p>한도를 넘겨 납입한 금액은 세액공제를 못 받는 대신 <b>과세제외금액</b>이 되어 나중에 인출할 때 세금이 붙지 않고, 연 1,500만원 한도 계산에서도 빠집니다. 손해만은 아닙니다.</p>
+    <p class="src">소득세법 §59의3 · 조세특례제한법 §91의18</p>
+  </div>
+</details>
+
+<details class="acc">
+  <summary>기본세율 (종합과세를 택할 때)</summary>
+  <div class="accbody">
+    <table>
+      <tr><th>과세표준</th><th>세율</th><th>누진공제</th></tr>
+      <tr><td>1,400만원 이하</td><td>6%</td><td>—</td></tr>
+      <tr><td>~ 5,000만원</td><td>15%</td><td>126만원</td></tr>
+      <tr><td>~ 8,800만원</td><td>24%</td><td>576만원</td></tr>
+      <tr><td>~ 1억 5,000만원</td><td>35%</td><td>1,544만원</td></tr>
+      <tr><td>~ 3억원</td><td>38%</td><td>1,994만원</td></tr>
+      <tr><td>~ 5억원</td><td>40%</td><td>2,594만원</td></tr>
+      <tr><td>~ 10억원</td><td>42%</td><td>3,594만원</td></tr>
+      <tr><td>10억원 초과</td><td>45%</td><td>6,594만원</td></tr>
+    </table>
+    <p>지방소득세 10%가 별도로 붙습니다. 퇴직소득세 계산에도 같은 세율표를 씁니다.</p>
+    <p class="src">소득세법 §55</p>
+  </div>
+</details>
+
+<details class="acc">
+  <summary>이 계산기가 다루지 않는 것</summary>
+  <div class="accbody">
+    <p>결과를 해석하실 때 감안해야 할 한계입니다.</p>
+    <ul>
+      <li><b>건강보험료</b> — 연금소득은 지역가입자 보험료 산정에 반영됩니다. 세금을 줄여도 보험료로 나가는 부분이 있습니다.</li>
+      <li><b>국민연금</b> — 공적연금은 별도 체계라 포함하지 않았습니다. 실제 노후 현금흐름을 보실 때는 따로 더하셔야 합니다.</li>
+      <li><b>종합과세 선택</b> — 1,500만원 초과 시 16.5% 분리과세만 계산합니다. 다른 소득이 적으면 종합과세가 유리할 수 있습니다.</li>
+      <li><b>계좌별 요건 충족 시점</b> — 가입 연도를 하나만 입력받아 연금저축과 IRP에 같이 적용합니다. 실제로는 계좌마다 가입일이 달라 충족 시점이 갈릴 수 있고, 5년 요건 면제도 이연퇴직소득이 든 계좌에만 적용됩니다.</li>
+      <li><b>중도인출·부득이한 사유</b> — 연금외수령, 의료목적 인출 등은 다루지 않습니다.</li>
+      <li><b>세법 변경</b> — 연금 세제는 자주 바뀝니다. 상단 검토일 이후의 개정은 반영돼 있지 않습니다.</li>
+    </ul>
+    <p>계산 결과는 참고용이며 개별 세무상담을 대신하지 않습니다.</p>
+  </div>
+</details>
+
+</section>
+
+
+<footer class="sitefoot">
+  <p class="disclaimer">계산 결과는 참고용이며 개별 세무상담을 대신하지 않습니다. 연금 세제는 자주 바뀌므로 위에 표시된 세법 기준일을 함께 확인해 주세요.</p>
+  <nav aria-label="사이트 정보">
+    <a href="https://xeno-xeno.github.io/10minute.studio/">10minute.studio</a>
+    <a href="../privacy.html">개인정보처리방침</a>
+    <a href="../terms.html">이용약관</a>
+    <a href="../contact.html">문의</a>
+  </nav>
+</footer>
+
+</div><!-- /.page -->
+
+<aside class="adwrap ad-rail ad-right"><ins class="adsbygoogle" style="display:inline-block;width:160px;height:600px" data-ad-client="ca-pub-2292328325141579" data-ad-slot="XXXXXXXXXX"></ins></aside>
+
+</div><!-- /.shell -->
+
+<!-- 하단 고정 요약 (모바일, 계산기 탭에서 항상 표시). 입력 중엔 [결과 보기], 결과 영역에선 [다시 계산](초기화 + 맨 위로) -->
+<div class="livebar on" id="livebar" aria-hidden="true">
+  <div><b id="livebar-v"></b><br><span id="livebar-s"></span></div>
+  <button type="button" id="livebar-go" tabindex="-1">결과 보기</button>
+</div>
+
+<!-- 바텀시트: 설명 전용. 입력 조작 중 결과를 가리지 않도록 세부 설정은 시트로 열지 않는다 -->
+<dialog class="sheet" id="sheet" aria-labelledby="sheet-t">
+  <div class="sheet-h"><h2 id="sheet-t"></h2><button type="button" class="sheet-x" id="sheet-x" aria-label="닫기">×</button></div>
+  <div class="sheet-b" id="sheet-b">
+
+    <section id="h-ps-calc" data-title="연금저축 계산 방식" hidden>
+      <p>월 수령액은 잔액의 1%로 잡았습니다. <b>예: 4,500만원이면 매달 45만원.</b> 이 금액을 매달 먼저 받고, 목표 실수령액에 모자란 만큼을 IRP가 채웁니다. (계산식: 첫해 연금수령한도 ÷ 12 = 잔액 × 1.2 ÷ 10 ÷ 12)</p>
+      <p><b>과세제외금액</b>은 세금 혜택(세액공제)을 받지 않고 넣은 돈입니다. 뺄 때 세금이 없고 1,500만원 한도에도 들어가지 않습니다. 금융사 앱에서 조회할 수 있고, 모르면 0으로 두세요(전부 세금이 붙는 돈으로 보수적으로 계산합니다).</p>
+      <p>연금저축은 IRP와 <b>별개 계좌</b>라서 뺄 수 있는 한도(연금수령한도)를 각자 갖습니다. 다만 <b>연 1,500만원 한도는 연금저축과 IRP를 합쳐서</b> 적용됩니다.</p>
+    </section>
+
+    <section id="h-ps-irp" data-title="연금저축과 IRP, 뭐가 다른가요?" hidden>
+      <p>둘 다 세액공제를 받는 개인 연금이지만 규칙이 다릅니다.</p>
+      <table>
+        <tr><th></th><th>연금저축</th><th>IRP</th></tr>
+        <tr><td>가입 자격</td><td>누구나</td><td>소득이 있는 사람</td></tr>
+        <tr><td>납입 한도</td><td colspan="2" style="text-align:center;">둘을 합쳐 연 1,800만원</td></tr>
+        <tr><td>세액공제</td><td>그중 600만원까지</td><td>그중 900만원까지 (연금저축 포함)</td></tr>
+        <tr><td>주식형 비중</td><td>100% 가능</td><td>70%까지 (30%는 안전자산)</td></tr>
+        <tr><td>중도인출</td><td>비교적 자유</td><td>법정 사유만 가능</td></tr>
+        <tr><td>퇴직금 수령</td><td>불가</td><td>가능</td></tr>
+      </table>
+      <p>그래서 보통 <b>연금저축 600만원을 먼저 채우고, 남는 300만원을 IRP에 넣는</b> 순서를 씁니다. 다만 IRP는 중간에 깨기 어려워서, 그 돈을 중간에 쓸 가능성이 있다면 순서를 바꾸는 편이 낫습니다.</p>
+      <p>퇴직금은 만 55세 전에 받으면 원칙적으로 IRP 계좌로 이전되므로, 이미 IRP를 가지고 계실 수도 있습니다. IRP 납입금액은 <b>앞으로 더 넣을 계획</b>입니다.</p>
+    </section>
+
+    <section id="h-dc-tax" data-title="퇴직금 세금이 줄어드는 방식" hidden>
+      <p id="dc-note"></p>
+    </section>
+
+    <section id="h-irp-limit" data-title="납입 한도·세액공제" hidden>
+      <p>납입 한도 <b>연 1,800만원</b>은 연금저축 + IRP 합산·개인 단위입니다(부부는 각자 1,800만원). 세액공제 한도는 연 900만원이며, 연금저축 단독으로는 600만원까지만 공제됩니다.</p>
+      <p>세액공제 한도를 넘겨 납입한 분은 <b>과세제외 원금</b>이 되어 인출 시 비과세, 세액공제 받은 원금과 <b>모든 운용수익</b>은 연금소득세 과세대상입니다.</p>
+      <p>ISA 만기자금 전환분과 퇴직금 이전액은 1,800만원 한도와 별도이며 여기서는 다루지 않습니다.</p>
+    </section>
+
+    <section id="h-paytype" data-title="확정기간형과 종신형" hidden>
+      <p><b>확정기간형</b>은 정해진 기간 동안, <b>종신형</b>은 평생 받는 방식입니다.</p>
+      <p>세율은 확정기간형이 55~69세 5.5% / 70~79세 4.4% / 80세~ 3.3%, 종신형은 나이와 관계없이 3.3%입니다(2026년 1월 1일 이후 받는 연금부터, 종전 4.4%).</p>
+    </section>
+
+    <section id="h-cap" data-title="연 1,500만원 한도" hidden>
+      <p><b>한도 안에서 수령</b>: 낮은 세율(3.3~5.5%)을 유지하도록 연 1,500만원까지만 인출합니다.</p>
+      <p><b>초과 허용</b>: 목표 실수령액을 맞추기 위해 한도를 넘겨 인출하고, 초과한 해는 <b>그해 사적연금 전액</b>에 16.5% 분리과세를 적용합니다. 종합과세를 택하는 쪽이 유리한 경우도 있지만, 다른 소득에 따라 달라져 여기서는 계산하지 않습니다.</p>
+    </section>
+
+    <section id="h-goal" data-title="돈의 종류별 목표" hidden>
+      <p>돈은 <b>세금이 적은 순서</b>로 나갑니다. ① 세금 없는 돈(과세제외 원금) → ② 퇴직금(이연퇴직소득) → ③ 세금 혜택을 받은 돈과 수익(세액공제분+운용수익). 이 순서는 법으로 정해져 있어 바꿀 수 없습니다.</p>
+      <p>목표는 <b>세금 뗀 뒤 손에 들어오는 금액</b>입니다. 연금저축에서 매달 정해진 금액이 먼저 나오고, 모자란 만큼만 IRP·퇴직금에서 채웁니다. 연금저축만으로 목표를 넘으면 IRP는 건드리지 않습니다.</p>
+      <p>체크하지 않으면 위 기본 정보의 목표 금액을 세 단계에 똑같이 적용합니다.</p>
+    </section>
+
+    <section id="h-rate" data-title="기대수익률" hidden>
+      <p id="rate-note"></p>
+      <p>기본은 <b>하나의 수익률</b>로 계산합니다. <b>따로 정하기</b>를 고르면 모으는 기간과 받는 기간의 수익률을 나눌 수 있습니다. 받는 기간에는 매달 돈을 빼 쓰기 때문에 시장이 떨어진 해의 손실을 만회하기 어렵습니다. 그래서 <b>받는 기간 수익률은 더 낮게</b> 잡는 게 안전합니다.</p>
+    </section>
+
+    <section id="h-infl" data-title="물가상승률" hidden>
+      <p>연도별 내역의 <b>지금 돈 가치</b> 칸과 차트의 점선은, 그해 받는 금액을 <b>오늘의 물가로 바꾼 금액</b>입니다. 받는 금액은 매달 같은 명목 금액이라, 물가가 오를수록 이 값은 해마다 줄어듭니다. 물가가 해마다 2.5% 오르면 30년 뒤 300만원은 지금 돈으로 약 143만원어치입니다.</p>
+      <p><b>2.0%</b>는 한국은행 물가안정목표, <b>3.0%</b>는 보수적으로 잡는 값이고 기본값은 그 사이인 <b>2.5%</b>입니다. 40년을 놓고 보면 2%와 3% 사이에 지금 돈 가치가 30% 넘게 벌어지니, 한쪽 숫자만 보지 마시고 양끝을 한 번씩 눌러보시는 편이 좋습니다.</p>
+    </section>
+
+    <section id="h-reset" data-title="기본 값으로 돌릴까요?" hidden>
+      <p>다시 계산할 때, 입력한 값을 모두 기본 값으로 돌립니다.</p>
+      <div class="sheet-act">
+        <button type="button" id="reset-ok">초기화</button>
+        <button type="button" id="reset-cancel" class="main" autofocus>입력값유지</button>
+      </div>
+    </section>
+
+    <section id="h-legend" data-title="표 기호 설명" hidden>
+      <p><b>연금 연차</b>: 연금을 받을 수 있게 된 해부터 센 햇수입니다(실제로 받기 시작한 해가 아니라 조건을 채운 해가 1년차). 금액은 모두 세금 떼기 전 월평균입니다.</p>
+      <p>⚠수령한도 = 그해 뺄 수 있는 한도(연금수령한도, 120%)에 닿음<br>⚠1500 = 연 1,500만원 한도에 닿음<br>⚠16.5% = 한도를 넘겨 세금 16.5% 적용<br>⚠미달 = 목표 실수령액에 못 미침</p>
+    </section>
+
+  </div>
+</dialog>
+
+<script>
+/* ═════════ 상수 ═════════ */
+const DEDUCT_CAP  = 900;   // 세액공제 한도 (연, 만원)
+const PRIVATE_CAP = 1500;  // 사적연금 저율과세 한도 (연, 만원)
+const OVER_RATE   = .165;  // 1500만원 초과 시 분리과세율
+
+/* 나이별 연금소득세율 (지방소득세 포함) */
+const termRate = age => age>=80 ? .033 : age>=70 ? .044 : .055;  // 확정기간형
+const lifeRate = () => .033;  // 종신형: 전 연령 3%+지방세(2026.1.1 이후 수령분부터, 종전 4%. 국세청 원천징수 안내)
+
+/* 이연퇴직소득 연금수령 감면율
+   원천징수: 10년 이하 70% / 10년 초과~20년 이하 60% / 20년 초과 50%
+   → 감면율 30% / 40% / 50%. 20년 초과 구간은 2026.1.1 이후 연금수령분부터 신설. */
+const dcRed = yr => yr>20 ? .50 : yr>10 ? .40 : .30;
+
+/* 연금수령한도: 평가액 / (11 - 연차) x 120%. 11년차 이상은 한도 없음. */
+const payoutLimit = (bal, yr) => yr>=11 ? Infinity : bal/(11-yr)*1.2;
+
+/* 연금수령연차: 최초로 연금수령할 수 있는 날이 속하는 과세기간이 기산연차.
+   2013.3.1 이전 가입 계좌는 6년차부터 기산(offset 5). */
+const recvYear = (age, eligibleAge, legacyOffset) =>
+  Math.max(1, Math.floor(age - eligibleAge) + 1 + legacyOffset);
+
+/* 가입 연도 → 수령요건 충족 나이
+   요건: 만 55세 이후 + 가입일부터 5년 경과. 단 계좌에 이연퇴직소득이 있으면 5년 요건 면제. */
+const THIS_YEAR = new Date().getFullYear();
+/* 세법 기준은 여기 한 곳만 고치면 배지와 안내가 함께 갱신된다 */
+const TAX_BASIS = { law:'2026년 1월 1일 시행 세법', reviewed:'2026-09-15', year:2026 };
+
+/* 연금저축 월 정액 = 1년차 연금수령한도 / 12 = 평가액의 1% */
+const monthlyPayout = bal => bal * 0.01;
+
+const realValue = (v, years, inflPct) => v / Math.pow(1 + inflPct/100, years);
+const fmt  = n => Math.round(n).toLocaleString('ko-KR');
+const fmtD = n => (Math.round(n*10)/10).toLocaleString('ko-KR');
+
+/* ═════════ 퇴직소득세 ═════════ */
+function progressiveTax(base){
+  if(base<=1400)   return base*.06;
+  if(base<=5000)   return 84    + (base-1400)*.15;
+  if(base<=8800)   return 624   + (base-5000)*.24;
+  if(base<=15000)  return 1536  + (base-8800)*.35;
+  if(base<=30000)  return 3706  + (base-15000)*.38;
+  if(base<=50000)  return 9406  + (base-30000)*.40;
+  if(base<=100000) return 17406 + (base-50000)*.42;
+  return 38406 + (base-100000)*.45;
+}
+
+function calcRetirementTax(incomeMan, workYears){
+  if(incomeMan<=0||workYears<=0) return {tax:0, rate:0};
+  let d1;                                   // 근속연수공제
+  if(workYears<=5)       d1 = 100*workYears;
+  else if(workYears<=10) d1 = 500  + 200*(workYears-5);
+  else if(workYears<=20) d1 = 1500 + 250*(workYears-10);
+  else                   d1 = 4000 + 300*(workYears-20);
+
+  const converted = Math.max(0, incomeMan-d1) * 12 / workYears;  // 환산급여
+
+  let d2;                                   // 환산급여공제
+  if(converted<=800)        d2 = converted;
+  else if(converted<=7000)  d2 = 800   + (converted-800)*.6;
+  else if(converted<=10000) d2 = 4520  + (converted-7000)*.55;
+  else if(converted<=30000) d2 = 6170  + (converted-10000)*.45;
+  else                      d2 = 15170 + (converted-30000)*.35;
+
+  const taxBase = Math.max(0, converted - d2);
+  const tax = progressiveTax(taxBase) * workYears / 12;
+  const total = tax * 1.1;
+  return {tax: Math.round(total*10)/10, rate: total/incomeMan*100};
+}
+
+/* ═════════ 축적 ═════════ */
+function accumulate(annualPay, rate, nowAge, startAge, seed, seedT1, payYears){
+  seed   = seed   || 0;
+  seedT1 = Math.min(seedT1 || 0, seed);
+  payYears = payYears == null ? 5 : payYears;
+  const rm = rate/100/12;
+  const totalMonths = Math.max(0, Math.round((startAge-nowAge)*12));
+  const payMonths   = Math.min(payYears*12, totalMonths);
+  const restMonths  = totalMonths - payMonths;
+
+  let bal = seed;
+  for(let m=0;m<payMonths;m++) bal = bal*(1+rm) + annualPay/12;
+  bal *= Math.pow(1+rm, restMonths);
+
+  const paidYears = payMonths/12;
+  const t1 = seedT1 + Math.max(0, annualPay - DEDUCT_CAP) * paidYears;
+  return { t1, t3: Math.max(0, bal - t1), total: bal, paidYears };
+}
+
+/* ═════════ 한 해 인출 ═════════
+   s는 잔액 상태 사본 {a1,a3,t1,dc,t3} — 호출부에서 복사해 넘긴다.
+   rcYrPs/rcYrIrp: 연금저축과 IRP(+DC)는 별개 계좌라 연금수령연차도 각자 센다.
+   capLimit: 1500 또는 Infinity, forceRate: null 또는 0.165 */
+function runYear(s, age, rcYrPs, rcYrIrp, p, capLimit, forceRate){
+  const psRm  = p.psRate/100/12;
+  const irpRm = p.irpRate/100/12;
+  const dcEff = p.dcEffTaxRate/100;
+  const rateFn = p.lifetime ? lifeRate : termRate;
+
+  const psLimit  = payoutLimit(s.a1+s.a3, rcYrPs);
+  const irpLimit = payoutLimit(s.t1+s.dc+s.t3, rcYrIrp);
+  let psUsed=0, irpUsed=0, capUsed=0;
+  let psW=0,psNetSum=0,t1W=0,dcW=0,t3W=0,netSum=0,taxSum=0;
+  let stageYr=null, hitPayout=false, hitPsLimit=false, hitCap=false, shortfall=false;
+  let dcExhausted=false, t1Exhausted=false;
+
+  for(let m=0;m<12;m++){
+    const tr = forceRate != null ? forceRate : rateFn(age + m/12);
+    const stage = s.t1>0.01 ? 1 : s.dc>0.01 ? 2 : 3;
+    if(m===0) stageYr = stage;
+    const target = stage===1 ? p.s1Net : stage===2 ? p.s2Net : p.s3Net;
+
+    let monthNet = 0, monthTax = 0;
+
+    /* 운용수익: 과세제외 원금과 이연퇴직소득의 수익은 전부 3순위로 귀속 */
+    if(s.a1>0) s.a3 += s.a1*psRm;
+    s.a3 *= (1+psRm);
+    if(s.t1>0) s.t3 += s.t1*irpRm;
+    if(s.dc>0) s.t3 += s.dc*irpRm;
+    s.t3 *= (1+irpRm);
+
+    /* 계좌 A: 연금저축 — 월 정액 인출 */
+    const psRoom = () => Math.max(0, psLimit - psUsed);
+    let psWant = Math.min(p.psGross, psRoom());
+    if(psWant>0.01 && s.a1>0.01){                       // 1순위: 과세제외 원금
+      const w = Math.min(psWant, s.a1, psRoom());
+      s.a1 -= w; psW += w; psUsed += w;
+      monthNet += w; psNetSum += w; psWant -= w;
+    }
+    if(psWant>0.01 && s.a3>0.01){                       // 3순위
+      const capRoom = Math.max(0, capLimit - capUsed);
+      const gross   = Math.min(psWant, s.a3, psRoom(), capRoom);
+      const net     = gross*(1-tr);
+      s.a3 -= gross; psW += gross; psUsed += gross; capUsed += gross;
+      monthNet += net; monthTax += gross-net; psNetSum += net;
+      if(gross < psWant - 0.01 && capRoom <= gross + 0.01) hitCap = true;
+    }
+    if(p.psGross > psWant + 0.01 && (s.a1+s.a3) > 0.01 && psRoom() <= 0.01) hitPsLimit = true;
+
+    /* 계좌 B: IRP — 부족분을 법정 순서대로 채운다 */
+    let need = Math.max(0, target - monthNet);
+    const room = () => Math.max(0, irpLimit - irpUsed);
+
+    if(need>0.01 && s.t1>0.01){                         // 1순위: 과세제외 원금
+      const w = Math.min(need, s.t1, room());
+      const prev = s.t1;
+      s.t1 -= w; t1W += w; irpUsed += w;
+      monthNet += w; need -= w;
+      if(prev>0 && s.t1<=0.01) t1Exhausted = true;
+    }
+    if(need>0.01 && s.dc>0.01){                         // 2순위: 이연퇴직소득
+      const effTax = dcEff*(1-dcRed(rcYrIrp));
+      const gross  = Math.min(need/(1-effTax), s.dc, room());
+      const net    = gross*(1-effTax);
+      const prev = s.dc;
+      s.dc -= gross; dcW += gross; irpUsed += gross;
+      monthNet += net; monthTax += gross-net; need -= net;
+      if(prev>0 && s.dc<=0.01) dcExhausted = true;
+    }
+    if(need>0.01 && s.t3>0.01){                         // 3순위
+      const capRoom = Math.max(0, capLimit - capUsed);
+      const gross   = Math.min(need/(1-tr), s.t3, room(), capRoom);
+      const net     = gross*(1-tr);
+      s.t3 -= gross; t3W += gross; irpUsed += gross; capUsed += gross;
+      monthNet += net; monthTax += gross-net; need -= net;
+    }
+
+    if(need > 0.01){
+      shortfall = true;
+      if(room() <= 0.01 && (s.t1+s.dc+s.t3) > 0.01) hitPayout = true;
+      if(capUsed >= capLimit - 0.01 && (s.t3+s.a3) > 0.01 && s.t1<=0.01 && s.dc<=0.01) hitCap = true;
+    }
+    netSum += monthNet; taxSum += monthTax;
+  }
+
+  return {state:s, capUsed, stage:stageYr,
+    psW, psNetSum, t1W, dcW, t3W, netSum, taxSum,
+    hitPayout, hitPsLimit, hitCap, shortfall, dcExhausted, t1Exhausted};
+}
+
+/* ═════════ 시뮬레이션 ═════════ */
+function simulate(p){
+  const legacyOffsetPs  = p.legacyOffsetPs  || 0;
+  const legacyOffsetIrp = p.legacyOffsetIrp || 0;
+  const eligibleAgePs   = p.eligibleAgePs  == null ? 55 : p.eligibleAgePs;
+  const eligibleAgeIrp  = p.eligibleAgeIrp == null ? 55 : p.eligibleAgeIrp;
+  let st = {a1:p.psT1||0, a3:p.psT3||0, t1:p.t1||0, dc:p.dc||0, t3:p.t3||0};
+  const rows = [];
+
+  for(let y=0; p.startAge+y<=100; y++){
+    const age  = p.startAge + y;
+    const rcYrPs  = recvYear(age, eligibleAgePs,  legacyOffsetPs);
+    const rcYrIrp = recvYear(age, eligibleAgeIrp, legacyOffsetIrp);
+    const snap = {...st};
+
+    // 1차: 저율과세 유지 가정
+    let r = runYear({...snap}, age, rcYrPs, rcYrIrp, p, p.allowOver ? Infinity : PRIVATE_CAP, null);
+    let overCap = false;
+
+    // 초과 허용 모드에서 실제로 1500만원을 넘겼다면 그해 전액 16.5%로 재계산
+    if(p.allowOver && r.capUsed > PRIVATE_CAP + 0.01){
+      r = runYear({...snap}, age, rcYrPs, rcYrIrp, p, Infinity, OVER_RATE);
+      overCap = true;
+    }
+
+    st = r.state;
+    rows.push({
+      age, rcYrPs, rcYrIrp, stage:r.stage, overCap,
+      rate: overCap ? OVER_RATE : (p.lifetime?lifeRate:termRate)(age),
+      psW:r.psW/12, psNetW:r.psNetSum/12, psBal:st.a1+st.a3, psT1Bal:st.a1,
+      t1W:r.t1W/12, t1Bal:st.t1,
+      dcW:r.dcW/12, dcBal:st.dc,
+      t3W:r.t3W/12, t3Bal:st.t3,
+      net:r.netSum/12, tax:r.taxSum/12, capUsed:r.capUsed,
+      hitPayout:r.hitPayout, hitPsLimit:r.hitPsLimit, hitCap:r.hitCap,
+      shortfall:r.shortfall, dcExhausted:r.dcExhausted, t1Exhausted:r.t1Exhausted,
+    });
+
+    if(st.a1<=0.01 && st.a3<=0.01 && st.t1<=0.01 && st.dc<=0.01 && st.t3<=0.01) break;
+  }
+  return rows;
+}
+
+/* ═════════ UI ═════════ */
+let C1=null, C2=null;
+let payType = 'life';   // term | life (기본 종신형)
+let rateMode = 'basic'; // basic | detail
+let inflPct = 2.5;      // 물가상승률 (%) — 프리셋 2.0 / 2.5 / 3.0
+let capMode = 'keep';   // keep | over
+let warnShown = false;  // 경고박스가 비어있다가 채워지는 순간만 페이드인
+const $ = id => document.getElementById(id);
+/* CSS 변수 값 읽기 — 차트 색을 다크모드에 맞추려고 */
+const cv = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+/* prefers-reduced-motion은 CSS transition/animation은 자동으로 죽지만
+   Element.animate()는 별개라 여기서 직접 체크한다 */
+const reduceMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* dx≠0이면 그 방향에서 들어온다(다음=오른쪽에서, 이전=왼쪽에서). 입력은 막지 않는다. */
+function fadeIn(el, dx = 0){
+  if(!el || reduceMotion()) return;
+  const from = dx ? {opacity:0, transform:`translateX(${dx}px)`} : {opacity:0};
+  const to   = dx ? {opacity:1, transform:'translateX(0)'}       : {opacity:1};
+  el.animate([from, to], {duration: dx ? 220 : 150, easing:'cubic-bezier(.2,.8,.2,1)'});
+}
+
+/* 슬라이더는 프레임당 여러 번 input이 올 수 있어 한 프레임에 한 번만 계산한다 */
+let rafId = 0;
+function update(){
+  if(!rafId) rafId = requestAnimationFrame(()=>{ rafId = 0; render(); });
+}
+
+function render(){
+  const showMain   = $('c1').offsetParent !== null;   // 계산기 탭이 보일 때만 차트를 그린다
+  const showDetail = showMain && $('detail').open;    // 접힌 '자세한 결과'는 열 때 그린다
+  const nowAge   = +$('now').value;
+  const startAge = +$('age').value;
+  const accRate  = rateMode==='basic' ? +$('rate-basic').value : +$('irp-r').value;
+  const drawRate = rateMode==='basic' ? +$('rate-basic').value : +$('draw-r').value;
+  const infl     = inflPct;
+  const hasPs    = $('has-ps').checked;
+  const hasIrp   = $('has-irp').checked;
+  const hasDc    = $('has-dc').checked;
+  const annPay   = hasIrp ? +$('pay').value : 0;
+  const payYears = +$('payyr').value;
+  const seed     = hasPs ? +$('seed').value : 0;
+  const seedT1   = hasPs ? Math.min(+$('seed-t1').value, seed) : 0;
+  const dcBal    = hasDc ? +$('dc').value : 0;
+  $('card-dc').classList.toggle('off',  !hasDc);
+  $('card-ps').classList.toggle('off',  !hasPs);
+  $('card-irp').classList.toggle('off', !hasIrp);
+  const noMoney  = !(dcBal > 0 || seed > 0 || annPay > 0);   // 아직 금액을 넣지 않은 처음 상태
+  const wYears   = +$('wy').value;
+  const goal     = +$('goal').value;
+  const split    = $('goal-split').checked;   // 기본은 목표 하나를 세 단계에 똑같이 적용
+  const s1Net    = split ? +$('s1').value : goal;
+  const s2Net    = split ? +$('s2').value : goal;
+  const s3Net    = split ? +$('s3').value : goal;
+  const lifetime = payType === 'life';
+  const allowOver= capMode === 'over';
+  const rateFn = lifetime ? lifeRate : termRate;
+
+  /* 결국 필요한 정보는 "가입 후 5년이 지났는가" 하나뿐이다 — 정확한 가입 연도가
+     아니라 이 예/아니오만 있으면 계산이 끝난다. 그리고 그 답조차 대부분 물어볼
+     필요가 없다: 수령 시작이 현재보다 5년 이상 뒤라면(가입일을 최악으로 가정해도,
+     즉 오늘 막 가입했다고 해도) 시작 시점엔 이미 요건을 채운다. DC(퇴직금)가 있으면
+     이 5년 요건 자체가 면제되어 역시 만 55세로 고정된다. 개시가 머지않았고 DC도
+     없을 때만 실제로 물어볼 필요가 생긴다. */
+  const gapGuaranteed = (startAge - nowAge) >= 5;
+  const needsJoin     = hasPs || hasIrp || hasDc;
+  const needsFiveYearCheck = needsJoin && !hasDc && !gapGuaranteed;
+
+  $('five-year-row').classList.toggle('off', !needsFiveYearCheck);
+  $('elig-info-simple').classList.toggle('off', !needsJoin);
+
+  const fiveYearsPassed = !needsFiveYearCheck || $('five-year-check').checked;
+  const eligAge = fiveYearsPassed ? 55 : startAge;   // 아직이면 시작 나이에 막 자격이 생긴 것으로 보수적으로 처리
+  const legacyOffsetIrp = 0;                          // IRP는 2013년 이후 도입된 상품이라 특례가 사실상 해당 없음
+  const legacyOffsetPs  = (hasPs && $('ps-legacy-simple').checked) ? 5 : 0;
+
+  if(needsJoin){
+    let reason;
+    if(hasDc)             reason = '퇴직금이 든 계좌는 \'가입 5년\' 조건이 없기 때문입니다.';
+    else if(gapGuaranteed) reason = `받기 시작하기까지 ${startAge-nowAge}년 넘게 남았습니다. 오늘 가입해도 그 전에 5년이 채워집니다.`;
+    else if(fiveYearsPassed) reason = '이미 가입 후 5년이 지났다고 확인하셨기 때문입니다.';
+    else reason = null;
+
+    if(reason){
+      $('elig-info-simple').innerHTML = `<b>만 55세부터 받을 수 있습니다.</b> ${reason}`
+        + (legacyOffsetPs ? `<br>연금저축은 2013년 3월 1일 이전 가입 특례로 <b>6년차부터</b> 셉니다.` : '');
+    }else{
+      $('elig-info-simple').innerHTML = `<span class="warnline"><b>아직 가입 5년이 안 됐을 수 있습니다.</b> 만 ${startAge}세에 시작하면 그때 막 조건을 채운 것(1년차)으로 보수적으로 계산합니다. 이미 5년이 지났다면 위 체크를 눌러 주세요.</span>`;
+    }
+  }
+
+  $('now-o').textContent    = '만 '+nowAge+'세';
+  $('age-o').textContent    = '만 '+startAge+'세';
+  $('irp-r-o').textContent  = accRate.toFixed(1)+'%';
+  $('draw-r-o').textContent = drawRate.toFixed(1)+'%';
+  $('rate-basic-o').textContent = accRate.toFixed(1)+'%';
+  $('pay-o').textContent    = annPay>0 ? annPay.toLocaleString()+'만원' : '납입 안 함';
+  $('payyr-o').textContent  = payYears>0 ? payYears+'년' : '—';
+  $('seed-o').textContent   = seed.toLocaleString()+'만원';
+  $('seed-t1-o').textContent= seedT1.toLocaleString()+'만원';
+  $('dc-o').textContent     = dcBal.toLocaleString()+'만원';
+  $('wy-o').textContent     = wYears+'년';
+  $('s1-o').textContent     = s1Net+'만원';
+  $('s2-o').textContent     = s2Net+'만원';
+  $('s3-o').textContent     = s3Net+'만원';
+  $('goal-o').textContent   = goal+'만원';
+  $('split-rows').classList.toggle('off', !split);
+  $('chips-risk').querySelectorAll('button').forEach(b =>
+    b.setAttribute('aria-pressed', rateMode==='basic' && +b.dataset.v === accRate ? 'true' : 'false'));
+  document.querySelectorAll('.sr input[type=range]').forEach(el=>{
+    const o = $(el.id+'-o');
+    if(o) el.setAttribute('aria-valuetext', o.textContent);   // 스크린리더가 "만원/세" 단위로 읽도록
+    el.style.setProperty('--p', ((el.value - el.min) / (el.max - el.min) * 100) + '%');   // 슬라이더 채움 비율
+  });
+
+  const real = (v, age) => realValue(v, age - nowAge, infl);
+  const startYrIrp = recvYear(startAge, eligAge, legacyOffsetIrp);   // 이연퇴직소득(DC)은 IRP 쪽 연차를 따른다
+
+  $('rate-note').innerHTML = `<b>모으는 기간</b> 만 ${nowAge}~${startAge}세 (${Math.max(0,startAge-nowAge)}년): 돈을 넣고 불리는 기간. <b>받는 기간</b> 만 ${startAge}세~: 매달 돈을 빼 쓰기 때문에 시장이 떨어진 해의 손실을 만회하기 어렵습니다. 모으는 기간보다 낮게 잡는 게 안전합니다.`;
+
+  $('row-s2').classList.toggle('off', !hasDc);
+
+  const warns=[];
+  /* 입력 자체의 문제는 결과 카드가 아니라 그 입력 바로 아래에 보여준다(같은 내용이면 다시 쓰지 않아 스크린리더 중복 낭독 방지) */
+  const fw = (id, html) => { const el = $(id); if(el.dataset.h !== html){ el.innerHTML = html; el.dataset.h = html; } };
+  const gap = startAge - nowAge;
+  fw('acct-warn', (!hasPs && !hasIrp && !hasDc) ? '⚠ 연금을 하나 이상 골라 주세요.' : '');
+  fw('age-warn', startAge < eligAge ? `⚠ 만 ${eligAge}세부터 받을 수 있는데 만 ${startAge}세로 설정돼 있습니다.`
+              : gap <= 0 ? '⚠ 받기 시작할 나이가 현재 나이 이하입니다. 모으는 기간이 없어 지금 잔액 그대로 계산합니다.' : '');
+  fw('payyr-warn', (annPay > 0 && payYears > 0 && gap > 0 && gap < payYears)
+    ? `⚠ 받기 시작까지 ${gap}년뿐이라 ${payYears}년을 다 채우지 못합니다. ${gap}년만 납입합니다.` : '');
+  fw('pay-warn', annPay > DEDUCT_CAP
+    ? `세금 혜택(세액공제) 한도 900만원을 넘는 ${(annPay-DEDUCT_CAP).toLocaleString()}만원은 '세금 없는 돈'이 되어 나중에 뺄 때 세금이 없습니다.` : '');
+
+  /* 축적 */
+  const ps  = accumulate(0,      accRate, nowAge, startAge, seed, seedT1, payYears);
+  const acc = accumulate(annPay, accRate, nowAge, startAge, 0, 0, payYears);
+  const psGross = monthlyPayout(ps.total);
+  const psTr    = 1 - rateFn(startAge);
+  $('acc-line').textContent = annPay > 0
+    ? `받기 시작할 때 IRP 잔액 ${fmt(acc.total)}만원 (넣은 돈 ${fmt(annPay*acc.paidYears)}만원)`
+    : '';
+
+  /* 퇴직소득세 */
+  const dcT = calcRetirementTax(dcBal, wYears);
+  const dcRate = dcT.rate;
+  $('dc-line').textContent = hasDc
+    ? `한 번에 받으면 퇴직소득세 ${fmt(dcT.tax)}만원(${dcRate.toFixed(2)}%). 연금으로 받으면 ${(dcRate*.7).toFixed(2)}→${(dcRate*.6).toFixed(2)}→${(dcRate*.5).toFixed(2)}%로 줄어듭니다.`
+    : '퇴직금이 0이면 계산에 넣지 않습니다.';
+  $('dc-note').innerHTML = `퇴직금으로 받는 연금은 한 번에 받을 때보다 <b>세금이 30~50% 줄어듭니다.</b> 연금을 받을 수 있게 된 해부터 센 햇수(연금수령연차)가 늘수록 더 줄어듭니다 — <b>10년차까지 30%, 11~20년차 40%, 21년차부터 50%</b>. (21년차부터 구간은 2026년 1월 1일 이후 받는 연금부터 생겼습니다.)<br>이번 설정은 ${startYrIrp}년차부터 시작하므로, 첫해 세금은 한 번에 받을 때의 <b>${(1-dcRed(startYrIrp))*100}%</b>(실제 세금 비율 ${(dcRate*(1-dcRed(startYrIrp))).toFixed(2)}%)입니다${startYrIrp>=11?' (11년차 이상이라 연금수령한도도 이미 적용되지 않습니다)':''}. 이 돈은 연 1,500만원 한도에 들어가지 않습니다.`;
+
+  const base = {
+    psT1:ps.t1, psT3:ps.t3, psRate:drawRate, psGross,
+    t1:acc.t1, t3:acc.t3, dc:dcBal,
+    dcEffTaxRate:dcRate, irpRate:drawRate, startAge,
+    eligibleAgePs:eligAge, eligibleAgeIrp:eligAge,
+    legacyOffsetPs, legacyOffsetIrp, lifetime, allowOver,
+    s1Net, s2Net, s3Net
+  };
+  const rows = simulate(base);
+
+  /* 단계 전환 */
+  const s1Age = rows.find(r=>r.stage>=2)?.age ?? null;
+  const s2Age = rows.find(r=>r.stage===3)?.age ?? null;
+  const last  = rows[rows.length-1];
+  const endBal  = last ? last.t3Bal + last.psBal : 0;
+  const endDraw = last ? (last.t3W + last.psW)*12 : 0;
+  const endYrs  = endDraw > 0.01 ? endBal/endDraw : (endBal > 0.01 ? Infinity : 0);
+  const reached = last && last.age >= 100 && endBal > 0.01;
+
+  /* 목표 미달이 재원 존속보다 우선한다 — "재원이 100세까지 남았다"와
+     "실제로 목표한 만큼 받았다"는 다른 질문이며, 후자가 먼저 답해야 할 질문이다. */
+  const shortRowsAll = rows.filter(r=>r.shortfall);
+  const hasShortfall = shortRowsAll.length > 0;
+  const verdict = hasShortfall ? `${shortRowsAll[0].age}세부터 목표 미달`
+                : !reached ? `${last?last.age:'—'}세에 바닥남`
+                : endYrs >= 5 ? '영구수령' : `100세까지 수령 (100세에 ${fmtD(endYrs)}년치 남음)`;
+  const vColor  = hasShortfall || !reached ? 'var(--red)' : endYrs >= 5 ? 'var(--green)' : 'var(--amber)';   // 판정에만 상태색을 쓴다
+
+  /* 스트레스 테스트 */
+  const stressRate = Math.max(0, drawRate - 1);
+  const sRows = simulate({...base, psRate:stressRate, irpRate:stressRate});
+  const sLast = sRows[sRows.length-1];
+  const stressTxt = (sLast && sLast.age>=100 && sLast.t3Bal+sLast.psBal>0.01)
+    ? '100세까지 버팁니다' : `${sLast?sLast.age:'—'}세에 바닥납니다`;
+
+  /* 경고 */
+  const psLimRows  = rows.filter(r=>r.hitPsLimit);
+  const payoutRows = rows.filter(r=>r.hitPayout);
+  const capRows    = rows.filter(r=>r.hitCap);
+  const overRows   = rows.filter(r=>r.overCap);
+  const shortRows  = shortRowsAll;
+  if(psLimRows.length)  warns.push(`<b>연금저축에서 매달 받는 금액이 그해 뺄 수 있는 한도(연금수령한도)를 넘었습니다</b> — ${psLimRows[0].age}세 등 ${psLimRows.length}개 해. 한도까지만 뺐습니다.`);
+  if(payoutRows.length) warns.push(`<b>그해 뺄 수 있는 한도(연금수령한도)에 닿았습니다</b> — ${payoutRows[0].age}세 등 ${payoutRows.length}개 해. 한도까지만 뺐습니다. 넘겨 빼면 '연금'이 아니라 일반 인출로 봐서 세금이 훨씬 커집니다(내가 넣은 돈은 16.5%, 퇴직금은 세금 감면 없음).`);
+  if(capRows.length)    warns.push(`<b>연금을 1년에 1,500만원까지만 받도록 했습니다</b> — ${capRows[0].age}세 등 ${capRows.length}개 해. 그 이상 받으면 세금이 크게 달라지기 때문입니다. '연금 수령 방법'의 '자세히 설정'에서 '초과 허용'을 고르면 넘게 받을 때의 세금도 볼 수 있습니다.`);
+  if(overRows.length)   warns.push(`<b>1,500만원을 넘겨 받아 세금 16.5%(분리과세)를 적용했습니다</b> — ${overRows[0].age}세 등 ${overRows.length}개 해. 넘은 부분만이 아니라 <b>그해 받은 연금 전부</b>에 적용됩니다. 다른 소득이 적으면 종합과세가 더 유리할 수 있지만 여기서는 계산하지 않습니다.`);
+  if(shortRows.length)  warns.push(`<b>목표 실수령액에 못 미칩니다</b> — ${shortRows[0].age}세부터 ${shortRows.length}개 해. 돈이 다 떨어졌거나 위의 한도에 걸렸기 때문입니다.`);
+  const warnHtml = noMoney ? '' : warns.map(w=>`<p>⚠ ${w}</p>`).join('');
+  if($('warn').dataset.h !== warnHtml){ $('warn').innerHTML = warnHtml; $('warn').dataset.h = warnHtml; }  // aria-live 중복 낭독 방지
+  if(warns.length && !warnShown) fadeIn($('warn'));
+  warnShown = !!warns.length;
+
+  /* 히어로 — 첫해 월 실수령액과 지속 가능성 */
+  const first = rows[0];
+  $('hero').innerHTML = noMoney ? `<p class="hero-l">결과</p><p class="hero-s" style="margin:0;">퇴직금·연금저축 잔액·IRP 납입 중 하나를 입력하면 월 수령액이 계산됩니다.</p>` : first ? `
+    <p class="hero-l">만 ${first.age}세부터 받기 시작 · 첫해 월 실수령액 (세금 뗀 뒤)</p>
+    <p class="hero-v">${fmtD(first.net)}만원</p>
+    <p class="hero-s" style="font-size:1rem;"><b style="color:${vColor};">${verdict}</b></p>
+    ${(!split && first.net > goal + 0.5) ? `<p class="hero-s" style="color:var(--muted);font-size:.8125rem;">목표(${goal}만원)보다 ${fmtD(first.net-goal)}만원 많습니다. 연금저축은 잔액의 1%가 매달 먼저 나오는데, 그것만으로 목표를 넘기 때문입니다.</p>` : ''}` : '';
+  $('livebar-v').textContent = noMoney ? '금액을 입력해 주세요' : first ? `월 ${fmtD(first.net)}만원` : '';
+  $('livebar-s').textContent = (first && !noMoney) ? verdict : '';
+
+  /* 요약 */
+  const shortDetail = hasShortfall
+    ? `실제로는 월 ${fmtD(shortRowsAll[0].net)}만원까지만 가능합니다. `
+    : (reached ? (endYrs===Infinity ? '100세에도 돈이 계속 남습니다. ' : endYrs >= 5 ? `100세에 ${fmtD(endYrs)}년치가 남습니다. ` : '') : '');
+  $('sum4').innerHTML = `
+    <div class="metric m1"><p class="ml">1단계 · 세금 없는 돈</p><p class="mv">${startAge}세 ~ ${s1Age?s1Age+'세':'—'}</p><p class="ms">목표 월 ${s1Net}만원</p></div>
+    <div class="metric m2"><p class="ml">2단계 · 퇴직금</p><p class="mv">${s1Age?s1Age+'세':'—'} ~ ${s2Age?s2Age+'세':'—'}</p><p class="ms">목표 월 ${s2Net}만원</p></div>
+    <div class="metric m3"><p class="ml">3단계 · 세금혜택분+수익</p><p class="mv">${s2Age?s2Age+'세~':'—'}</p><p class="ms">목표 월 ${s3Net}만원</p></div>
+    <div class="metric m4"><p class="ml">최종 결과</p>
+      <p class="mv" style="color:${vColor};">${verdict}</p>
+      <p class="ms">${shortDetail}수익률이 ${stressRate}%로 떨어지면 ${stressTxt}.</p></div>`;
+
+  const s3Gross  = s3Net/(1-rateFn(s2Age ?? 70));
+  const totalNet = rows.reduce((a,r)=>a+r.net*12,0);
+  const totalTax = rows.reduce((a,r)=>a+r.tax*12,0);
+  const capBad   = overRows.length || capRows.length;
+  $('sum3').innerHTML = `
+    <div class="metric m1">
+      <p class="ml">세금 떼기 전에 받아야 할 월 금액 (3단계)</p>
+      <p class="mv">${fmtD(s3Gross)}만원</p>
+      <p class="ms">연 ${fmt(s3Gross*12)}만원</p>
+    </div>
+    <div class="metric">
+      <p class="ml">연 1,500만원 한도 (연금저축·IRP)</p>
+      <p class="mv" style="color:${capBad?'var(--amber)':'var(--green)'};">${overRows.length?'초과':capRows.length?'도달':'한도 내'}</p>
+      <p class="ms">${overRows.length?`${overRows.length}개 해에 세금 16.5% 적용`:capRows.length?'낮은 세율을 지키려고 인출을 제한':'낮은 세율(3.3~5.5%) 유지'}</p>
+    </div>
+    <div class="metric m4">
+      <p class="ml">평생 총 실수령 / 총 세금</p>
+      <p class="mv">${fmt(totalNet)}만원</p>
+      <p class="ms">세금 ${fmt(totalTax)}만원 (세금 비중 ${(totalTax/(totalNet+totalTax)*100||0).toFixed(1)}%)</p>
+    </div>`;
+
+  /* 차트 — 처음 한 번만 만들고 이후엔 데이터만 갈아끼운다. 슬라이더를 끄는 동안 등장 애니메이션이
+     계속 처음부터 다시 도는 걸 막으려고 애니메이션은 끈다(모션 감소 설정과도 일치).
+     화면에 보일 때만 그린다. 색은 CSS 변수에서 읽어 다크모드를 따른다. */
+  $('c1').setAttribute('aria-label', `전체 잔액 추이 차트. 만 ${startAge}세부터 ${last?last.age:startAge}세까지 연금 계좌 잔액의 합계입니다. 돈의 종류별 수치는 자세한 결과의 연도별 내역에 있습니다.`);
+  $('c2').setAttribute('aria-label', `월 실수령액 추이 차트. 돈의 종류별 세금 뗀 뒤 월 수령액과, 그 금액을 지금 돈으로 바꾼 점선입니다. 수치는 아래 연도별 표에 있습니다.`);
+  rows.forEach(r => { r.allBal = r.psBal + r.t1Bal + r.dcBal + r.t3Bal; });
+  if(showMain){
+    const col  = {blue:cv('--blue'), gray:cv('--gray'), t2:cv('--text2')};
+    const tick = {font:{size:11}, color:cv('--muted')};
+    const grid = {color:cv('--line-soft')};
+    const axis = {ticks:{...tick, maxTicksLimit:9}, grid};
+    const opt  = {responsive:true, maintainAspectRatio:false, animation:false, plugins:{legend:{display:false}}};
+    const labels = rows.map(r=>r.age+'세');
+
+    const line = (label, key, color, w) => ({label, data:rows.map(r=>Math.round(r[key])),
+      borderColor:color, backgroundColor:color+'12', fill:true, tension:.3, pointRadius:0, borderWidth:w});
+    const cfg1 = {type:'line', data:{labels, datasets:[line('전체 잔액','allBal',col.blue,2.5)]},
+      options:{...opt, scales:{x:axis, y:{ticks:{...tick, callback:v=>v.toLocaleString()}, grid, beginAtZero:true}}}};
+    if(C1){ C1.data = cfg1.data; C1.update('none'); } else C1 = new Chart($('c1'), cfg1);
+
+    if(showDetail){
+    const dcNetArr = rows.map(r=>Math.round(r.dcW*(1-dcRate/100*(1-dcRed(r.rcYrIrp)))));
+    const t3NetArr = rows.map(r=>Math.round(r.t3W*(1-r.rate)));
+    const bar = (label, data, color, a) => ({label, data, backgroundColor:color+a, borderRadius:2, stack:'s'});
+    const cfg2 = {type:'bar', data:{labels, datasets:[
+        bar('연금저축', rows.map(r=>Math.round(r.psNetW)), col.blue, 'ff'),
+        bar('세금 없는 돈', rows.map(r=>Math.round(r.t1W)),    col.blue, '99'),
+        bar('퇴직금', dcNetArr,                          col.gray, 'cc'),
+        bar('세금혜택분+수익', t3NetArr,                       col.blue, '4d'),
+        {type:'line', label:'지금 돈 가치', data:rows.map(r=>Math.round(real(r.net,r.age))),
+         borderColor:col.t2, borderWidth:1.5, borderDash:[4,3], pointRadius:0, fill:false, tension:.3, stack:'real'}]},
+      options:{...opt, scales:{x:{stacked:true, ...axis}, y:{stacked:true, ticks:{...tick, callback:v=>v+'만'}, grid, beginAtZero:true}}}};
+    if(C2){ C2.data = cfg2.data; C2.update('none'); } else C2 = new Chart($('c2'), cfg2);
+    }
+  }
+
+  /* 단계별 달성 가능 상한 — 다른 두 단계는 실제로 설정한 값 그대로 두고,
+     해당 단계만 최대로 밀었을 때 진짜 한계가 얼마인지를 본다.
+     세 단계를 전부 최대로 놓고 보면(과거 방식) 앞 단계가 실제보다 빨리 재원을
+     써버려 뒷 단계의 한계를 실제보다 낮게(또는 다르게) 계산하는 오차가 생긴다. */
+  [1,2,3].forEach(stp=>{
+    const t = [s1Net, s2Net, s3Net];
+    t[stp-1] = 99999;
+    const probe = simulate({...base, s1Net:t[0], s2Net:t[1], s3Net:t[2]});
+    const r = probe.find(x=>x.stage===stp);
+    const tgt = [s1Net,s2Net,s3Net][stp-1];
+    const el = $('s'+stp+'-cap');
+    el.textContent = (r && tgt > r.net + 0.5) ? `달성 가능 상한 ${fmtD(r.net)}만원` : '';
+  });
+
+  /* 단계별 구성 */
+  $('split-info').innerHTML = [1,2,3].map((stp,i)=>{
+    const tgt = [s1Net,s2Net,s3Net][i];
+    const r = rows.find(x=>x.stage===stp);
+    if(!r) return `<div class="kv"><span class="k">${stp}단계</span><span class="v" style="color:var(--muted);font-weight:400;">해당 없음</span></div>`;
+    const psP  = r.psNetW, irpP = Math.max(0, r.net - psP);
+    const over = psP > tgt + 0.5, miss = r.net < tgt - 0.5;
+    return `<div class="kv">
+      <span class="k">${stp}단계 · ${r.age}세 기준</span>
+      <span class="v">연금저축 ${fmtD(psP)} + IRP ${fmtD(irpP)}</span>
+      <span class="s" style="color:${(over||miss)?'var(--amber)':'var(--muted)'};">${
+        over ? `연금저축만으로 목표 ${tgt}만 초과 → IRP는 안 씀`
+        : miss ? `합계 ${fmtD(r.net)}만 · 목표 ${tgt}만 미달`
+        : `합계 ${fmtD(r.net)}만`}</span>
+    </div>`;
+  }).join('');
+
+  /* 테이블 */
+  if(showDetail){
+  const bal = v => v>0.01 ? fmt(v)+'만' : '<span style="color:var(--muted)">소진</span>';
+  const wd  = (v,extra) => v>0.005 ? fmtD(v)+'만'+(extra||'') : '—';
+  const tagOf = r => r.stage===1?'<span class="tag t1">세금 없는 돈</span>':r.stage===2?'<span class="tag t2">퇴직금</span>':'<span class="tag t3">세금혜택분</span>';
+  const flagsOf = r => (r.hitPsLimit?'<span class="lim">⚠연금저축한도</span>':'')
+                     + (r.hitPayout?'<span class="lim">⚠수령한도</span>':'')
+                     + (r.hitCap?'<span class="lim">⚠1500</span>':'')
+                     + (r.overCap?'<span class="lim">⚠16.5%</span>':'')
+                     + (r.shortfall?'<span class="lim">⚠미달</span>':'');
+  $('tbody').innerHTML = rows.map(r=>{
+    const cls = r.stage===1?'s1':r.stage===2?'s2':'s3';
+    const tag = tagOf(r);
+    const flags = flagsOf(r);
+    return `<tr class="${cls}">
+      <td>${r.age}세</td><td>${(hasIrp||hasDc) ? r.rcYrIrp : r.rcYrPs}</td>
+      <td${r.overCap?' style="color:var(--red);font-weight:500;"':''}>${(r.rate*100).toFixed(1)}%</td>
+      <td>${wd(r.psW)}</td><td class="col-opt">${bal(r.psBal)}</td>
+      <td class="col-opt">${wd(r.t1W, r.t1Exhausted?'<span class="mid">(연중소진)</span>':'')}</td><td class="col-opt">${bal(r.t1Bal)}</td>
+      <td>${wd(r.dcW, r.dcExhausted?'<span class="mid">(연중소진)</span>':'')}</td><td class="col-opt">${bal(r.dcBal)}</td>
+      <td class="col-opt">${wd(r.t3W)}</td><td class="col-opt">${bal(r.t3Bal)}</td>
+      <td>${fmtD(r.tax)}만</td>
+      <td style="font-weight:600;color:var(--blue);">${fmtD(r.net)}만${flags}</td>
+      <td style="color:var(--muted);">${fmtD(real(r.net, r.age))}만</td>
+      <td class="col-opt">${tag}</td></tr>`;
+  }).join('');
+
+  /* 모바일 연도별 카드 — 요약 한 줄(나이·월 실수령), 탭하면 재원별 내역 */
+  const srcRow = (name, w, b, extra) => (w > 0.005 || b > 0.01)
+    ? `<div><span>${name}</span><b>${wd(w, extra)} · 잔액 ${bal(b)}</b></div>` : '';
+  $('yearlist').innerHTML = rows.map(r=>`
+    <details class="yr"><summary>
+      <span class="yr-a">${r.age}세<small>${(hasIrp||hasDc) ? r.rcYrIrp : r.rcYrPs}년차</small>${tagOf(r)}</span>
+      <span class="yr-n">${fmtD(r.net)}만</span>
+      <span class="yr-f">${flagsOf(r)}</span>
+    </summary><div class="yr-b">
+      <div><span>세율</span><b>${(r.rate*100).toFixed(1)}%</b></div>
+      <div><span>월 세금</span><b>${fmtD(r.tax)}만</b></div>
+      <div><span>지금 돈으로 환산</span><b>${fmtD(real(r.net, r.age))}만</b></div>
+      ${srcRow('연금저축', r.psW, r.psBal)}
+      ${srcRow('세금 없는 돈', r.t1W, r.t1Bal, r.t1Exhausted?'<span class="mid">(연중소진)</span>':'')}
+      ${srcRow('퇴직금', r.dcW, r.dcBal, r.dcExhausted?'<span class="mid">(연중소진)</span>':'')}
+      ${srcRow('세금혜택분+수익', r.t3W, r.t3Bal)}
+    </div></details>`).join('');
+  }
+  saveStateSoon();
+}
+
+/* ═════════ 입력 바인딩 ═════════ */
+['now','age','goal','rate-basic','irp-r','draw-r','pay','payyr','seed','seed-t1','dc','wy','s1','s2','s3']
+  .forEach(id => $(id).addEventListener('input', update));
+['has-dc','has-ps','has-irp','ps-legacy-simple','five-year-check'].forEach(id => $(id).addEventListener('change', update));
+/* 단계별 목표를 처음 켜면 지금 목표 금액에서 출발한다 */
+$('goal-split').addEventListener('change', e => {
+  if(e.target.checked) ['s1','s2','s3'].forEach(id => $(id).value = $('goal').value);
+  update();
+});
+
+function bindSeg(elId, setter){
+  const el = $(elId);
+  el.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    el.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true');
+    setter(b.dataset.v);
+    update();
+  }));
+}
+const applyRateMode = () => {
+  $('row-rate-basic').classList.toggle('off', rateMode!=='basic');
+  $('row-rate-acc').classList.toggle('off',   rateMode!=='detail');
+  $('row-rate-draw').classList.toggle('off',  rateMode!=='detail');
+};
+bindSeg('seg-type', v => payType = v);
+bindSeg('seg-cap',  v => capMode = v);
+bindSeg('seg-rate', v => { rateMode = v; applyRateMode(); });
+bindSeg('seg-infl', v => inflPct = +v);
+
+/* 투자 성향 칩 — 수익률 슬라이더를 프리셋 값으로 맞춘다(선택 표시는 render에서 슬라이더 값과 동기화) */
+$('chips-risk').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+  if(rateMode !== 'basic') $('seg-rate').querySelector('[data-v="basic"]').click();
+  $('rate-basic').value = b.dataset.v;
+  update();
+}));
+
+/* ═════════ 탭 ═════════ */
+const TABS = [['tb-calc','tab-calc'],['tb-law','tab-law']];
+function selectTab(i, focus){
+  TABS.forEach(([b,pn],j)=>{
+    const on = j === i;
+    $(b).setAttribute('aria-selected', on ? 'true' : 'false');
+    $(b).tabIndex = on ? 0 : -1;
+    $(pn).hidden = !on;
+  });
+  $('livebar').classList.toggle('on', i === 0);
+  if(i === 0) update();
+  fadeIn($(TABS[i][1]));
+  if(focus) $(TABS[i][0]).focus();
+  window.scrollTo({top:0});
+}
+TABS.forEach(([b],i)=>{
+  $(b).addEventListener('click', ()=> selectTab(i));
+  $(b).addEventListener('keydown', e=>{
+    const step = {ArrowRight:1, ArrowLeft:-1}[e.key];
+    if(step){ e.preventDefault(); selectTab((i+step+TABS.length)%TABS.length, true); }
+    else if(e.key === 'Home'){ e.preventDefault(); selectTab(0, true); }
+    else if(e.key === 'End'){  e.preventDefault(); selectTab(TABS.length-1, true); }
+  });
+});
+
+/* ═════════ 바텀시트 (설명) ═════════ */
+const sheet = $('sheet');
+function openSheet(key){
+  const target = $('h-'+key);
+  sheet.querySelectorAll('#sheet-b>section').forEach(s => s.hidden = s !== target);
+  $('sheet-t').textContent = target.dataset.title;
+  $('sheet-b').scrollTop = 0;
+  document.documentElement.classList.add('lock');   // 시트 뒤 페이지가 같이 스크롤되지 않게
+  sheet.showModal();
+}
+document.addEventListener('click', e=>{
+  const b = e.target.closest('[data-help]');
+  if(b) openSheet(b.dataset.help);
+});
+sheet.addEventListener('click', e=>{ if(e.target === sheet) sheet.close(); });   // 배경 탭
+$('sheet-x').addEventListener('click', ()=> sheet.close());
+sheet.addEventListener('close', ()=> document.documentElement.classList.remove('lock'));   // 포커스는 브라우저가 누른 버튼으로 돌려준다
+
+/* ═════════ 하단 고정 요약 — 항상 그 자리에 두고 버튼만 상황에 맞게 바꾼다 ═════════
+   결과가 아직 아래에 있으면(입력 중) [결과 보기], 결과 영역에 들어왔거나 지나쳤으면 [다시 계산](= 초기화하고 맨 위로).
+   결과 영역 전체(#results)를 보므로 '자세한 결과'를 펼쳐 내려가도 같은 동작이다. */
+let barGoesToResult = true;
+const syncBarLabel = () => { $('livebar-go').textContent = barGoesToResult ? '결과 보기' : '다시 계산'; };
+new IntersectionObserver(([en])=>{
+  barGoesToResult = !en.isIntersecting && en.boundingClientRect.top > 0;
+  syncBarLabel();
+}).observe($('results'));
+$('livebar-go').addEventListener('click', ()=>{
+  if(barGoesToResult) $('hero').scrollIntoView({block:'start', behavior: reduceMotion() ? 'auto' : 'smooth'});
+  else openSheet('reset');
+});
+
+/* ═════════ 처음부터 다시 — 로드 시점의 기본값을 기억해뒀다가 그대로 복원한다 ═════════ */
+const DEFAULT_INPUTS = {};
+document.querySelectorAll('input[type=range], input[type=checkbox]').forEach(el=>{
+  DEFAULT_INPUTS[el.id] = el.type==='checkbox' ? el.checked : el.value;
+});
+const DEFAULT_SEGS = {};
+document.querySelectorAll('.seg').forEach(seg=>{
+  const active = seg.querySelector('button[aria-pressed="true"]');
+  if(active) DEFAULT_SEGS[seg.id] = active.dataset.v;
+});
+
+/* 다시 계산 = 확인창(바텀시트). [초기화]는 모든 입력을 기본값으로 되돌리고, [입력값유지]는 값을 두고, 둘 다 맨 위로 올라간다. Esc·배경 탭은 그냥 닫기(이동 없음) */
+const toTop = () => window.scrollTo({top:0, behavior: reduceMotion() ? 'auto' : 'smooth'});
+function doResetAll(){
+  Object.entries(DEFAULT_INPUTS).forEach(([id,v])=>{
+    const el = $(id);
+    if(el.type==='checkbox') el.checked = v; else el.value = v;
+  });
+  document.querySelectorAll('.seg').forEach(seg=>{
+    const def = DEFAULT_SEGS[seg.id];
+    seg.querySelectorAll('button').forEach(b=>
+      b.setAttribute('aria-pressed', b.dataset.v === def ? 'true' : 'false'));
+  });
+  payType  = DEFAULT_SEGS['seg-type'];
+  capMode  = DEFAULT_SEGS['seg-cap'];
+  rateMode = DEFAULT_SEGS['seg-rate'];
+  inflPct  = +DEFAULT_SEGS['seg-infl'];
+  applyRateMode();
+  toTop();
+  update();
+}
+$('resetall').addEventListener('click', ()=> openSheet('reset'));
+$('reset-cancel').addEventListener('click', ()=>{ sheet.close(); toTop(); });   // 값은 두고 입력 맨 위로만 올라간다
+$('reset-ok').addEventListener('click', ()=>{ sheet.close(); doResetAll(); });
+
+/* ═════════ 광고 ═════════
+   - 광고 단위 ID가 아직 XXXXXXXXXX(미발급)면 그 슬롯은 숨기고 요청하지 않는다(빈 박스 방지).
+   - 숨겨진 컨테이너(좁은 화면의 좌우 레일, 모바일 상단 배너)에는 요청하지 않는다
+     — 폭 0에 요청하면 'No slot size for availableWidth=0' 오류가 난다.
+   - 화면 크기가 바뀌어 새로 보이게 된 슬롯은 그때 한 번만 요청한다. */
+const AD_PLACEHOLDER = 'XXXXXXXXXX';
+function initAds(){
+  document.querySelectorAll('.adwrap').forEach(w=>{
+    const ins = w.querySelector('ins.adsbygoogle');
+    if(!ins) return;
+    if(ins.dataset.adSlot === AD_PLACEHOLDER){ w.hidden = true; return; }
+    if(ins.dataset.adDone || !w.offsetWidth) return;
+    ins.dataset.adDone = '1';
+    try{ (window.adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+  });
+}
+initAds();
+['(min-width:769px)','(min-width:1140px)'].forEach(q => matchMedia(q).addEventListener('change', initAds));
+
+/* 접이식 결과를 열 때 차트·표를 그린다(닫혀 있을 땐 그리지 않는다) */
+$('detail').addEventListener('toggle', update);
+
+/* 라이트/다크 — 사용자가 직접 고른 값은 이 브라우저에만 저장하고, 고른 적이 없으면 시스템 설정을 따른다.
+   차트 색은 캔버스에 구워지므로 테마가 바뀌면 차트를 다시 만든다. */
+const THEME_KEY = 'pension-alchemist:theme';
+const darkMQ = matchMedia('(prefers-color-scheme: dark)');
+const ICON_SUN  = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+const ICON_MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+const isDark = () => document.documentElement.dataset.theme
+  ? document.documentElement.dataset.theme === 'dark' : darkMQ.matches;
+function syncThemeUI(){
+  const d = isDark();
+  $('themebtn').innerHTML = d ? ICON_SUN : ICON_MOON;          // 누르면 바뀔 모드를 보여준다
+  $('themebtn').setAttribute('aria-label', d ? '라이트 모드로 전환' : '다크 모드로 전환');
+  $('tc').content = cv('--bg');                                // 모바일 브라우저 주소창 색
+}
+function refreshTheme(){
+  [C1, C2].forEach(c => c && c.destroy());
+  C1 = C2 = null;
+  syncThemeUI();
+  update();
+}
+$('themebtn').addEventListener('click', ()=>{
+  const next = isDark() ? 'light' : 'dark';
+  const root = document.documentElement;
+  if(!reduceMotion()){ root.classList.add('theme-anim'); setTimeout(()=>root.classList.remove('theme-anim'), 300); }
+  root.dataset.theme = next;
+  try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
+  refreshTheme();
+});
+darkMQ.addEventListener('change', refreshTheme);
+
+/* 입력값 보존 — 이 기기의 브라우저(localStorage)에만 저장한다. URL(#hash)에 싣지 않는 이유는
+   잔액 같은 금융 정보가 주소창·공유·분석 도구로 새는 걸 막기 위해서다.
+   v2는 입력 구조(단계 → 한 화면)가 달라 v1 키와 분리했다. */
+const STORE_KEY = 'pension-alchemist:v2';
+const pressed = id => $(id).querySelector('button[aria-pressed="true"]').dataset.v;
+
+function loadState(){
+  try{
+    const st = JSON.parse(localStorage.getItem(STORE_KEY) || 'null');
+    if(!st) return;
+    Object.entries(st.inputs || {}).forEach(([id,v])=>{
+      if(!(id in DEFAULT_INPUTS)) return;
+      const el = $(id);
+      if(el.type === 'checkbox') el.checked = !!v; else el.value = v;
+    });
+    Object.entries(st.segs || {}).forEach(([id,v])=>{
+      if(!(id in DEFAULT_SEGS)) return;
+      const btns = [...$(id).querySelectorAll('button')];
+      if(!btns.some(b => b.dataset.v === String(v))) return;
+      btns.forEach(b => b.setAttribute('aria-pressed', b.dataset.v === String(v) ? 'true' : 'false'));
+    });
+    payType = pressed('seg-type'); capMode = pressed('seg-cap');
+    rateMode = pressed('seg-rate'); inflPct = +pressed('seg-infl');
+    applyRateMode();
+  }catch(e){}
+}
+
+let saveTimer = 0;
+function saveStateSoon(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(()=>{
+    try{
+      const inputs = {}, segs = {};
+      document.querySelectorAll('input[type=range], input[type=checkbox]').forEach(el=>{
+        inputs[el.id] = el.type === 'checkbox' ? el.checked : el.value;
+      });
+      document.querySelectorAll('.seg').forEach(seg=>{ segs[seg.id] = pressed(seg.id); });
+      localStorage.setItem(STORE_KEY, JSON.stringify({inputs, segs}));
+    }catch(e){}   // 사생활 보호 모드 등에서 막혀도 계산기는 그대로 동작한다
+  }, 300);
+}
+
+/* 연도 의존 초기화 — 해가 바뀌어도 코드를 고칠 필요가 없다 */
+const staleYears = THIS_YEAR - TAX_BASIS.year;
+$('asof').className = staleYears > 0 ? 'asof stale' : 'asof';
+$('asof').innerHTML = `${TAX_BASIS.law} 기준 · 검토일 ${TAX_BASIS.reviewed}`
+  + (staleYears > 0 ? ` · <b>검토 후 ${staleYears}년 경과 — 개정 여부를 확인해 주세요</b>` : '');
+
+loadState();
+syncThemeUI();
+render();   // 첫 화면은 동기로 그려 빈 결과가 깜빡이지 않게 한다
+
+/* ═════════ 자체 검증 (브라우저 콘솔) ═════════ */
+function selfTest(){
+  const near=(a,b,tol,msg)=>{ if(Math.abs(a-b)>tol) throw new Error(msg+': '+a+' != '+b); };
+  const sim = o => simulate({psT1:0,psT3:0,psRate:0,psGross:0,t1:0,t3:0,dc:0,dcEffTaxRate:0,
+                             irpRate:0,startAge:65,eligibleAgePs:55,eligibleAgeIrp:55,legacyOffsetPs:0,legacyOffsetIrp:0,
+                             s1Net:0,s2Net:0,s3Net:0,...o});
+
+  // 퇴직소득세
+  near(calcRetirementTax(10000,20).tax, 123.2, 0.5, '퇴직소득세 1억/20년');
+  near(calcRetirementTax(5000,10).tax,   74.8, 0.5, '퇴직소득세 5천/10년');
+  near(calcRetirementTax(0,20).tax, 0, 1e-9, '퇴직금 0');
+
+  // 연금수령한도: 11년차부터 한도 없음
+  near(payoutLimit(10000,1),  1200,  1e-6, '수령한도 1년차');
+  near(payoutLimit(10000,10), 12000, 1e-6, '수령한도 10년차');
+  if(payoutLimit(10000,11) !== Infinity) throw new Error('11년차 한도 미해제');
+
+  // 감면율 3단계 (2026 개정)
+  near(dcRed(10), .30, 1e-9, '감면 10년차');
+  near(dcRed(11), .40, 1e-9, '감면 11년차');
+  near(dcRed(20), .40, 1e-9, '감면 20년차');
+  near(dcRed(21), .50, 1e-9, '감면 21년차 — 2026 신설');
+
+  // 연금수령연차 기산: 개시일이 아니라 수령요건 충족일부터
+  near(recvYear(55,55,0),  1, 1e-9, '55세 충족·55세 개시 → 1년차');
+  near(recvYear(65,55,0), 11, 1e-9, '55세 충족·65세 개시 → 11년차');
+  near(recvYear(60,60,0),  1, 1e-9, '60세 충족·60세 개시 → 1년차');
+  near(recvYear(55,55,5),  6, 1e-9, '2013.3.1 이전 가입 → 6년차 기산');
+  near(recvYear(50,55,0),  1, 1e-9, '충족 전이면 1년차로 클램프');
+
+  // 종신형 세율
+  near(lifeRate(60), .033, 1e-9, '종신형 60세 3.3%');
+  near(lifeRate(75), .033, 1e-9, '종신형 75세 3.3%');
+  near(termRate(60), .055, 1e-9, '확정기간형 60세 5.5%');
+  near(lifeRate(80), .033, 1e-9, '종신형 80세 3.3%');
+
+  // 축적
+  const z = accumulate(1800, 0, 50, 60, 0, 0, 5);
+  near(z.total, 9000, 1e-6, '축적 원금(0%)');
+  near(z.t1,    4500, 1e-6, '과세제외 원금');
+  near(accumulate(900,0,50,60,0,0,5).t1, 0, 1e-6, '900만 납입 시 과세제외 0');
+  near(accumulate(1800,0,50,60,0,0,10).total, 18000, 1e-6, '납입기간 10년');
+  const zg = accumulate(0, 6, 50, 60, 10000, 10000, 5);
+  near(zg.t1, 10000, 1e-6, '과세제외 원금은 불어나지 않는다');
+  near(zg.t3, zg.total-10000, 1e-6, '시드 운용수익은 3순위');
+  near(accumulate(0,0,50,60,3000,9999,5).t1, 3000, 1e-6, '과세제외금액 클램프');
+
+  // 1,500만원 한도 (keep 모드)
+  const r1 = sim({t3:100000, s3Net:400});
+  if(!r1[0].hitCap) throw new Error('1500만 한도가 걸리지 않음');
+  near(r1[0].t3W*12, 1500, 1, '3순위 연 인출 = 1500만 캡');
+
+  // 초과 허용 모드: 넘기면 그해 전액 16.5%
+  const r1o = sim({t3:100000, s3Net:400, allowOver:true});
+  if(!r1o[0].overCap) throw new Error('초과 플래그 누락');
+  near(r1o[0].rate, .165, 1e-9, '초과 연도 세율 16.5%');
+  if(!(r1o[0].t3W*12 > 1500)) throw new Error('초과 허용인데 1500을 안 넘김');
+  // 초과 허용은 목표를 더 잘 맞추지만 세금이 더 많다
+  if(!(r1o[0].tax > r1[0].tax)) throw new Error('초과 인출인데 세금이 늘지 않음');
+
+  // 한도 안쪽이면 두 모드 결과가 같아야 한다
+  const a = sim({t3:100000, s3Net:100}), b = sim({t3:100000, s3Net:100, allowOver:true});
+  near(a[0].net, b[0].net, .01, '한도 내에서는 모드 무관');
+  if(b[0].overCap) throw new Error('한도 내인데 초과 플래그가 떴다');
+
+  // 연금수령한도가 1500보다 빡빡하면 그쪽이 우선 (평가액 5000, 1년차 → 600만)
+  const r2 = sim({t3:5000, s3Net:400, startAge:55, eligibleAgeIrp:55});
+  near(r2[0].t3W*12, 600, 1, '수령한도 우선 적용');
+  if(!r2[0].hitPayout) throw new Error('수령한도 플래그 누락');
+  // 같은 조건이라도 65세 개시면 11년차라 한도가 없다
+  const r2b = sim({t3:5000, s3Net:400, startAge:65, eligibleAgeIrp:55});
+  if(r2b[0].hitPayout) throw new Error('11년차인데 수령한도가 걸렸다');
+
+  // 과세제외 원금은 비과세
+  near(sim({t1:6000, s1Net:50})[0].tax, 0, 1e-9, '과세제외 원금 비과세');
+
+  // 이연퇴직소득: 연차가 높을수록 세금이 적다 (2026 3단계가 실제로 작동하는지)
+  const dcTax = yrOff => {
+    const rr = sim({dc:50000, dcEffTaxRate:10, s2Net:100, startAge:60, eligibleAgeIrp:60-yrOff});
+    return rr[0].tax;
+  };
+  if(!(dcTax(0) > dcTax(11) && dcTax(11) > dcTax(21)))
+    throw new Error('감면 3단계가 세금에 반영되지 않는다: '+dcTax(0)+' / '+dcTax(11)+' / '+dcTax(21));
+
+  // 연금저축 정액
+  near(monthlyPayout(4500), 45, 1e-9, '4,500만 → 월 45만');
+  near(monthlyPayout(4500)*12, payoutLimit(4500,1), 1e-9, '월 정액 x 12 = 1년차 한도');
+  const psS = sim({psT3:6000, psGross:monthlyPayout(6000), startAge:55, eligibleAgePs:55});
+  near(psS[0].psW, 60, .01, '세전 월 정액 60만');
+  near(psS[0].psNetW, 60*(1-.055), .01, '세후 월 수령액');
+  near(psS[psS.length-1].psBal, 0, .01, '정액 인출이면 결국 소진된다');
+  const psG = simulate({psT1:0,psT3:6000,psRate:6,psGross:monthlyPayout(6000),t1:0,t3:0,dc:0,
+                        dcEffTaxRate:0,irpRate:6,startAge:55,eligibleAgePs:55,legacyOffsetPs:0,
+                        s1Net:0,s2Net:0,s3Net:0});
+  near(psG[psG.length-1].psBal, 0, .01, '수익률 6%여도 잔액은 0으로 수렴');
+  if(psG.length > 20) throw new Error('연금저축이 소진되지 않고 꼬리가 남는다: '+psG.length+'년');
+  near(sim({psT1:6000, psGross:monthlyPayout(6000)})[0].tax, 0, 1e-9, '연금저축 과세제외분 비과세');
+
+  // 계좌 독립성 / 1500만원 합산
+  const both = sim({psT3:6000, psGross:monthlyPayout(6000), t3:5000, s3Net:400, startAge:55, eligibleAgePs:55, eligibleAgeIrp:55});
+  near(both[0].psW*12, 720, 1, '연금저축 연 720만');
+  near(both[0].t3W*12, 600, 1, 'IRP 한도는 연금저축과 독립');
+  const cap = sim({psT3:100000, psGross:200, t3:100000, s3Net:400});
+  near((cap[0].psW + cap[0].t3W)*12, 1500, 1, '합산 1500만 한도');
+  if(!cap[0].hitCap) throw new Error('합산 1500만 한도 플래그 누락');
+
+  // 수익률이 낮을수록 빨리 마른다
+  const mk = r => simulate({psT1:0,psT3:0,psRate:r,psGross:0,t1:0,t3:20000,dc:0,dcEffTaxRate:0,
+                            irpRate:r,startAge:60,eligibleAgeIrp:55,legacyOffsetIrp:0,
+                            s1Net:0,s2Net:0,s3Net:100});
+  if(!(mk(3).at(-1).age < mk(7).at(-1).age)) throw new Error('수익률이 낮은데 더 오래 버틴다');
+
+  // 종신형은 70세 미만 구간에서 세금이 적다
+  const t = sim({t3:50000, s3Net:100, startAge:60}), l = sim({t3:50000, s3Net:100, startAge:60, lifetime:true});
+  if(!(l[0].tax < t[0].tax)) throw new Error('종신형 우대세율이 반영되지 않는다');
+
+  // 실질 환산
+  near(realValue(100, 0, 2), 100, 1e-9, '0년 뒤는 명목=실질');
+  near(realValue(100, 1, 2), 100/1.02, 1e-9, '1년 뒤 2% 할인');
+  near(realValue(100, 10, 0), 100, 1e-9, '물가 0%면 명목=실질');
+
+  console.log('%c✓ selfTest 통과', 'color:#1D9E75;font-weight:bold');
+}
+try { selfTest(); } catch(e){ console.error('✗ selfTest 실패:', e.message); }
+</script>
+
+</body>
+</html>
