@@ -1,0 +1,21 @@
+/* 퇴직 연금술사 — 공용 팔레트. pension/ 아래 모든 페이지가 <link>로 불러온다.
+   여기 없는 색(--amber 등 상태색)은 계산기 전용이라 pension-alchemist.html 자체 <style>에 남아 있다. */
+:root{color-scheme:light dark;
+  --bg:#f4f6f9;--surface2:#eef1f5;--card:#ffffff;--text:#161a20;--text2:#454c56;--muted:#66707c;
+  --line:rgba(20,32,52,.14);--line-soft:rgba(20,32,52,.08);
+  --blue:#1b4f9c;--blue-soft:#eaf1fb;--on-blue:#ffffff;}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0d1014;--surface2:#232830;--card:#171b21;--text:#eef1f5;--text2:#c5cbd3;--muted:#98a1ad;
+  --line:rgba(255,255,255,.16);--line-soft:rgba(255,255,255,.09);
+  --blue:#7db2ff;--blue-soft:rgba(125,178,255,.14);--on-blue:#0d1014;}}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#0d1014;--surface2:#232830;--card:#171b21;--text:#eef1f5;--text2:#c5cbd3;--muted:#98a1ad;
+  --line:rgba(255,255,255,.16);--line-soft:rgba(255,255,255,.09);
+  --blue:#7db2ff;--blue-soft:rgba(125,178,255,.14);--on-blue:#0d1014;}
+:root[data-theme="light"]{color-scheme:light;}
+@media(prefers-contrast:more){:root{--line:rgba(0,0,0,.5);--line-soft:rgba(0,0,0,.35);--muted:#404040;}}
+@media(prefers-contrast:more) and (prefers-color-scheme:dark){:root:not([data-theme="light"]){--line:rgba(255,255,255,.6);--line-soft:rgba(255,255,255,.4);--muted:#d0d0d4;}}
+@media(prefers-contrast:more){:root[data-theme="dark"]{--line:rgba(255,255,255,.6);--line-soft:rgba(255,255,255,.4);--muted:#d0d0d4;}}
+.theme-anim,.theme-anim *{transition:background-color .25s ease,color .25s ease,border-color .25s ease!important;}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}

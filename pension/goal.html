@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" id="tc" content="#f4f6f9">
+<script>try{const t=localStorage.getItem('pension-alchemist:theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;}catch(e){}</script>
+<title>필요 자금 역산 계산기 (얼마를 모아야 할까) | 퇴직 연금술사</title>
+<meta name="description" content="은퇴 후 원하는 월 수령액을 정하면 지금부터 얼마를 모아야 하는지 거꾸로 계산합니다. 모아야 할 총 금액, 부족한 금액, 연 납입액, 연금저축·IRP 배분까지. 2026년 세법 기준.">
+<meta name="keywords" content="연금 역산 계산기, 노후자금 계산기, 연금 준비 계산기, IRP 연금저축 납입액, 은퇴자금 계산기, 퇴직 연금술사">
+<meta name="author" content="10minute.studio">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://xeno-xeno.github.io/10minute.studio/pension/goal.html">
+<link rel="icon" type="image/svg+xml" href="../assets/images/clock-10.svg">
+<meta property="og:title" content="필요 자금 역산 계산기 (얼마를 모아야 할까) | 퇴직 연금술사">
+<meta property="og:description" content="목표 월 수령액에서 거꾸로 계산하는 연금 준비 자금 계산기. 부족한 금액과 연 납입액을 알려줍니다.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="https://xeno-xeno.github.io/10minute.studio/pension/goal.html">
+<meta property="og:site_name" content="10minute.studio">
+<meta property="og:image" content="https://xeno-xeno.github.io/10minute.studio/assets/images/pension_hero.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="800">
+<meta property="og:image:type" content="image/jpeg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="필요 자금 역산 계산기 (얼마를 모아야 할까) | 퇴직 연금술사">
+<meta name="twitter:description" content="목표 월 수령액에서 거꾸로 계산하는 연금 준비 자금 계산기. 부족한 금액과 연 납입액을 알려줍니다.">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8L3S8MLEGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-8L3S8MLEGK');
+</script>
+
+<link rel="stylesheet" href="./pension.css?v=2026-09-22">
+<script src="./engine.js?v=2026-09-22"></script>
+<style>
+/* 이 페이지 전용 컴포넌트 CSS — pension-alchemist.html과 같은 컴포넌트를 지금은 그대로 복붙해 쓴다.
+   (엔진·CSS 분리 때 정한 대로, 컴포넌트 공유는 index.html의 동명 클래스와 충돌해 뒤로 미뤘다.) */
+/* 이 페이지만 쓰는 보조 강조색 — 결과 숫자 하나에만 써서, 버튼·체크박스 등 상호작용 요소의
+   파란색(사이트 공용 --blue)은 그대로 두고 "정방향과는 다른 도구"라는 것만 표시한다. */
+:root{--accent2:#6d28d9;--red:#b3261e;--warn-bg:#fff5e0;}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--accent2:#c4b5fd;--red:#ff8f86;--warn-bg:rgba(232,178,90,.14);}}
+:root[data-theme="dark"]{--accent2:#c4b5fd;--red:#ff8f86;--warn-bg:rgba(232,178,90,.14);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html.lock{overflow:hidden;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);-webkit-text-size-adjust:100%;line-height:1.5;word-break:keep-all;}
+.page{max-width:760px;margin:0 auto;padding:1.25rem 1rem 3rem;}
+.off{display:none !important;}
+.brandbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;}
+.brandbar a{font-size:.8125rem;color:var(--muted);text-decoration:none;}
+.brandbar a:hover{color:var(--text);}
+.brandbar a.back{display:inline-flex;align-items:center;gap:2px;min-height:44px;margin:-8px 0 -8px -8px;padding:0 10px 0 4px;font-size:.9375rem;font-weight:500;color:var(--blue);border-radius:10px;}
+.back svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+.brandbar a.back:hover{color:var(--blue);background:var(--line-soft);}
+.themebtn{flex:none;width:40px;height:40px;margin:-6px -8px -6px 0;display:grid;place-items:center;border:0;border-radius:50%;background:none;color:var(--text2);cursor:pointer;transition:background-color .15s ease,transform .1s ease-out;}
+.themebtn:hover{background:var(--line-soft);}
+.themebtn:active{transform:scale(.92);}
+.themebtn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+h1{display:flex;align-items:center;gap:8px;font-size:clamp(1.25rem,4.6vw,1.5rem);font-weight:700;letter-spacing:-.02em;line-height:1.25;margin-bottom:.3rem;}
+h1 svg{flex:none;width:1.15em;height:1.15em;color:var(--blue);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+/* 카드 그룹 사이 흐름 표시 */
+.flow-divider{display:flex;align-items:center;gap:10px;margin:.9rem 0;color:var(--muted);}
+.flow-divider::before,.flow-divider::after{content:'';flex:1;height:1px;background:var(--line);}
+.flow-divider svg{flex:none;width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.sub{font-size:.875rem;color:var(--text2);}
+.asof{font-size:.75rem;color:var(--muted);margin:.35rem 0 1rem;}
+.asof.stale{color:var(--red);}
+
+.tabs{display:flex;gap:4px;margin-bottom:1rem;border-bottom:.5px solid var(--line);}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;font:inherit;font-size:.9375rem;color:var(--muted);padding:9px 14px;cursor:pointer;margin-bottom:-.5px;transition:background-color .15s ease,color .15s ease,transform .1s ease-out;}
+.tabs button[aria-selected="true"]{color:var(--blue);font-weight:600;border-bottom-color:var(--blue);}
+.tabs button:active{transform:scale(.96);}
+@media(pointer:coarse){.tabs button{min-height:44px;} details.acc>summary{min-height:48px;}}
+
+table{width:100%;border-collapse:collapse;font-size:.8125rem;}
+th{background:var(--surface2);padding:5px 7px;text-align:right;font-weight:500;color:var(--text2);border-bottom:.5px solid var(--line-soft);white-space:nowrap;font-size:.75rem;}
+th:first-child{text-align:left;}
+td{padding:4px 7px;text-align:right;border-bottom:.5px solid var(--line-soft);white-space:nowrap;font-size:.8125rem;}
+td:first-child{text-align:left;color:var(--text2);}
+
+details.acc{background:var(--card);border:.5px solid var(--line);border-radius:14px;margin-bottom:8px;overflow:hidden;}
+details.acc>summary{list-style:none;cursor:pointer;padding:.95rem 1.1rem;font-size:.9375rem;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+details.acc>summary::-webkit-details-marker{display:none;}
+details.acc>summary::after{content:'+';color:var(--muted);font-size:1.125rem;font-weight:400;}
+details.acc[open]>summary::after{content:'−';}
+details.acc[open]>summary{border-bottom:.5px solid var(--line-soft);}
+.accbody{padding:1rem 1.1rem 1.1rem;font-size:.84375rem;line-height:1.7;color:var(--text2);}
+details.acc[open]>.accbody{animation:accIn .18s ease-out;}
+@keyframes accIn{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
+.accbody p{margin-bottom:.6rem;}
+.accbody p:last-child{margin-bottom:0;}
+.accbody table{font-size:.8125rem;margin:.4rem 0 .7rem;}
+.accbody td,.accbody th{text-align:left;white-space:normal;}
+.src{font-size:.75rem;color:var(--muted);border-top:.5px solid var(--line-soft);padding-top:.5rem;margin-top:.7rem;}
+
+.card{background:var(--card);border:.5px solid var(--line);border-radius:14px;padding:1.1rem 1.25rem;margin-bottom:1rem;}
+.st{font-size:.8125rem;font-weight:600;color:var(--text2);margin:0 0 10px;}
+.st.title{font-size:1.0625rem;font-weight:700;color:var(--text);margin:0 0 .9rem;display:flex;align-items:center;}
+.num{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--text);color:var(--card);font-size:.75rem;font-weight:700;margin-right:8px;}
+.hint{font-size:.8125rem;color:var(--muted);line-height:1.55;margin:-.35rem 0 .9rem;}
+.hint:empty{display:none;}
+.note{font-size:.8125rem;color:var(--muted);margin-top:8px;line-height:1.6;}
+.lnk{background:none;border:0;font:inherit;font-size:.8125rem;color:var(--blue);cursor:pointer;padding:.25rem 0;text-decoration:underline;text-underline-offset:3px;}
+.help{flex:none;width:20px;height:20px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--muted);font:inherit;font-size:.6875rem;font-weight:700;line-height:1;cursor:pointer;display:inline-grid;place-items:center;}
+.help:hover{color:var(--blue);border-color:var(--blue);}
+
+.sr{display:grid;grid-template-columns:1fr auto;grid-template-areas:"label value" "range range" "cap cap";align-items:center;column-gap:12px;margin-bottom:.9rem;}
+.lb{grid-area:label;display:flex;align-items:center;gap:6px;min-width:0;}
+.lb label{font-size:.9375rem;font-weight:500;color:var(--text);line-height:1.35;}
+.sv{grid-area:value;font-size:.9375rem;font-weight:700;color:var(--blue);text-align:right;}
+.sr input[type=range]{grid-area:range;}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;min-width:0;height:44px;margin:0;background:transparent;cursor:pointer;}
+input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(to right,var(--blue) var(--p,0%),var(--line) var(--p,0%));}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;margin-top:-12px;border-radius:50%;background:#fff;border:2px solid var(--blue);box-shadow:0 1px 4px rgba(0,0,0,.25);}
+input[type=range]::-moz-range-track{height:4px;border-radius:2px;background:var(--line);}
+input[type=range]::-moz-range-progress{height:4px;border-radius:2px;background:var(--blue);}
+input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:#fff;border:2px solid var(--blue);box-shadow:0 1px 4px rgba(0,0,0,.25);}
+@media(min-width:769px){
+  .sr{grid-template-columns:230px 1fr 96px;grid-template-areas:"label range value" ". cap cap";column-gap:14px;margin-bottom:.35rem;}
+  input[type=range]{height:32px;}
+}
+
+.chk{display:flex;align-items:center;gap:12px;min-height:48px;padding:.35rem 0;font-size:.9375rem;line-height:1.35;color:var(--text);margin:0;cursor:pointer;}
+.chk input[type=checkbox]{flex:none;-webkit-appearance:none;appearance:none;position:relative;width:24px;height:24px;margin:0;border-radius:7px;border:1.5px solid var(--muted);background:transparent;cursor:pointer;transition:background-color .15s ease,border-color .15s ease;}
+.chk input[type=checkbox]::after{content:'';position:absolute;left:7.5px;top:2.5px;width:6px;height:12px;border:solid var(--on-blue);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) scale(0);transition:transform .15s cubic-bezier(.2,.8,.2,1);}
+.chk input[type=checkbox]:checked{background:var(--blue);border-color:var(--blue);}
+.chk input[type=checkbox]:checked::after{transform:rotate(45deg) scale(1);}
+
+.seg,.chips{display:inline-flex;border:.5px solid var(--line);border-radius:10px;overflow:hidden;margin:2px 0 8px;max-width:100%;}
+.chips{display:flex;}
+.chips button{flex:1;}
+.seg button,.chips button{background:var(--card);border:0;font:inherit;font-size:.875rem;color:var(--text2);padding:9px 14px;cursor:pointer;white-space:nowrap;}
+.seg button+button,.chips button+button{border-left:.5px solid var(--line);}
+.seg button[aria-pressed="true"],.chips button[aria-pressed="true"]{background:var(--blue);color:var(--on-blue);font-weight:600;}
+.seg button:disabled{opacity:.4;cursor:not-allowed;}
+.optlabel{display:flex;align-items:center;gap:6px;font-size:.9375rem;font-weight:500;margin:.5rem 0 4px;}
+.seg button,.chips button{transition:background-color .15s ease,color .15s ease,transform .1s ease-out;}
+.seg button:active,.chips button:active{transform:scale(.96);}
+
+.hero{background:var(--card);border:.5px solid var(--line);border-radius:14px;padding:1.1rem 1.25rem;margin-bottom:1rem;}
+.hero-l{font-size:.8125rem;color:var(--muted);margin:0 0 .2rem;}
+.hero-v{font-size:clamp(2rem,9vw,2.75rem);font-weight:700;letter-spacing:-.03em;line-height:1.1;margin:0;color:var(--accent2);}
+.hero-s{font-size:.875rem;color:var(--text2);margin:.5rem 0 0;}
+.warn{background:var(--warn-bg);border-radius:10px;padding:10px 14px;font-size:.8125rem;color:var(--text2);margin-bottom:1rem;line-height:1.6;}
+.warn:empty{display:none;}
+.warn b{color:var(--text);}
+.kv{display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:baseline;padding:.6rem 0;border-bottom:.5px solid var(--line-soft);font-size:.875rem;}
+.kv:last-child{border-bottom:0;}
+.kv .k{color:var(--text2);}
+.kv .v{font-weight:600;text-align:right;}
+.kv .s{grid-column:1/-1;font-size:.75rem;color:var(--muted);}
+
+.sitefoot{margin-top:2rem;padding-top:1rem;border-top:.5px solid var(--line-soft);font-size:.8125rem;color:var(--muted);}
+.sitefoot .disclaimer{line-height:1.6;margin-bottom:.7rem;}
+.sitefoot nav{display:flex;flex-wrap:wrap;gap:.4rem 1rem;}
+.sitefoot a{color:var(--muted);text-decoration:none;}
+.sitefoot a:hover{color:var(--text);}
+.foot{display:flex;justify-content:center;margin:1rem 0 .5rem;}
+.foot .lnk{color:var(--muted);}
+
+.livebar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:none;align-items:center;justify-content:space-between;gap:12px;padding:.7rem 1rem calc(.7rem + env(safe-area-inset-bottom));background:var(--card);border-top:.5px solid var(--line);box-shadow:0 -6px 24px rgba(10,20,40,.12);transform:translateY(110%);transition:transform .32s cubic-bezier(.32,.72,0,1);}
+.livebar.on{transform:none;}
+.livebar b{font-size:1.125rem;color:var(--blue);letter-spacing:-.02em;}
+.livebar span{font-size:.8125rem;color:var(--text2);}
+.livebar button{flex:none;font:inherit;font-size:.875rem;font-weight:600;padding:9px 16px;border-radius:10px;border:0;background:var(--blue);color:var(--on-blue);cursor:pointer;transition:transform .1s ease-out;}
+.livebar button:active{transform:scale(.94);}
+@media(max-width:768px){.livebar{display:flex;}.page{padding-bottom:5.5rem;}}
+
+dialog.sheet{border:0;padding:0;background:var(--card);color:var(--text);width:min(600px,100%);max-height:86dvh;border-radius:18px 18px 0 0;margin:auto auto 0;overflow:hidden;}
+dialog.sheet[open]{display:flex;flex-direction:column;animation:sheetUp .5s cubic-bezier(.32,.72,0,1);}
+dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
+@keyframes sheetUp{from{transform:translateY(100%);opacity:0;}to{transform:none;opacity:1;}}
+@media(min-width:769px){dialog.sheet{margin:auto;border-radius:18px;max-height:80dvh;}}
+.sheet-grab{flex:none;width:36px;height:5px;border-radius:99px;background:var(--line);margin:.6rem auto -.15rem;touch-action:none;cursor:grab;}
+.sheet-grab:active{cursor:grabbing;}
+@media(min-width:769px){.sheet-grab{display:none;}}
+.sheet-h{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:1rem 1.1rem .8rem;border-bottom:.5px solid var(--line-soft);}
+.sheet-h h2{font-size:1.0625rem;font-weight:700;}
+.sheet-x{flex:none;width:36px;height:36px;border:0;border-radius:50%;background:var(--surface2);color:var(--text2);font:inherit;font-size:1.25rem;line-height:1;cursor:pointer;}
+.sheet-b{overflow:auto;padding:1rem 1.1rem calc(1.4rem + env(safe-area-inset-bottom));font-size:.875rem;line-height:1.75;color:var(--text2);overscroll-behavior:contain;}
+.sheet-b p{margin-bottom:.7rem;}
+.sheet-b p:last-child{margin-bottom:0;}
+.sheet-b b{color:var(--text);font-weight:600;}
+.sheet-act{display:flex;gap:10px;margin-top:1.1rem;}
+.sheet-act button{flex:1;font:inherit;font-size:.9375rem;font-weight:600;padding:13px;border-radius:12px;border:.5px solid var(--line);background:var(--card);color:var(--text2);cursor:pointer;}
+.sheet-act button.main{background:var(--blue);border-color:var(--blue);color:var(--on-blue);}
+
+.sv,.hero-v,.livebar b,.kv .v{font-variant-numeric:tabular-nums;}
+@media(pointer:coarse){
+  .themebtn{width:44px;height:44px;}
+  .seg button,.chips button{min-height:44px;}
+  .help{width:24px;height:24px;}
+}
+@media(max-width:768px){.page{padding:.75rem .8rem calc(5.5rem + env(safe-area-inset-bottom));}.card{padding:1rem;}.foot{display:none;}}
+@media(prefers-reduced-transparency:reduce){dialog.sheet::backdrop{background:rgba(8,12,20,.8);backdrop-filter:none;}}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<div class="brandbar"><a class="back" href="./" aria-label="퇴직 연금술사 소개로 돌아가기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span>퇴직 연금술사</span></a><button type="button" class="themebtn" id="themebtn" aria-label="다크 모드로 전환"></button></div>
+
+<h1><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>필요 자금 역산 계산기</h1>
+<p class="sub">원하는 월 수령액을 정하면, 지금부터 얼마를 모아야 하는지 거꾸로 계산합니다.</p>
+<p class="asof" id="asof"></p>
+
+<nav class="tabs" role="tablist" aria-label="계산기와 세법 정보">
+  <button role="tab" id="tb-calc" aria-selected="true" aria-controls="tab-calc">계산기</button>
+  <button role="tab" id="tb-law" aria-selected="false" aria-controls="tab-law" tabindex="-1">세법 정보</button>
+</nav>
+
+<section id="tab-calc" role="tabpanel" aria-labelledby="tb-calc">
+
+<div id="results" tabindex="-1">
+
+<!-- 1. 기본 정보 -->
+<div class="card">
+  <p class="st title"><span class="num">1</span>기본 정보</p>
+  <div class="sr"><span class="lb"><label for="now">현재 나이 (만)</label></span><input type="range" id="now" min="25" max="70" step="1" value="25"><span class="sv" aria-hidden="true" id="now-o"></span></div>
+  <div class="sr"><span class="lb"><label for="age">연금 받기 시작할 나이 (만)</label></span><input type="range" id="age" min="55" max="80" step="1" value="55"><span class="sv" aria-hidden="true" id="age-o"></span></div>
+  <p class="optlabel">언제까지 받고 싶나요</p>
+  <div class="seg" role="group" aria-label="목표 수령 기간" id="seg-end">
+    <button type="button" data-v="perm" aria-pressed="true">평생(영구)</button>
+    <button type="button" data-v="age" aria-pressed="false">특정 나이까지</button>
+  </div>
+  <div class="sr off" id="endage-row"><span class="lb"><label for="endage">종료 나이 (만)</label></span><input type="range" id="endage" min="60" max="100" step="1" value="85"><span class="sv" aria-hidden="true" id="endage-o"></span></div>
+</div>
+
+<div class="flow-divider" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></svg></div>
+
+<!-- 2. 목표 -->
+<div class="card">
+  <p class="st title"><span class="num">2</span>목표</p>
+  <div class="sr"><span class="lb"><label for="goal">매달 받고 싶은 금액 (세후)</label></span><input type="range" id="goal" min="50" max="400" step="5" value="50"><span class="sv" aria-hidden="true" id="goal-o"></span></div>
+  <p class="hint">정방향 계산기와 같은 방식으로, 받는 내내 매달 같은 금액(명목)을 목표로 계산합니다.</p>
+  <p class="optlabel">기대수익률 <button type="button" class="help" data-help="rate" aria-label="수익률 설명">?</button></p>
+  <div class="chips" role="group" aria-label="기대수익률" id="chips-risk">
+    <button type="button" data-v="3" aria-pressed="false">안정형 3%</button>
+    <button type="button" data-v="5" aria-pressed="true">균형형 5%</button>
+    <button type="button" data-v="7" aria-pressed="false">적극형 7%</button>
+  </div>
+  <p class="optlabel">수령 방식 <button type="button" class="help" data-help="paytype" aria-label="수령 방식 설명">?</button></p>
+  <div class="seg" role="group" aria-label="수령 방식" id="seg-type">
+    <button type="button" data-v="life" aria-pressed="true">종신형</button>
+    <button type="button" data-v="term" aria-pressed="false">확정기간형</button>
+  </div>
+  <p class="hint" id="paytype-note"></p>
+  <p class="optlabel">연 1,500만원 한도 <button type="button" class="help" data-help="cap" aria-label="1,500만원 한도 설명">?</button></p>
+  <div class="seg" role="group" aria-label="연 1,500만원 한도 처리" id="seg-cap">
+    <button type="button" data-v="keep" aria-pressed="true">한도 안에서 수령</button>
+    <button type="button" data-v="over" aria-pressed="false">초과 허용</button>
+  </div>
+</div>
+
+<div class="flow-divider" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></svg></div>
+
+<!-- 3. 지금 가진 것 -->
+<div class="card">
+  <p class="st title"><span class="num">3</span>지금 가진 것</p>
+  <label class="chk"><input type="checkbox" id="has-dc" checked> 퇴직금(DC·DB)을 연금으로 받을 예정입니다</label>
+  <div id="dc-row">
+    <div class="sr"><span class="lb"><label for="dc">퇴직금 예상 금액</label></span><input type="range" id="dc" min="0" max="30000" step="500" value="0"><span class="sv" aria-hidden="true" id="dc-o"></span></div>
+    <div class="sr"><span class="lb"><label for="wy">일한 근속연수</label></span><input type="range" id="wy" min="1" max="40" step="1" value="1"><span class="sv" aria-hidden="true" id="wy-o"></span></div>
+  </div>
+  <label class="chk"><input type="checkbox" id="has-seed"> 연금저축·IRP 등 개인연금도 있습니다</label>
+  <div id="seed-row" class="off">
+    <div class="sr"><span class="lb"><label for="seed">개인연금(연금저축+IRP) 잔액</label></span><input type="range" id="seed" min="0" max="20000" step="100" value="0"><span class="sv" aria-hidden="true" id="seed-o"></span></div>
+  </div>
+</div>
+
+<div class="flow-divider" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></svg></div>
+
+<!-- 4. 결과 -->
+<p class="st title"><span class="num">4</span>결과</p>
+<div class="hero" id="hero"></div>
+<div id="warn" class="warn" role="status"></div>
+<div class="card" id="kvcard">
+  <p class="st">지금 상태로 계산하면</p>
+  <div id="kv"></div>
+</div>
+<div class="card" id="suggestcard">
+  <p class="st">이걸 채우려면</p>
+  <div id="kv-suggest"></div>
+</div>
+
+</div><!-- /#results -->
+
+<div class="foot"><button type="button" class="lnk" id="resetall">다시 계산</button></div>
+
+</section>
+
+<!-- ══════════ 세법 정보 ══════════ -->
+<section id="tab-law" role="tabpanel" aria-labelledby="tb-law" hidden>
+
+<p class="sub" style="margin-bottom:1rem;">이 계산이 적용한 세법을 항목별로 정리했습니다. 계좌 비교·세액공제 등 더 자세한 내용은 세법 가이드(준비 중)에서 다룰 예정입니다.</p>
+
+<details class="acc" open>
+  <summary>법정 인출순서</summary>
+  <div class="accbody">
+    <p>연금계좌에서 돈을 빼면 재원의 성격에 따라 정해진 순서대로 나갑니다. 본인이 고를 수 없습니다.</p>
+    <table>
+      <tr><th>순위</th><th>재원</th><th>과세</th></tr>
+      <tr><td>1</td><td>과세제외금액 (세액공제 안 받은 원금)</td><td>비과세</td></tr>
+      <tr><td>2</td><td>이연퇴직소득 (퇴직금)</td><td>퇴직소득세 × 감면</td></tr>
+      <tr><td>3</td><td>세액공제 받은 원금 + 운용수익</td><td>연금소득세 3.3~5.5%</td></tr>
+    </table>
+    <p>세금이 싼 돈부터 빠져나가는 구조입니다. 그래서 받기 시작한 초반에는 세금 비율이 낮다가 후반으로 갈수록 올라갑니다.</p>
+    <p>주의하실 점은 1순위와 2순위 재원에서 발생한 <b>운용수익은 3순위로 귀속</b>된다는 것입니다. 원금만 앞 순위에 남습니다.</p>
+    <p class="src">소득세법 시행령 §40의3</p>
+  </div>
+</details>
+
+<details class="acc">
+  <summary>나이별 연금소득세율</summary>
+  <div class="accbody">
+    <table>
+      <tr><th>수령 나이</th><th>확정기간형</th><th>종신형</th></tr>
+      <tr><td>55 ~ 69세</td><td>5.5%</td><td>3.3%</td></tr>
+      <tr><td>70 ~ 79세</td><td>4.4%</td><td>3.3%</td></tr>
+      <tr><td>80세 이상</td><td>3.3%</td><td>3.3%</td></tr>
+    </table>
+    <p>모두 지방소득세 10%를 포함한 세율입니다. 나이는 만 나이 기준이며, 수령 도중 생일이 지나 구간이 바뀌면 그때부터 낮은 세율이 적용됩니다. 개시를 늦추실 수 있다면 그 자체로 절세가 됩니다.</p>
+    <p>종신형은 사망할 때까지 받고 중도 해지할 수 없는 계약이라 나이와 관계없이 3.3%입니다. 확정기간형보다 70세 미만은 2.2%p, 70~79세는 1.1%p 낮습니다. 2025년까지는 종신형이 4.4%였고, 2026년 1월 1일 이후 받는 연금부터 3.3%로 내렸습니다.</p>
+    <p class="src">소득세법 §143의2</p>
+  </div>
+</details>
+
+<details class="acc">
+  <summary>사적연금 연 1,500만원 분리과세 한도</summary>
+  <div class="accbody">
+    <p>연금저축·IRP에서 받는 연금 중 <b>세액공제를 받은 원금과 운용수익</b>의 합계가 연 1,500만원 이하면, 나이에 따라 3.3~5.5%로 원천징수하고 과세가 끝납니다.</p>
+    <p>1원이라도 넘으면 넘은 부분만이 아니라 <b>그해 받은 연금 전부</b>에 세금이 다시 매겨집니다. 종합과세(6.6~49.5%)와 분리과세(16.5%) 중 유리한 쪽을 고릅니다. 한도를 살짝 넘기는 게 가장 손해라서 월 125만원 선을 지키라는 말이 나옵니다.</p>
+    <p>한도 계산에서 빠지는 것: 과세제외금액, 이연퇴직소득 재원에서 나온 인출, 국민연금 등 공적연금(별도 체계).</p>
+    <p class="src">소득세법 §14 ③ 9호 · §129</p>
+  </div>
+</details>
+
+<details class="acc">
+  <summary>연금수령한도 (120% 룰)</summary>
+  <div class="accbody">
+    <p>한 해에 연금으로 인정받고 뺄 수 있는 금액에는 상한이 있습니다.</p>
+    <p style="background:var(--surface2);border-radius:8px;padding:.7rem .9rem;font-size:.84375rem;">연금수령한도 = 그해 1월 1일 현재 평가액 ÷ (11 − 연금수령연차) × 120%<br><span style="color:var(--muted);">예: 잔액 1억원, 1년차면 1억 ÷ 10 × 1.2 = 1,200만원</span></p>
+    <p>연차가 오를수록 분모가 작아져 한도가 커지고, <b>11년차부터는 한도 자체가 사라집니다</b>. 한도를 넘겨 뺀 금액은 연금수령이 아니라 연금외수령으로 봐서, 자기납입분은 기타소득세 16.5%, 이연퇴직소득은 감면 없는 퇴직소득세가 붙습니다.</p>
+    <p>계좌별로 각각 계산합니다. 연금저축에서 뺀 금액은 IRP 한도를 잠식하지 않습니다.</p>
+    <p class="src">소득세법 시행령 §40의2 ③ 3호</p>
+  </div>
+</details>
+
+<details class="acc">
+  <summary>이 계산기가 다루지 않는 것</summary>
+  <div class="accbody">
+    <p>결과를 해석하실 때 감안해야 할 한계입니다.</p>
+    <ul>
+      <li><b>건강보험료</b> — 연금소득은 지역가입자 보험료 산정에 반영됩니다. 세금을 줄여도 보험료로 나가는 부분이 있습니다.</li>
+      <li><b>국민연금</b> — 공적연금은 별도 체계라 포함하지 않았습니다. 실제 노후 현금흐름을 보실 때는 따로 더하셔야 합니다.</li>
+      <li><b>종합과세 선택</b> — 1,500만원 초과 시 16.5% 분리과세만 계산합니다. 다른 소득이 적으면 종합과세가 유리할 수 있습니다.</li>
+      <li><b>가입 5년 요건</b> — 만 55세부터 바로 받을 수 있다고 가정합니다. 실제로는 계좌 가입 후 5년이 지나야 받을 수 있는 경우가 있습니다(이연퇴직소득이 든 계좌는 면제).</li>
+      <li><b>연금저축·IRP 배분</b> — "계좌 구성 제안"은 세액공제 한도를 기준으로 한 제안일 뿐, 두 계좌를 따로 시뮬레이션해 각자의 연금수령한도를 계산하지는 않습니다.</li>
+      <li><b>과세제외금액</b> — 지금 가진 개인연금 잔액은 전부 과세 대상으로 보수적으로 계산합니다.</li>
+      <li><b>중도인출·부득이한 사유</b> — 연금외수령, 의료목적 인출 등은 다루지 않습니다.</li>
+      <li><b>세법 변경</b> — 연금 세제는 자주 바뀝니다. 상단 검토일 이후의 개정은 반영돼 있지 않습니다.</li>
+    </ul>
+    <p>계산 결과는 참고용이며 개별 재무상담을 대신하지 않습니다.</p>
+  </div>
+</details>
+
+</section>
+
+<footer class="sitefoot">
+  <p class="disclaimer">계산 결과는 참고용이며 개별 재무상담을 대신하지 않습니다. 연금 세제는 자주 바뀌므로 위에 표시된 세법 기준일을 함께 확인해 주세요.</p>
+  <nav aria-label="사이트 정보">
+    <a href="https://xeno-xeno.github.io/10minute.studio/">10minute.studio</a>
+    <a href="../privacy.html">개인정보처리방침</a>
+    <a href="../terms.html">이용약관</a>
+    <a href="../contact.html">문의</a>
+  </nav>
+</footer>
+
+</div><!-- /.page -->
+
+<div class="livebar on" id="livebar" aria-hidden="true">
+  <div><b id="livebar-v"></b><br><span id="livebar-s"></span></div>
+  <button type="button" id="livebar-go" tabindex="-1">결과 보기</button>
+</div>
+
+<dialog class="sheet" id="sheet" aria-labelledby="sheet-t">
+  <div class="sheet-grab" aria-hidden="true"></div>
+  <div class="sheet-h"><h2 id="sheet-t"></h2><button type="button" class="sheet-x" id="sheet-x" aria-label="닫기">×</button></div>
+  <div class="sheet-b" id="sheet-b">
+
+    <section id="h-rate" data-title="기대수익률" hidden>
+      <p>모으는 기간과 받는 기간에 같은 수익률을 적용한 간단 모델입니다. 보수적으로 보려면 안정형(3%)을, 공격적으로 보려면 적극형(7%)을 눌러 비교해 보세요.</p>
+    </section>
+
+    <section id="h-paytype" data-title="확정기간형과 종신형" hidden>
+      <p><b>확정기간형</b>은 정해진 기간 동안, <b>종신형</b>은 평생 받는 방식입니다. 세율은 확정기간형이 55~69세 5.5% / 70~79세 4.4% / 80세~ 3.3%, 종신형은 나이와 관계없이 3.3%입니다.</p>
+    </section>
+
+    <section id="h-cap" data-title="연 1,500만원 한도" hidden>
+      <p><b>한도 안에서 수령</b>은 낮은 세율(3.3~5.5%)을 유지하도록 연 1,500만원까지만 인출합니다. <b>초과 허용</b>은 그 이상도 받되 넘긴 해는 세율이 16.5%로 올라갑니다.</p>
+      <p>목표가 크거나 기간이 길면 '한도 안에서 수령'으로는 돈을 아무리 모아도 달성이 안 될 수 있습니다 — 그럴 땐 '초과 허용'을 눌러 보세요.</p>
+    </section>
+
+    <section id="h-reset" data-title="기본 값으로 돌릴까요?" hidden>
+      <p>다시 계산할 때, 입력한 값을 모두 기본 값으로 돌립니다.</p>
+      <div class="sheet-act">
+        <button type="button" id="reset-ok">초기화</button>
+        <button type="button" id="reset-cancel" class="main" autofocus>입력값유지</button>
+      </div>
+    </section>
+
+  </div>
+</dialog>
+
+<script>
+/* ═════════ 유틸 ═════════ */
+const $ = id => document.getElementById(id);
+const cv = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const reduceMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+const pressed = id => $(id).querySelector('button[aria-pressed="true"]').dataset.v;
+
+function bindGroup(id){
+  $(id).querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    $(id).querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true');
+    update(); saveStateSoon();
+  }));
+}
+['seg-end','chips-risk','seg-type','seg-cap'].forEach(bindGroup);
+
+document.querySelectorAll('input[type=range], input[type=checkbox]').forEach(el=>{
+  el.addEventListener('input', ()=>{ update(); saveStateSoon(); });
+});
+
+let rafId = 0;
+function update(){
+  if(!rafId) rafId = requestAnimationFrame(()=>{ rafId = 0; render(); });
+}
+
+function fadeIn(el, dx = 0){
+  if(!el || reduceMotion()) return;
+  const from = dx ? {opacity:0, transform:`translateX(${dx}px)`} : {opacity:0};
+  const to   = dx ? {opacity:1, transform:'translateX(0)'}       : {opacity:1};
+  el.animate([from, to], {duration: dx ? 220 : 150, easing:'cubic-bezier(.2,.8,.2,1)'});
+}
+
+/* ═════════ 탭 ═════════ */
+const TABS = [['tb-calc','tab-calc'],['tb-law','tab-law']];
+function selectTab(i, focus){
+  TABS.forEach(([b,pn],j)=>{
+    const on = j === i;
+    $(b).setAttribute('aria-selected', on ? 'true' : 'false');
+    $(b).tabIndex = on ? 0 : -1;
+    $(pn).hidden = !on;
+  });
+  $('livebar').classList.toggle('on', i === 0);
+  if(i === 0) update();
+  fadeIn($(TABS[i][1]));
+  if(focus) $(TABS[i][0]).focus();
+  window.scrollTo({top:0});
+}
+TABS.forEach(([b],i)=>{
+  $(b).addEventListener('click', ()=> selectTab(i));
+  $(b).addEventListener('keydown', e=>{
+    const step = {ArrowRight:1, ArrowLeft:-1}[e.key];
+    if(step){ e.preventDefault(); selectTab((i+step+TABS.length)%TABS.length, true); }
+    else if(e.key === 'Home'){ e.preventDefault(); selectTab(0, true); }
+    else if(e.key === 'End'){  e.preventDefault(); selectTab(TABS.length-1, true); }
+  });
+});
+
+/* ═════════ 렌더 ═════════ */
+function render(){
+  const nowAge   = +$('now').value;
+  const startAge = +$('age').value;
+  const endMode  = pressed('seg-end');
+  $('endage-row').classList.toggle('off', endMode !== 'age');
+  const endAge   = endMode === 'age' ? Math.max(+$('endage').value, startAge+1) : null;
+
+  const goal = +$('goal').value;   // 정방향 계산기와 같은 방식 — 받는 내내 고정된 명목 금액, 물가로 키우지 않는다
+  const rate = +pressed('chips-risk');
+  const lifetime  = pressed('seg-type') === 'life';
+  $('paytype-note').textContent = lifetime
+    ? '종신형: 세율 3.3% 고정. 사망할 때까지 받고 중도 해지할 수 없습니다.'
+    : '확정기간형: 세율 55~69세 5.5% / 70~79세 4.4% / 80세~ 3.3%. 종신형보다 세율이 높습니다.';
+  const allowOver = pressed('seg-cap') === 'over';
+
+  const hasSeed = $('has-seed').checked;
+  $('seed-row').classList.toggle('off', !hasSeed);
+  const seed  = hasSeed ? +$('seed').value : 0;
+  const hasDc = $('has-dc').checked;
+  $('dc-row').classList.toggle('off', !hasDc);
+  const dcBal  = hasDc ? +$('dc').value : 0;
+  const wYears = +$('wy').value;
+  const dcEffTaxRate = hasDc ? Engine.calcRetirementTax(dcBal, wYears).rate : 0;
+
+  $('now-o').textContent    = '만 '+nowAge+'세';
+  $('age-o').textContent    = '만 '+startAge+'세';
+  $('endage-o').textContent = '만 '+(+$('endage').value)+'세';
+  $('goal-o').textContent   = goal+'만원';
+  $('seed-o').textContent   = Engine.fmt(seed)+'만원';
+  $('dc-o').textContent     = Engine.fmt(dcBal)+'만원';
+  $('wy-o').textContent     = wYears+'년';
+  document.querySelectorAll('.sr input[type=range]').forEach(el=>{
+    const o = $(el.id+'-o');
+    if(o) el.setAttribute('aria-valuetext', o.textContent);
+    const p = (el.value-el.min)/(el.max-el.min)*100;
+    el.style.setProperty('--p', p+'%');
+  });
+
+  const result = Engine.solveGoal({
+    nowAge, startAge, endAge, goal,
+    irpRate: rate, dcEffTaxRate, dc: dcBal, lifetime, allowOver, currentSeed: seed,
+  });
+
+  if(!result.feasible){
+    $('hero').innerHTML = `<p class="hero-l">모아야 할 총 금액</p><p class="hero-v" style="color:var(--red);">계산 불가</p><p class="hero-s">돈을 100억원까지 모아도 이 조건으로는 목표를 달성할 수 없습니다.</p><p class="note">위 금액은 물가상승률을 반영하지 않은 명목 금액입니다.</p>`;
+    $('kv').innerHTML = `
+      <div class="kv"><span class="k">이 조건으로 실제 낼 수 있는 최대 월 수령액</span><span class="v">${Engine.fmt(result.maxNet)}만원</span>
+        <span class="s">목표(${goal}만원)보다 ${Engine.fmt(goal-result.maxNet)}만원 부족합니다</span></div>
+    `;
+    $('suggestcard').classList.add('off');
+    $('warn').innerHTML = allowOver
+      ? `<b>목표가 너무 큽니다.</b> 월 ${goal}만원은 이 나이·기간 조건으로는 돈을 아무리 모아도 달성되지 않습니다. 목표를 낮추거나 수령 시작 나이를 늦춰 보세요.`
+      : `<b>'한도 안에서 수령' 모드로는 달성할 수 없습니다.</b> 세금 없는 돈·퇴직금 없이는 연 1,500만원 한도 때문에 월 실수령액에 상한이 생깁니다(위 표의 '최대 월 수령액'이 그 한계입니다). 위 '연 1,500만원 한도'에서 <b>초과 허용</b>을 눌러 다시 확인해 보세요.`;
+    $('livebar-v').textContent = `최대 월 ${Engine.fmt(result.maxNet)}만원`;
+    $('livebar-s').textContent = '목표에는 못 미칩니다';
+    return;
+  }
+  $('suggestcard').classList.remove('off');
+
+  $('hero').innerHTML = `<p class="hero-l">모아야 할 총 금액 (만 ${startAge}세 기준)</p><p class="hero-v">${Engine.fmt(result.neededTotal)}만원</p>`
+    + (dcBal>0 ? `<p class="hero-s">개인연금 ${Engine.fmt(result.neededT3)}만원 + 퇴직금 ${Engine.fmt(dcBal)}만원</p>` : '')
+    + `<p class="note">위 금액은 물가상승률을 반영하지 않은 명목 금액입니다. 지금부터 수십 년에 걸쳐 모으고 받는 계산이라, 실제로는 시간이 지날수록 이 돈의 구매력이 줄어듭니다.</p>`;
+
+  const overNote = result.overLimit
+    ? `<b>연 1,800만원 납입 한도로는 부족합니다.</b> 필요한 연 납입액이 이 한도를 넘습니다. 목표를 낮추거나 수령 시작 나이를 늦추면(모으는 기간이 늘어) 필요한 금액이 줄어듭니다.`
+    : (startAge<=nowAge && result.gap>0.5
+        ? `<b>지금 당장 필요한 돈이 부족합니다.</b> 이미 수령 시작 나이라 더 모을 시간이 없습니다. 목표를 낮추거나 시작 나이를 늦춰 보세요.`
+        : '');
+  $('warn').innerHTML = overNote;
+
+  const payYears = Math.max(0, startAge - nowAge);
+  $('kv').innerHTML = `
+    <div class="kv"><span class="k">지금 자금을 그대로 굴렸을 때 예상액</span><span class="v">${Engine.fmt(result.currentProjected)}만원</span></div>
+    <div class="kv"><span class="k">부족한 금액</span><span class="v">${Engine.fmt(result.gap)}만원</span></div>
+  `;
+  $('kv-suggest').innerHTML = `
+    <div class="kv"><span class="k">필요한 연 납입액</span><span class="v">${Engine.fmt(result.annualPay)}만원</span>
+      <span class="s">지금부터 만 ${startAge}세까지 ${payYears}년간, 매년 이 금액을 낼 경우</span></div>
+    <div class="kv"><span class="k">계좌 구성 제안</span><span class="v">매년 연금저축 ${Engine.fmt(result.split.ps)}만원 + IRP ${Engine.fmt(result.split.irp)}만원</span>
+      <span class="s">위 금액을 ${payYears}년간 매년 이렇게 나눠 넣는 제안입니다(세액공제 한도 — 연금저축 600만원 우선). 실제 배분은 자유롭게 조정할 수 있습니다</span></div>
+  `;
+
+  $('livebar-v').textContent = `${Engine.fmt(result.neededTotal)}만원`;
+  $('livebar-s').textContent = '모아야 할 총 금액';
+}
+
+/* ═════════ 바텀시트 ═════════ */
+const sheet = $('sheet');
+function openSheet(key){
+  const target = $('h-'+key);
+  sheet.querySelectorAll('#sheet-b>section').forEach(s => s.hidden = s !== target);
+  $('sheet-t').textContent = target.dataset.title;
+  $('sheet-b').scrollTop = 0;
+  document.documentElement.classList.add('lock');
+  sheet.showModal();
+}
+document.addEventListener('click', e=>{
+  const b = e.target.closest('[data-help]');
+  if(b) openSheet(b.dataset.help);
+});
+
+function animateClose(){
+  if(!sheet.open || sheet.dataset.closing) return;
+  sheet.dataset.closing = '1';
+  const finish = ()=>{ delete sheet.dataset.closing; sheet.style.transform=''; sheet.close(); };
+  if(reduceMotion()){ finish(); return; }
+  const from = getComputedStyle(sheet).transform;
+  sheet.animate(
+    [{transform: from === 'none' ? 'translateY(0)' : from, opacity:1}, {transform:'translateY(100%)', opacity:1}],
+    {duration:220, easing:'cubic-bezier(.32,.72,0,1)'}
+  ).finished.then(finish, finish);
+}
+sheet.addEventListener('click', e=>{ if(e.target === sheet) animateClose(); });
+$('sheet-x').addEventListener('click', animateClose);
+sheet.addEventListener('cancel', e=>{ e.preventDefault(); animateClose(); });
+sheet.addEventListener('close', ()=> document.documentElement.classList.remove('lock'));
+
+const rubberband = (overshoot, dim, k=.55) => (overshoot*dim*k) / (dim + k*Math.abs(overshoot));
+const grab = document.querySelector('.sheet-grab');
+let dragging=false, dragStartY=0, lastY=0, lastT=0, vel=0;
+grab.addEventListener('pointerdown', e=>{
+  if(e.pointerType==='mouse' && e.button!==0) return;
+  dragging = true; dragStartY = lastY = e.clientY; lastT = performance.now(); vel = 0;
+  grab.setPointerCapture(e.pointerId);
+});
+grab.addEventListener('pointermove', e=>{
+  if(!dragging) return;
+  const dy = e.clientY - dragStartY;
+  const now = performance.now(), dt = now - lastT || 1;
+  vel = (e.clientY - lastY) / dt;
+  lastY = e.clientY; lastT = now;
+  sheet.style.transform = `translateY(${dy < 0 ? rubberband(dy, 180) : dy}px)`;
+});
+function grabRelease(e){
+  if(!dragging) return;
+  dragging = false;
+  const dy = e.clientY - dragStartY;
+  if(dy > 70 || vel > 0.6) animateClose();
+  else if(reduceMotion()) sheet.style.transform = '';
+  else sheet.animate([{transform: sheet.style.transform || 'translateY(0)'}, {transform:'translateY(0)'}],
+    {duration:260, easing:'cubic-bezier(.32,.72,0,1)'}).finished.then(()=>{ sheet.style.transform = ''; });
+}
+grab.addEventListener('pointerup', grabRelease);
+grab.addEventListener('pointercancel', grabRelease);
+
+/* ═════════ 하단 고정 요약 ═════════ */
+let barGoesToResult = true;
+const syncBarLabel = () => { $('livebar-go').textContent = barGoesToResult ? '결과 보기' : '다시 계산'; };
+new IntersectionObserver(([en])=>{
+  barGoesToResult = !en.isIntersecting && en.boundingClientRect.top > 0;
+  syncBarLabel();
+}).observe($('results'));
+$('livebar-go').addEventListener('click', ()=>{
+  if(barGoesToResult) $('hero').scrollIntoView({block:'start', behavior: reduceMotion() ? 'auto' : 'smooth'});
+  else openSheet('reset');
+});
+
+/* ═════════ 처음부터 다시 ═════════ */
+const DEFAULT_INPUTS = {};
+document.querySelectorAll('input[type=range], input[type=checkbox]').forEach(el=>{
+  DEFAULT_INPUTS[el.id] = el.type==='checkbox' ? el.checked : el.value;
+});
+const DEFAULT_SEGS = {};
+document.querySelectorAll('.seg, .chips').forEach(seg=>{
+  const active = seg.querySelector('button[aria-pressed="true"]');
+  if(active) DEFAULT_SEGS[seg.id] = active.dataset.v;
+});
+
+const toTop = () => window.scrollTo({top:0, behavior: reduceMotion() ? 'auto' : 'smooth'});
+function doResetAll(){
+  Object.entries(DEFAULT_INPUTS).forEach(([id,v])=>{
+    const el = $(id);
+    if(el.type==='checkbox') el.checked = v; else el.value = v;
+  });
+  document.querySelectorAll('.seg, .chips').forEach(seg=>{
+    const def = DEFAULT_SEGS[seg.id];
+    seg.querySelectorAll('button').forEach(b=>
+      b.setAttribute('aria-pressed', b.dataset.v === def ? 'true' : 'false'));
+  });
+  toTop();
+  update();
+}
+$('resetall').addEventListener('click', ()=> openSheet('reset'));
+$('reset-cancel').addEventListener('click', ()=>{ animateClose(); toTop(); });
+$('reset-ok').addEventListener('click', ()=>{ animateClose(); doResetAll(); });
+
+/* ═════════ 라이트/다크 ═════════ */
+const THEME_KEY = 'pension-alchemist:theme';
+const darkMQ = matchMedia('(prefers-color-scheme: dark)');
+const ICON_SUN  = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+const ICON_MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+const isDark = () => document.documentElement.dataset.theme
+  ? document.documentElement.dataset.theme === 'dark' : darkMQ.matches;
+function syncThemeUI(){
+  const d = isDark();
+  $('themebtn').innerHTML = d ? ICON_SUN : ICON_MOON;
+  $('themebtn').setAttribute('aria-label', d ? '라이트 모드로 전환' : '다크 모드로 전환');
+  $('tc').content = cv('--bg');
+}
+$('themebtn').addEventListener('click', ()=>{
+  const next = isDark() ? 'light' : 'dark';
+  const root = document.documentElement;
+  if(!reduceMotion()){ root.classList.add('theme-anim'); setTimeout(()=>root.classList.remove('theme-anim'), 300); }
+  root.dataset.theme = next;
+  try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
+  syncThemeUI();
+});
+darkMQ.addEventListener('change', syncThemeUI);
+
+/* ═════════ 입력값 보존 ═════════ */
+const STORE_KEY = 'pension-alchemist:goal';
+function loadState(){
+  try{
+    const st = JSON.parse(localStorage.getItem(STORE_KEY) || 'null');
+    if(!st) return;
+    Object.entries(st.inputs || {}).forEach(([id,v])=>{
+      if(!(id in DEFAULT_INPUTS)) return;
+      const el = $(id);
+      if(el.type === 'checkbox') el.checked = !!v; else el.value = v;
+    });
+    Object.entries(st.segs || {}).forEach(([id,v])=>{
+      if(!(id in DEFAULT_SEGS)) return;
+      const btns = [...$(id).querySelectorAll('button')];
+      if(!btns.some(b => b.dataset.v === String(v))) return;
+      btns.forEach(b => b.setAttribute('aria-pressed', b.dataset.v === String(v) ? 'true' : 'false'));
+    });
+  }catch(e){}
+}
+let saveTimer = 0;
+function saveStateSoon(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(()=>{
+    try{
+      const inputs = {}, segs = {};
+      document.querySelectorAll('input[type=range], input[type=checkbox]').forEach(el=>{
+        inputs[el.id] = el.type === 'checkbox' ? el.checked : el.value;
+      });
+      document.querySelectorAll('.seg, .chips').forEach(seg=>{
+        const active = seg.querySelector('button[aria-pressed="true"]');
+        if(active) segs[seg.id] = active.dataset.v;
+      });
+      localStorage.setItem(STORE_KEY, JSON.stringify({inputs, segs}));
+    }catch(e){}
+  }, 300);
+}
+
+/* 연도 의존 초기화 */
+const staleYears = Engine.THIS_YEAR - Engine.TAX_BASIS.year;
+$('asof').className = staleYears > 0 ? 'asof stale' : 'asof';
+$('asof').innerHTML = `${Engine.TAX_BASIS.law} 기준 · 검토일 ${Engine.TAX_BASIS.reviewed}`
+  + (staleYears > 0 ? ` · <b>검토 후 ${staleYears}년 경과 — 개정 여부를 확인해 주세요</b>` : '');
+
+loadState();
+syncThemeUI();
+render();
+</script>
+</body>
+</html>
