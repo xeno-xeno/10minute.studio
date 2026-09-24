@@ -303,8 +303,45 @@ function solveGoal(params){
   return { feasible:true, neededTotal: neededT3+dc, neededT3, currentProjected, gap, annualPay, overLimit, split };
 }
 
+/* ═════════ 세액공제 환급 (소득세법 §59조의3 ①, 2026-09-24 law.go.kr 원문 대조) ═════════
+   공제율 12%(종합소득금액 4,500만원 이하·근로소득만이면 총급여 5,500만원 이하는 15%) + 지방소득세 10%.
+   한도: 연금저축 600만원, 연금저축(600 이내)+퇴직연금(IRP) 합산 900만원. 소득 구간별 한도 차등은 조문에 없다.
+   ponytail: 공제액이 종합소득산출세액을 넘으면 그 세액까지만 공제되는 상한은 미반영(산출세액 입력을 받지 않는다 — 2026-09-24 사용자 결정으로 제외). */
+const PS_CREDIT_CAP = 600;
+function calcPensionCredit({ps, irp, income, wageOnly}){
+  const low = wageOnly ? income <= 5500 : income <= 4500;
+  const rate = low ? .15 : .12;
+  const base = Math.min(Math.min(ps, PS_CREDIT_CAP) + irp, DEDUCT_CAP);
+  const refund = base * rate * 1.1;
+  const room = DEDUCT_CAP - base;              // 한도까지 더 넣을 수 있는 금액
+  return { rate, base, refund, room, extraRefund: room * rate * 1.1, excluded: ps + irp - base };
+}
+
+/* ═════════ 퇴직금 일시금 vs 연금 수령 세금 비교 (severance.html) ═════════
+   일시금 = calcRetirementTax. 연금 = 같은 퇴직소득세(실효세율)를 인출액에 비례해 매기되 연금수령연차별로 감면
+   (dcRed: 1~10년차 30% / 11~20년차 40% / 21년차~ 50%). IRP로 옮긴 이연퇴직소득이라 5년 가입요건은 면제, 55세부터 1년차.
+   매년 균등액(퇴직금 ÷ 받는 기간)을 빼되 연금수령한도(payoutLimit)에 걸리면 한도까지만 빼서 기간이 늘어난다.
+   ponytail: 운용수익 0%(원금만 비교), 운용수익에 붙는 연금소득세·건보료는 미반영. 수익률 입력이 필요하면 simulate로 교체. */
+function compareSeverance({sev, wy, startAge, years}){
+  const lump = calcRetirementTax(sev, wy);
+  const eff = lump.rate / 100;
+  const perYear = sev / years;
+  let bal = sev, pensionTax = 0;
+  const rows = [];
+  for(let age = startAge; bal > 0.01 && age <= 100; age++){
+    const yr = recvYear(age, 55, 0);
+    const w = Math.min(perYear, payoutLimit(bal, yr), bal);
+    const tax = w * eff * (1 - dcRed(yr));
+    bal -= w; pensionTax += tax;
+    rows.push({age, yr, w, tax, red: dcRed(yr)});
+  }
+  return { lumpTax: lump.tax, effRate: lump.rate, pensionTax, saved: lump.tax - pensionTax,
+           actualYears: rows.length, rows };
+}
+
 /* 페이지 쪽 전역은 이 객체 하나만 노출한다(정적 환경 확정 규칙) */
 const Engine = {
+  compareSeverance, calcPensionCredit,
   DEDUCT_CAP, PRIVATE_CAP, OVER_RATE, THIS_YEAR, TAX_BASIS,
   termRate, lifeRate, dcRed, payoutLimit, recvYear,
   monthlyPayout, realValue, fmt, fmtD,
@@ -469,6 +506,31 @@ function selfTest(){
   near(accumulate(900, 3, 40, 60, 0, 0, 20).total, 24623, 250, '900만원 기사: 3% → 약 2억4623만원');
   near(accumulate(900, 5, 40, 60, 0, 0, 20).total, 30828, 310, '900만원 기사: 5% → 약 3억828만원');
   near(accumulate(900, 7, 40, 60, 0, 0, 20).total, 39069, 400, '900만원 기사: 7% → 약 3억9069만원');
+
+  // 세액공제 환급 — 총급여 5,500 이하 15%, 초과 12%, 지방소득세 10% 포함(16.5%/13.2%)
+  const c1 = calcPensionCredit({ps:600, irp:300, income:5000, wageOnly:true});
+  near(c1.refund, 900*.165, 1e-9, '900만원 납입, 총급여 5천 → 148.5만원');
+  near(calcPensionCredit({ps:600, irp:300, income:8000, wageOnly:true}).refund, 900*.132, 1e-9, '총급여 8천 → 13.2%');
+  near(calcPensionCredit({ps:600, irp:300, income:5500, wageOnly:true}).rate, .15, 1e-9, '총급여 5,500 경계는 15%');
+  near(calcPensionCredit({ps:1000, irp:0, income:5000, wageOnly:true}).base, 600, 1e-9, '연금저축 단독 600만원 한도');
+  near(calcPensionCredit({ps:1000, irp:500, income:5000, wageOnly:true}).base, 900, 1e-9, '합산 900만원 한도');
+  near(calcPensionCredit({ps:0, irp:0, income:5000, wageOnly:true}).extraRefund, 900*.165, 1e-9, '미납이면 추가 환급 = 최대 환급');
+  near(calcPensionCredit({ps:1000, irp:500, income:5000, wageOnly:true}).excluded, 600, 1e-9, '한도 초과분 표시');
+  near(calcPensionCredit({ps:0, irp:0, income:4500, wageOnly:false}).rate, .15, 1e-9, '종합소득 4,500 경계는 15%');
+  near(calcPensionCredit({ps:0, irp:0, income:5000, wageOnly:false}).rate, .12, 1e-9, '종합소득 5,000은 12%');
+
+  // 퇴직금 비교 — 1억/20년: 일시금 123.2만원. 55세부터 10년 받으면 전부 1~10년차(감면 30%) → 123.2×0.7 = 86.24
+  const sv1 = compareSeverance({sev:10000, wy:20, startAge:55, years:10});
+  near(sv1.lumpTax, 123.2, 0.5, '비교: 일시금 세금');
+  near(sv1.pensionTax, sv1.lumpTax*0.7, 0.05, '비교: 1~10년차 감면 30% → 세금 70%');
+  near(sv1.actualYears, 10, 1e-9, '비교: 연금수령한도에 안 걸리면 기간 그대로');
+  // 65세에 시작하면 처음부터 11년차 → 감면 40% (연차는 개시가 아니라 55세 충족일부터 센다)
+  near(compareSeverance({sev:10000, wy:20, startAge:65, years:10}).pensionTax, sv1.lumpTax*0.6, 0.05, '비교: 65세 개시 → 11~20년차 40%');
+  // 5년에 다 빼려 하면 1년차 한도(잔액 12%)에 걸려 기간이 늘고, 그동안 연차가 올라간다
+  const sv5 = compareSeverance({sev:10000, wy:20, startAge:55, years:5});
+  if(!(sv5.actualYears > 5)) throw new Error('비교: 짧은 기간은 수령한도 때문에 늘어나야 한다');
+  if(!(sv1.pensionTax < sv1.lumpTax)) throw new Error('비교: 연금 수령이 일시금보다 세금이 적어야 한다');
+  near(compareSeverance({sev:0, wy:20, startAge:55, years:10}).pensionTax, 0, 1e-9, '비교: 0원');
 
   console.log('%c✓ selfTest 통과', 'color:#1D9E75;font-weight:bold');
 }

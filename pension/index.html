@@ -6,14 +6,14 @@
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" id="tc" content="#f4f6f9">
 <script>try{const t=localStorage.getItem('pension-alchemist:theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;}catch(e){}</script>
-<title>퇴직 연금술사 · 연금 계산기 모음 | 10minute.studio</title>
-<meta name="description" content="퇴직금·DC·IRP·연금저축을 한 솥에 녹여 월 실수령액으로 바꿔주는 퇴직 연금술사. 법정 인출순서와 세법상 한도를 그대로 적용한 연금 계산기를 모았습니다. 2026년 개정 세법 기준.">
-<meta name="keywords" content="퇴직 연금술사, 연금 계산기, 연금 수령 계산기, 퇴직금 계산기, IRP 세금, 연금저축 세금, 역산 계산기, 연금 실수령액, 10minute studio">
+<title>퇴직연금술사의 레시피 · 연금 계산기 모음 | 10minute.studio</title>
+<meta name="description" content="퇴직금·DC·IRP·연금저축을 한 솥에 녹여 월 실수령액으로 바꿔주는 퇴직연금술사의 레시피. 법정 인출순서와 세법상 한도를 그대로 적용한 연금 계산기를 모았습니다. 2026년 개정 세법 기준.">
+<meta name="keywords" content="퇴직연금술사의 레시피, 연금 계산기, 연금 수령 계산기, 퇴직금 계산기, IRP 세금, 연금저축 세금, 역산 계산기, 연금 실수령액, 10minute studio">
 <meta name="author" content="10minute.studio">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://xeno-xeno.github.io/10minute.studio/pension/">
 <link rel="icon" type="image/svg+xml" href="../assets/images/clock-10.svg">
-<meta property="og:title" content="퇴직 연금술사 · 연금 계산기 모음 | 10minute.studio">
+<meta property="og:title" content="퇴직연금술사의 레시피 · 연금 계산기 모음 | 10minute.studio">
 <meta property="og:description" content="퇴직금·DC·IRP·연금저축을 한 솥에 녹여 월 실수령액으로 바꿔주는 연금 계산기 모음.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ko_KR">
@@ -24,7 +24,7 @@
 <meta property="og:image:height" content="800">
 <meta property="og:image:type" content="image/jpeg">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="퇴직 연금술사 · 연금 계산기 모음 | 10minute.studio">
+<meta name="twitter:title" content="퇴직연금술사의 레시피 · 연금 계산기 모음 | 10minute.studio">
 <meta name="twitter:description" content="퇴직금·DC·IRP·연금저축을 한 솥에 녹여 월 실수령액으로 바꿔주는 연금 계산기 모음.">
 
 <!-- Google Analytics -->
@@ -36,7 +36,11 @@
   gtag('config', 'G-8L3S8MLEGK');
 </script>
 
-<link rel="stylesheet" href="./pension.css?v=2026-09-22">
+<!-- Google AdSense 사이트 연결 코드 — 광고 단위(data-ad-slot)가 있는 슬롯만 광고가 나온다 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2292328325141579"
+     crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="./pension.css?v=2026-09-24h">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);-webkit-text-size-adjust:100%;line-height:1.5;word-break:keep-all;overflow-wrap:break-word;}
@@ -59,17 +63,25 @@ h1{font-size:clamp(1.75rem,7vw,2.25rem);font-weight:700;letter-spacing:-.02em;li
 .asof{font-size:.75rem;color:var(--muted);margin-top:.7rem;}
 h2{font-size:1.0625rem;font-weight:700;margin:1.6rem 0 .7rem;}
 
-.cards{list-style:none;display:grid;gap:.75rem;}
+.cards{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;}
+@media(max-width:560px){.cards{grid-template-columns:1fr;}}
 .card{background:var(--card);border:.5px solid var(--line);border-radius:14px;padding:1.1rem 1.25rem;display:flex;flex-direction:column;align-items:flex-start;gap:.35rem;}
+.card{position:relative;transition:transform .1s ease-out,border-color .15s ease;}
+.card:not(.soon):hover{border-color:var(--blue);}
+.card:not(.soon):active{transform:scale(.99);}
+.card .btn:active{transform:none;}  /* transform이 걸리면 ::after의 기준 박스가 버튼으로 줄어 클릭이 끊긴다 */
+.card .btn::after{content:'';position:absolute;inset:0;border-radius:14px;}  /* 링크를 카드 전체로 늘려 카드 어디를 눌러도 이동 */
 .card h3{font-size:1rem;font-weight:600;}
-.card p{font-size:.875rem;color:var(--text2);line-height:1.6;}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 1.3rem;margin-top:.5rem;border-radius:10px;background:var(--blue);color:var(--on-blue);font-size:.9375rem;font-weight:600;text-decoration:none;transition:transform .1s ease-out;}
+.card p{font-size:.875rem;color:var(--text2);line-height:1.6;margin-bottom:.5rem;}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 1.3rem;margin-top:auto;border-radius:10px;background:var(--blue);color:var(--on-blue);font-size:.9375rem;font-weight:600;text-decoration:none;transition:transform .1s ease-out;}
 .btn:active{transform:scale(.97);}
+.btn.sub{background:var(--surface2);color:var(--text);border:.5px solid var(--line);}   /* 읽을거리 버튼: 계산기 버튼(파랑)과 구분되는 중립색 */
+.sep{border:0;border-top:.5px solid var(--line);margin:2rem 0 0;}
 .card.soon{opacity:.75;}
 .card.soon .btn{background:transparent;color:var(--muted);border:.5px solid var(--line);}
 
-.points{list-style:none;display:grid;gap:.6rem;}
-.points li{background:var(--card);border:.5px solid var(--line);border-radius:14px;padding:.8rem 1rem;font-size:.875rem;color:var(--text2);line-height:1.6;}
+.points{list-style:disc;margin:0 0 0 1.15rem;font-size:.875rem;color:var(--text2);line-height:1.7;}
+.points li{margin-bottom:.55rem;padding-left:.15rem;}
 .points b{color:var(--text);font-weight:600;}
 .note{font-size:.8125rem;color:var(--muted);line-height:1.6;margin-top:1.4rem;}
 footer{margin-top:2rem;padding-top:1rem;border-top:.5px solid var(--line-soft);font-size:.8125rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:.4rem 1rem;}
@@ -87,7 +99,7 @@ footer a:hover{color:var(--text);}
 </figure>
 
 <header class="hero">
-  <h1>퇴직 연금술사</h1>
+  <h1>퇴직연금술사의 레시피</h1>
   <p class="lead">누구나 가슴속에 품고 다니는'파이어족의 꿈'을 설계해볼까요?</p>
   <p class="lead">퇴직금·연금저축·IRP를 한 솥에 넣으면, 세금과 한도 규칙까지 계산해서 매달 손에 들어오는 돈을 계산해드립니다.</p>
   <p class="asof">2026년 1월 1일 시행 세법 기준</p>
@@ -106,14 +118,35 @@ footer a:hover{color:var(--text);}
       <p>받고 싶은 희망 월 금액을 입력하면, 지금부터 어떤 금융 상품에 얼마를 준비해야 하는지 계산합니다.</p>
       <a class="btn" href="goal.html" onclick="gtag('event','calc_click',{tool:'goal',location:'card'})">계산하기</a>
     </li>
-    <li class="card soon">
-      <h3>이정돈 알아야죠 - 연금 세금 가이드</h3>
-      <p>연금 수령 시 세금이 어떻게 매겨지는지, 인출 시기와 순서/세율, 연 1,500만원 한도 등, 알아두면 도움이 될 정보를 정리했습니다.</p>
-      <span class="btn" aria-disabled="true">준비 중</span>
+    <li class="card">
+      <h3>얼마나 돌려받을까? - 세액공제 환급 계산기</h3>
+      <p>연금저축·IRP에 넣은 금액으로 연말정산에서 돌려받는 세금을 계산합니다. 한도까지 더 넣으면 늘어나는 환급액도 보여줍니다.</p>
+      <a class="btn" href="refund.html" onclick="gtag('event','calc_click',{tool:'refund',location:'card'})">계산하기</a>
+    </li>
+    <li class="card">
+      <h3>일시금으로 받을까, 연금으로 받을까? - 퇴직금 세금 비교</h3>
+      <p>퇴직금을 한 번에 받을 때의 퇴직소득세와, IRP로 옮겨 연금으로 받을 때의 세금(연차별 30·40·50% 감면)을 나란히 비교합니다.</p>
+      <a class="btn" href="severance.html" onclick="gtag('event','calc_click',{tool:'severance',location:'card'})">계산하기</a>
     </li>
   </ul>
 
-  <h2>퇴직 연금술사는~ </h2>
+  <hr class="sep">
+
+  <h2>읽을거리</h2>
+  <ul class="cards">
+    <li class="card">
+      <h3>이정돈 알아야죠 - 연금 세금 가이드</h3>
+      <p>연금 수령 시 세금이 어떻게 매겨지는지, 인출 시기와 순서/세율, 연 1,500만원 한도 등, 알아두면 도움이 될 정보를 정리했습니다.</p>
+      <a class="btn sub" href="guide.html" onclick="gtag('event','calc_click',{tool:'guide',location:'card'})">읽어보기</a>
+    </li>
+    <li class="card">
+      <h3>바뀐 건 없을까? - 연금·세법 소식</h3>
+      <p>연금 세제와 관련된 공식 자료의 제목과 출처를 모았습니다. 제목을 누르면 원문 사이트로 이동합니다.</p>
+      <a class="btn sub" href="news.html" onclick="gtag('event','calc_click',{tool:'news',location:'card'})">소식 보기</a>
+    </li>
+  </ul>
+
+  <h2>퇴직연금술사의 레시피는~ </h2>
   <ul class="points">
     <li><b>금융 상품을 한 번에 계산합니다.</b> — 퇴직금(DC·DB), 연금저축, IRP를 따로 계산하지 않고 하나의 흐름으로 묶어 계산합니다.</li>
     <li><b>세법 기준에 따른 연금 수령 순서를 따릅니다.</b> — 세금 없는 돈, 퇴직금, 세금 혜택을 받은 돈과 수익 순서를 그대로 따릅니다.</li>
@@ -127,7 +160,6 @@ footer a:hover{color:var(--text);}
 <footer>
   <a href="https://xeno-xeno.github.io/10minute.studio/">10minute.studio</a>
   <a href="../privacy.html">개인정보처리방침</a>
-  <a href="../terms.html">이용약관</a>
   <a href="../contact.html">문의</a>
 </footer>
 

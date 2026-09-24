@@ -6,14 +6,14 @@
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" id="tc" content="#f4f6f9">
 <script>try{const t=localStorage.getItem('pension-alchemist:theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;}catch(e){}</script>
-<title>연금 수령 계산기 (퇴직금·IRP·연금저축) | 퇴직 연금술사</title>
+<title>연금 수령 계산기 (퇴직금·IRP·연금저축) | 퇴직연금술사의 레시피</title>
 <meta name="description" content="퇴직금·IRP·연금저축으로 몇 세부터 매달 얼마를 받고 세금은 얼마인지 계산하는 연금수령 계산기. 법정 인출순서와 연 1,500만원 한도를 반영한 2026년 세법 기준.">
-<meta name="keywords" content="연금 수령 계산기, 퇴직금 계산기, IRP 세금, 연금저축 수령 세금, 연금소득세, 연 1500만원 한도, 연금수령한도, 퇴직 연금술사">
+<meta name="keywords" content="연금 수령 계산기, 퇴직금 계산기, IRP 세금, 연금저축 수령 세금, 연금소득세, 연 1500만원 한도, 연금수령한도, 퇴직연금술사의 레시피">
 <meta name="author" content="10minute.studio">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://xeno-xeno.github.io/10minute.studio/pension/pension-alchemist.html">
 <link rel="icon" type="image/svg+xml" href="../assets/images/clock-10.svg">
-<meta property="og:title" content="연금 수령 계산기 (퇴직금·IRP·연금저축) | 퇴직 연금술사">
+<meta property="og:title" content="연금 수령 계산기 (퇴직금·IRP·연금저축) | 퇴직연금술사의 레시피">
 <meta property="og:description" content="퇴직금·IRP·연금저축의 월 수령액과 세금을 계산하는 연금수령 계산기. 2026년 세법 기준.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ko_KR">
@@ -24,7 +24,7 @@
 <meta property="og:image:height" content="800">
 <meta property="og:image:type" content="image/jpeg">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="연금 수령 계산기 (퇴직금·IRP·연금저축) | 퇴직 연금술사">
+<meta name="twitter:title" content="연금 수령 계산기 (퇴직금·IRP·연금저축) | 퇴직연금술사의 레시피">
 <meta name="twitter:description" content="퇴직금·IRP·연금저축의 월 수령액과 세금을 계산하는 연금수령 계산기. 2026년 세법 기준.">
 
 <!-- Google Analytics -->
@@ -36,7 +36,7 @@
   gtag('config', 'G-8L3S8MLEGK');
 </script>
 
-<link rel="stylesheet" href="./pension.css?v=2026-09-22">
+<link rel="stylesheet" href="./pension.css?v=2026-09-24h">
 <script src="./engine.js?v=2026-09-22"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <!-- AdSense: 광고 단위 ID(data-ad-slot)를 발급받아 XXXXXXXXXX 자리에 넣으면 그 슬롯이 켜진다. 발급 전 슬롯은 자리 자체를 만들지 않는다 -->
@@ -58,7 +58,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .brandbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;}
 .brandbar a{font-size:.8125rem;color:var(--muted);text-decoration:none;}
 .brandbar a:hover{color:var(--text);}
-/* 이전 버튼 '‹ 퇴직 연금술사'(PC·모바일 공통, 부모=랜딩). 기존 경로 표시는 이 버튼으로 대체한다.
+/* 이전 버튼 '‹ 퇴직연금술사의 레시피'(PC·모바일 공통, 부모=랜딩). 기존 경로 표시는 이 버튼으로 대체한다.
    이전 페이지가 검색 결과여도 사이트 안에 머물도록 history.back() 대신 링크 */
 .brandbar a.back{display:inline-flex;align-items:center;gap:2px;min-height:44px;margin:-8px 0 -8px -8px;padding:0 10px 0 4px;font-size:.9375rem;font-weight:500;color:var(--blue);border-radius:10px;}
 .back svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
@@ -302,7 +302,7 @@ dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
 
 <div class="page">
 
-<div class="brandbar"><a class="back" href="./" aria-label="퇴직 연금술사 소개로 돌아가기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span>퇴직 연금술사</span></a><button type="button" class="themebtn" id="themebtn" aria-label="다크 모드로 전환"></button></div>
+<div class="brandbar"><a class="back" href="./" aria-label="퇴직연금술사의 레시피 소개로 돌아가기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span>퇴직연금술사의 레시피</span></a><button type="button" class="themebtn" id="themebtn" aria-label="다크 모드로 전환"></button></div>
 
 <h1><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 17h3v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-3a3.16 3.16 0 0 0 2-2h1a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-1a5 5 0 0 0-2-4V3a4 4 0 0 0-3.2 1.6l-.3.4H11a6 6 0 0 0-6 6v1a5 5 0 0 0 2 4v3a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1z"/><path d="M16 10h.01"/><path d="M2 8v1a2 2 0 0 0 2 2h1"/></svg>연금 수령 계산기</h1>
 <p class="sub">퇴직금·IRP·연금저축을 합쳐, 매달 얼마 받고 세금은 얼마인지 계산합니다.</p>
@@ -415,9 +415,12 @@ dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
   </details>
 </div>
 
+<div class="showrow" id="showrow"><button type="button" class="showbtn" id="showbtn">결과 보기</button></div>
+
+<!-- 3. 결과 — '결과 보기'를 누르기 전에는 숨기고, 누른 뒤에는 입력하면 바로 갱신 -->
+<div id="resultwrap" hidden>
 <div class="flow-divider" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13.744 17.736a6 6 0 1 1-7.48-7.48"/><path d="M15 6h1v4"/><path d="m6.134 14.768.866-.5 2 3.464"/><circle cx="16" cy="8" r="6"/></svg></div>
 
-<!-- 3. 결과 (입력하면 바로 갱신) -->
 <p class="st title"><span class="num">3</span>결과</p>
 <div id="results" tabindex="-1">
   <div class="hero" id="hero"></div>
@@ -461,44 +464,21 @@ dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
 </div>
 
 <div class="foot"><button type="button" class="lnk" id="resetall">다시 계산</button></div>
+<nav class="xl" aria-label="다른 계산기">
+  <p class="xl-t">다른 계산기도 써 보세요</p>
+  <a href="goal.html" onclick="gtag('event','calc_click',{tool:'goal',location:'bottom'})">얼마를 준비해야 할까?<br>목표 역산 계산기<span>계산하기</span></a>
+  <a href="refund.html" onclick="gtag('event','calc_click',{tool:'refund',location:'bottom'})">얼마나 돌려받을까?<br>세액공제 환급 계산기<span>계산하기</span></a>
+  <a href="severance.html" onclick="gtag('event','calc_click',{tool:'severance',location:'bottom'})">일시금 vs 연금, 세금은?<br>퇴직금 세금 비교 계산기<span>계산하기</span></a>
+</nav>
+</div><!-- /#resultwrap -->
 
 </section>
 
 <!-- ══════════ 세법 정보 ══════════ -->
 <section id="tab-law" role="tabpanel" aria-labelledby="tb-law" hidden>
 
-<p class="sub" style="margin-bottom:1rem;">이 계산기가 적용한 세법을 항목별로 정리했습니다. <span style="color:var(--chg-text);font-weight:500;">개정</span> 표시는 2026년 1월 1일부터 달라진 내용입니다.</p>
-
-<details class="acc" open>
-  <summary>이연퇴직소득 연금수령 감면<span class="chg">2026 개정</span></summary>
-  <div class="accbody">
-    <p>퇴직금을 IRP로 받아 연금으로 나눠 받으면 퇴직소득세의 일부만 원천징수합니다. 2026년부터 20년 초과 구간이 신설되어 2단계가 3단계가 됐습니다.</p>
-    <table>
-      <tr><th>연금수령연차</th><th>원천징수</th><th>감면</th></tr>
-      <tr><td>10년 이하</td><td>퇴직소득세의 70%</td><td>30%</td></tr>
-      <tr><td>10년 초과 ~ 20년 이하</td><td>60%</td><td>40%</td></tr>
-      <tr><td>20년 초과</td><td>50%</td><td>50%</td></tr>
-    </table>
-    <p>2026년 1월 1일 이후 연금 수령분부터 적용됩니다. 오래 나눠 받을수록 유리한 구조라, 55세 이상이라면 퇴직 후 연금을 빨리 개시해 수령 기간을 늘리는 쪽이 절세에 도움이 됩니다.</p>
-    <p>이연퇴직소득에서 나온 인출은 <b>연 1,500만원 한도와 무관</b>합니다. 다만 이 재원을 굴려 생긴 운용수익은 연금소득으로 분류되어 한도에 포함됩니다.</p>
-    <p class="src">국세청 「연금소득 원천징수 방법」 · 기획재정부 2025년 세제개편</p>
-  </div>
-</details>
-
-<details class="acc">
-  <summary>연금수령연차는 언제부터 세나</summary>
-  <div class="accbody">
-    <p>연금을 받은 햇수(연금수령연차)는 <b>'받을 수 있게 된 해'를 1년차</b>로 셉니다. 실제로 돈을 빼기 시작한 해가 1년차가 아닙니다. <b>예: 55세에 조건을 채우고 65세에 처음 받으면, 첫 수령이 벌써 11년차입니다.</b></p>
-    <p>"받을 수 있는 날"은 만 55세와 가입 후 5년이 지나는 시점 중 늦은 쪽입니다. 계좌에 이연퇴직소득이 있으면 5년 요건은 면제됩니다.</p>
-    <p>따라서 55세에 요건을 채우고 65세에 개시하면 개시 시점이 이미 11년차입니다. 이것이 두 가지를 바꿉니다.</p>
-    <ul>
-      <li>연금수령연차가 11년 이상이면 <b>연금수령한도가 적용되지 않습니다</b>. 인출액 전체를 연금수령으로 봅니다.</li>
-      <li>이연퇴직소득 감면이 30%가 아니라 40%(20년 초과면 50%)에서 시작합니다.</li>
-    </ul>
-    <p>2013년 3월 1일 이전에 가입한 연금계좌는 특례로 <b>6년차부터</b> 기산합니다.</p>
-    <p class="src">소득세법 시행령 §40의2 ③④ · 국세청 「연금소득의 범위」</p>
-  </div>
-</details>
+<p class="sub" style="margin-bottom:.6rem;">이 계산이 적용한 규칙만 짧게 정리했습니다. <span style="color:var(--chg-text);font-weight:500;">개정</span> 표시는 2026년 1월 1일부터 달라진 내용입니다. 세율·한도의 자세한 설명은 세법 가이드에 있습니다.</p>
+<p class="sub" style="margin-bottom:1rem;">가이드로 이동: <a class="lnk" href="guide.html#accounts">계좌 비교</a> · <a class="lnk" href="guide.html#deduct">납입 한도·세액공제</a> · <a class="lnk" href="guide.html#eligible">수령 요건·연금수령연차</a> · <a class="lnk" href="guide.html#severance">퇴직금 감면</a> · <a class="lnk" href="guide.html#retax">퇴직소득세 계산</a> · <a class="lnk" href="guide.html#basic">기본세율표</a></p>
 
 <details class="acc">
   <summary>사적연금 연 1,500만원 분리과세 한도</summary>
@@ -559,88 +539,6 @@ dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
 </details>
 
 <details class="acc">
-  <summary>퇴직소득세 계산 구조</summary>
-  <div class="accbody">
-    <p>퇴직소득세는 일한 햇수가 길수록 세금이 줄도록 설계돼 있습니다. 계산은 네 단계입니다. (결과만 궁금하면 건너뛰세요. 계산기가 알아서 계산합니다.)</p>
-    <p><b>① 근속연수공제</b></p>
-    <table>
-      <tr><th>근속연수</th><th>공제액</th></tr>
-      <tr><td>5년 이하</td><td>100만원 × 근속연수</td></tr>
-      <tr><td>5년 초과 10년 이하</td><td>500만원 + 200만원 × (근속−5)</td></tr>
-      <tr><td>10년 초과 20년 이하</td><td>1,500만원 + 250만원 × (근속−10)</td></tr>
-      <tr><td>20년 초과</td><td>4,000만원 + 300만원 × (근속−20)</td></tr>
-    </table>
-    <p><b>② 환산급여</b> = (퇴직급여 − 근속연수공제) × 12 ÷ 근속연수</p>
-    <p><b>③ 환산급여공제</b></p>
-    <table>
-      <tr><th>환산급여</th><th>공제액</th></tr>
-      <tr><td>800만원 이하</td><td>전액</td></tr>
-      <tr><td>~ 7,000만원</td><td>800만원 + 초과분의 60%</td></tr>
-      <tr><td>~ 1억원</td><td>4,520만원 + 초과분의 55%</td></tr>
-      <tr><td>~ 3억원</td><td>6,170만원 + 초과분의 45%</td></tr>
-      <tr><td>3억원 초과</td><td>1억 5,170만원 + 초과분의 35%</td></tr>
-    </table>
-    <p><b>④ 산출세액</b> = 기본세율 적용 후 × 근속연수 ÷ 12, 여기에 지방소득세 10%를 더합니다.</p>
-    <p class="src">소득세법 §48 · §55</p>
-  </div>
-</details>
-
-<details class="acc">
-  <summary>연금저축 · IRP · DC는 어떻게 다른가</summary>
-  <div class="accbody">
-    <p>이름이 비슷해서 헷갈리기 쉬운데, 성격이 셋 다 다릅니다.</p>
-    <table>
-      <tr><th></th><th>DC 퇴직연금</th><th>연금저축</th><th>IRP</th></tr>
-      <tr><td>돈의 출처</td><td>회사가 넣는 퇴직금</td><td>내가 넣는 돈</td><td>내가 넣는 돈 + 퇴직금 이전</td></tr>
-      <tr><td>가입 자격</td><td>회사가 DC를 도입한 근로자</td><td>누구나</td><td>소득이 있는 사람</td></tr>
-      <tr><td>납입 한도</td><td>회사 규정에 따름</td><td colspan="2" style="text-align:center;">둘을 합쳐 연 1,800만원</td></tr>
-      <tr><td>세액공제</td><td>없음 (회사 부담분)</td><td>그중 600만원까지</td><td>그중 900만원까지 (연금저축 포함)</td></tr>
-      <tr><td>주식형 비중</td><td>70%까지</td><td>100% 가능</td><td>70%까지</td></tr>
-      <tr><td>중도인출</td><td>법정 사유만</td><td>비교적 자유</td><td>법정 사유만</td></tr>
-      <tr><td>인출 시 과세</td><td>퇴직소득세 × 감면</td><td>연금소득세 3.3~5.5%</td><td>재원별로 다름</td></tr>
-    </table>
-    <p><b>DC</b>는 회사가 매년 퇴직금을 넣어주고 운용은 본인이 하는 제도입니다. 퇴직하면 이 돈은 만 55세 전이라면 원칙적으로 IRP 계좌로 옮겨지고, 그때부터 <b>이연퇴직소득</b>이라는 이름으로 불립니다. 퇴직소득세를 연금 수령 시점까지 미루는 과세이연 효과가 있습니다.</p>
-    <p><b>연금저축</b>과 <b>IRP</b>는 둘 다 세액공제를 받는 개인 연금입니다. 가장 큰 차이는 유연성과 공제 한도의 맞교환입니다. 연금저축은 주식형 100% 운용이 가능하고 급할 때 꺼내 쓰기도 쉽지만 공제는 600만원까지입니다. IRP는 300만원을 더 공제받는 대신 30%를 안전자산에 묶어야 하고 중도인출이 법정 사유로 제한됩니다.</p>
-    <p>그래서 일반적으로는 <b>연금저축 600만원을 먼저 채우고 남는 300만원을 IRP에 넣는</b> 순서를 권합니다. 다만 그 돈을 중간에 쓸 가능성이 있다면 순서를 바꾸는 편이 안전하고, 반대로 "중간에 못 깨는" 구조가 오히려 도움이 되는 분도 있습니다. 정답은 본인의 인출 가능성에 달려 있습니다.</p>
-    <p>세액공제율은 총급여 5,500만원(종합소득금액 4,500만원) 이하면 16.5%, 초과하면 13.2%입니다. 900만원을 다 채우면 16.5% 구간에서 연 148만 5천원을 돌려받습니다. 1,800만원 한도까지 그 이상 넣는 것 자체는 가능하며, 세액공제를 못 받는 대신 그 원금은 <b>인출할 때 비과세</b>로 처리됩니다.</p>
-    <p class="src">근로자퇴직급여 보장법 · 소득세법 §59의3 · 퇴직연금감독규정(위험자산 70% 한도)</p>
-  </div>
-</details>
-
-<details class="acc">
-  <summary>납입 한도와 세액공제</summary>
-  <div class="accbody">
-    <ul>
-      <li><b>납입 한도</b> 연 1,800만원 — 연금저축과 IRP를 합산한 개인 단위 한도입니다. 부부는 각자 1,800만원씩 가능합니다.</li>
-      <li><b>세액공제 한도</b> 연 900만원 — 다만 연금저축 단독으로는 600만원까지만 공제됩니다. IRP에 900만원을 전부 넣거나, 연금저축 600 + IRP 300 조합이어야 한도를 꽉 채웁니다.</li>
-      <li><b>공제율</b> 총급여 5,500만원 이하 16.5%, 초과 시 13.2%.</li>
-      <li>ISA 만기자금 전환분과 퇴직금 이전액은 1,800만원 한도와 별도로 들어갑니다.</li>
-    </ul>
-    <p>한도를 넘겨 납입한 금액은 세액공제를 못 받는 대신 <b>과세제외금액</b>이 되어 나중에 인출할 때 세금이 붙지 않고, 연 1,500만원 한도 계산에서도 빠집니다. 손해만은 아닙니다.</p>
-    <p class="src">소득세법 §59의3 · 조세특례제한법 §91의18</p>
-  </div>
-</details>
-
-<details class="acc">
-  <summary>기본세율 (종합과세를 택할 때)</summary>
-  <div class="accbody">
-    <table>
-      <tr><th>과세표준</th><th>세율</th><th>누진공제</th></tr>
-      <tr><td>1,400만원 이하</td><td>6%</td><td>—</td></tr>
-      <tr><td>~ 5,000만원</td><td>15%</td><td>126만원</td></tr>
-      <tr><td>~ 8,800만원</td><td>24%</td><td>576만원</td></tr>
-      <tr><td>~ 1억 5,000만원</td><td>35%</td><td>1,544만원</td></tr>
-      <tr><td>~ 3억원</td><td>38%</td><td>1,994만원</td></tr>
-      <tr><td>~ 5억원</td><td>40%</td><td>2,594만원</td></tr>
-      <tr><td>~ 10억원</td><td>42%</td><td>3,594만원</td></tr>
-      <tr><td>10억원 초과</td><td>45%</td><td>6,594만원</td></tr>
-    </table>
-    <p>지방소득세 10%가 별도로 붙습니다. 퇴직소득세 계산에도 같은 세율표를 씁니다.</p>
-    <p class="src">소득세법 §55</p>
-  </div>
-</details>
-
-<details class="acc">
   <summary>이 계산기가 다루지 않는 것</summary>
   <div class="accbody">
     <p>결과를 해석하실 때 감안해야 할 한계입니다.</p>
@@ -649,6 +547,7 @@ dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
       <li><b>국민연금</b> — 공적연금은 별도 체계라 포함하지 않았습니다. 실제 노후 현금흐름을 보실 때는 따로 더하셔야 합니다.</li>
       <li><b>종합과세 선택</b> — 1,500만원 초과 시 16.5% 분리과세만 계산합니다. 다른 소득이 적으면 종합과세가 유리할 수 있습니다.</li>
       <li><b>계좌별 요건 충족 시점</b> — 가입 연도를 하나만 입력받아 연금저축과 IRP에 같이 적용합니다. 실제로는 계좌마다 가입일이 달라 충족 시점이 갈릴 수 있고, 5년 요건 면제도 이연퇴직소득이 든 계좌에만 적용됩니다.</li>
+      <li><b>종신형 근사</b> — 종신형도 목표 월 금액을 잔액이 있는 동안 꺼내 쓰는 방식으로 계산하며, 실제 종신 계약(사망 시까지 지급)의 조건은 반영하지 않습니다. 세율(3.3%)만 종신형을 따릅니다.</li>
       <li><b>중도인출·부득이한 사유</b> — 연금외수령, 의료목적 인출 등은 다루지 않습니다.</li>
       <li><b>세법 변경</b> — 연금 세제는 자주 바뀝니다. 상단 검토일 이후의 개정은 반영돼 있지 않습니다.</li>
     </ul>
@@ -664,7 +563,6 @@ dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
   <nav aria-label="사이트 정보">
     <a href="https://xeno-xeno.github.io/10minute.studio/">10minute.studio</a>
     <a href="../privacy.html">개인정보처리방침</a>
-    <a href="../terms.html">이용약관</a>
     <a href="../contact.html">문의</a>
   </nav>
 </footer>
@@ -676,7 +574,7 @@ dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
 </div><!-- /.shell -->
 
 <!-- 하단 고정 요약 (모바일, 계산기 탭에서 항상 표시). 입력 중엔 [결과 보기], 결과 영역에선 [다시 계산](초기화 + 맨 위로) -->
-<div class="livebar on" id="livebar" aria-hidden="true">
+<div class="livebar on pre" id="livebar" aria-hidden="true">
   <div><b id="livebar-v"></b><br><span id="livebar-s"></span></div>
   <button type="button" id="livebar-go" tabindex="-1">결과 보기</button>
 </div>
@@ -710,6 +608,7 @@ dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
 
     <section id="h-dc-tax" data-title="퇴직금 세금이 줄어드는 방식" hidden>
       <p id="dc-note"></p>
+      <p><a class="lnk" id="sev-link" href="severance.html" onclick="gtag('event','calc_click',{tool:'severance',location:'forward-dc'})">일시금으로 받으면 세금이 얼마일까? 비교하기 ›</a></p>
     </section>
 
     <section id="h-irp-limit" data-title="납입 한도·세액공제" hidden>
@@ -721,6 +620,7 @@ dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
     <section id="h-paytype" data-title="확정기간형과 종신형" hidden>
       <p><b>확정기간형</b>은 정해진 기간 동안, <b>종신형</b>은 평생 받는 방식입니다.</p>
       <p>세율은 확정기간형이 55~69세 5.5% / 70~79세 4.4% / 80세~ 3.3%, 종신형은 나이와 관계없이 3.3%입니다(2026년 1월 1일 이후 받는 연금부터, 종전 4.4%).</p>
+      <p><b>계산 방식 참고</b> — 이 계산기는 종신형도 목표 월 금액을 잔액이 있는 동안 꺼내 쓰는 방식으로 계산하고, 종신형에서 따르는 것은 세율(3.3%)뿐입니다. 실제 종신형의 지급액과 계약 조건은 상품마다 다르니 참고용으로만 보세요.</p>
     </section>
 
     <section id="h-cap" data-title="연 1,500만원 한도" hidden>
@@ -863,6 +763,7 @@ function render(){
   $('seed-t1-o').textContent= seedT1.toLocaleString()+'만원';
   $('dc-o').textContent     = dcBal.toLocaleString()+'만원';
   $('wy-o').textContent     = wYears+'년';
+  $('sev-link').href = `severance.html?sev=${dcBal}&wy=${wYears}`;   // 입력한 퇴직금을 비교 계산기로 넘긴다
   $('s1-o').textContent     = s1Net+'만원';
   $('s2-o').textContent     = s2Net+'만원';
   $('s3-o').textContent     = s3Net+'만원';
@@ -1249,13 +1150,35 @@ grab.addEventListener('pointercancel', grabRelease);
    결과가 아직 아래에 있으면(입력 중) [결과 보기], 결과 영역에 들어왔거나 지나쳤으면 [다시 계산](= 초기화하고 맨 위로).
    결과 영역 전체(#results)를 보므로 '자세한 결과'를 펼쳐 내려가도 같은 동작이다. */
 let barGoesToResult = true;
-const syncBarLabel = () => { $('livebar-go').textContent = barGoesToResult ? '결과 보기' : '다시 계산'; };
+let shown = false;   // '결과 보기'를 눌러야 결과 영역이 나타난다. 다시 계산으로 위로 올라가면 다시 숨긴다
+const syncBarLabel = () => { $('livebar-go').textContent = (!shown || barGoesToResult) ? '결과 보기' : '다시 계산'; };
 new IntersectionObserver(([en])=>{
   barGoesToResult = !en.isIntersecting && en.boundingClientRect.top > 0;
   syncBarLabel();
 }).observe($('results'));
+function showResults(){
+  if(shown) return;
+  shown = true;
+  $('resultwrap').hidden = false;
+  $('showrow').hidden = true;
+  $('livebar').classList.remove('pre');
+  syncBarLabel();
+  update();
+  initAds();   // 결과 직후 인피드 슬롯은 숨겨져 있던 동안 요청되지 않았으므로 이제 요청한다
+  requestAnimationFrame(()=> $('hero').scrollIntoView({block:'start', behavior: reduceMotion() ? 'auto' : 'smooth'}));
+  gtag('event','calc_result',{tool:'pension-alchemist'});
+}
+function hideResults(){
+  shown = false;
+  $('resultwrap').hidden = true;
+  $('showrow').hidden = false;
+  $('livebar').classList.add('pre');
+  syncBarLabel();
+}
+$('showbtn').addEventListener('click', showResults);
 $('livebar-go').addEventListener('click', ()=>{
-  if(barGoesToResult) $('hero').scrollIntoView({block:'start', behavior: reduceMotion() ? 'auto' : 'smooth'});
+  if(!shown) showResults();
+  else if(barGoesToResult) $('hero').scrollIntoView({block:'start', behavior: reduceMotion() ? 'auto' : 'smooth'});
   else openSheet('reset');
 });
 
@@ -1287,11 +1210,12 @@ function doResetAll(){
   rateMode = DEFAULT_SEGS['seg-rate'];
   inflPct  = +DEFAULT_SEGS['seg-infl'];
   applyRateMode();
+  hideResults();
   toTop();
   update();
 }
 $('resetall').addEventListener('click', ()=> openSheet('reset'));
-$('reset-cancel').addEventListener('click', ()=>{ animateClose(); toTop(); });   // 값은 두고 입력 맨 위로만 올라간다
+$('reset-cancel').addEventListener('click', ()=>{ animateClose(); hideResults(); toTop(); });   // 값은 두고 결과만 숨긴 채 입력 맨 위로 올라간다
 $('reset-ok').addEventListener('click', ()=>{ animateClose(); doResetAll(); });
 
 /* ═════════ 광고 ═════════
