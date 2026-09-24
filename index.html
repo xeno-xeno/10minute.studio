@@ -130,7 +130,7 @@
               "position": 4,
               "item": {
                 "@type": "WebApplication",
-                "name": "퇴직 연금술사",
+                "name": "퇴직연금술사의 레시피",
                 "description": "퇴직금·연금저축·IRP를 한 번에 계산하는 연금 수령 계산기. 세금과 연 1,500만원 한도까지 반영해 매달 받을 수 있는 금액을 계산합니다.",
                 "url": "https://xeno-xeno.github.io/10minute.studio/pension/",
                 "image": "https://xeno-xeno.github.io/10minute.studio/assets/images/pension_hero.jpg",
@@ -329,6 +329,11 @@
             color: var(--text-3);
         }
 
+        /* 가로 일러스트를 정사각으로 크롭 — 마법사 얼굴과 플라스크가 있는 가운데 오른쪽 */
+        .work-icon--photo {
+            object-position: 55% center;
+        }
+
         .work-icon--placeholder {
             background: var(--bg-subtle);
             border: 1px dashed var(--border);
@@ -460,8 +465,8 @@
 
                 <a href="pension/index.html" class="work-card">
                     <span class="work-sku">WEBx001 · Web</span>
-                    <img class="work-icon" src="assets/images/pension_hero.jpg" alt="퇴직 연금술사 Icon">
-                    <h2 class="work-title">퇴직 연금술사</h2>
+                    <img class="work-icon work-icon--photo" src="assets/images/pension_hero.jpg" alt="퇴직연금술사의 레시피 Icon">
+                    <h2 class="work-title">퇴직연금술사의 레시피</h2>
                     <p class="work-tagline">퇴직금·연금저축·IRP 연금 수령 계산기</p>
                 </a>
             </div>

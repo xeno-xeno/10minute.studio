@@ -6,14 +6,14 @@
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" id="tc" content="#f4f6f9">
 <script>try{const t=localStorage.getItem('pension-alchemist:theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;}catch(e){}</script>
-<title>연금 수령 계산기 (퇴직금·IRP·연금저축) | 퇴직 연금술사</title>
+<title>연금 수령 계산기 (퇴직금·IRP·연금저축) | 퇴직연금술사의 레시피</title>
 <meta name="description" content="퇴직금·IRP·연금저축으로 몇 세부터 매달 얼마를 받고 세금은 얼마인지 계산하는 연금수령 계산기. 법정 인출순서와 연 1,500만원 한도를 반영한 2026년 세법 기준.">
-<meta name="keywords" content="연금 수령 계산기, 퇴직금 계산기, IRP 세금, 연금저축 수령 세금, 연금소득세, 연 1500만원 한도, 연금수령한도, 퇴직 연금술사">
+<meta name="keywords" content="연금 수령 계산기, 퇴직금 계산기, IRP 세금, 연금저축 수령 세금, 연금소득세, 연 1500만원 한도, 연금수령한도, 퇴직연금술사의 레시피">
 <meta name="author" content="10minute.studio">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://xeno-xeno.github.io/10minute.studio/pension/pension-alchemist.html">
 <link rel="icon" type="image/svg+xml" href="../assets/images/clock-10.svg">
-<meta property="og:title" content="연금 수령 계산기 (퇴직금·IRP·연금저축) | 퇴직 연금술사">
+<meta property="og:title" content="연금 수령 계산기 (퇴직금·IRP·연금저축) | 퇴직연금술사의 레시피">
 <meta property="og:description" content="퇴직금·IRP·연금저축의 월 수령액과 세금을 계산하는 연금수령 계산기. 2026년 세법 기준.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ko_KR">
@@ -24,7 +24,7 @@
 <meta property="og:image:height" content="800">
 <meta property="og:image:type" content="image/jpeg">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="연금 수령 계산기 (퇴직금·IRP·연금저축) | 퇴직 연금술사">
+<meta name="twitter:title" content="연금 수령 계산기 (퇴직금·IRP·연금저축) | 퇴직연금술사의 레시피">
 <meta name="twitter:description" content="퇴직금·IRP·연금저축의 월 수령액과 세금을 계산하는 연금수령 계산기. 2026년 세법 기준.">
 
 <!-- Google Analytics -->
@@ -58,7 +58,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .brandbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;}
 .brandbar a{font-size:.8125rem;color:var(--muted);text-decoration:none;}
 .brandbar a:hover{color:var(--text);}
-/* 이전 버튼 '‹ 퇴직 연금술사'(PC·모바일 공통, 부모=랜딩). 기존 경로 표시는 이 버튼으로 대체한다.
+/* 이전 버튼 '‹ 퇴직연금술사의 레시피'(PC·모바일 공통, 부모=랜딩). 기존 경로 표시는 이 버튼으로 대체한다.
    이전 페이지가 검색 결과여도 사이트 안에 머물도록 history.back() 대신 링크 */
 .brandbar a.back{display:inline-flex;align-items:center;gap:2px;min-height:44px;margin:-8px 0 -8px -8px;padding:0 10px 0 4px;font-size:.9375rem;font-weight:500;color:var(--blue);border-radius:10px;}
 .back svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
@@ -302,7 +302,7 @@ dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
 
 <div class="page">
 
-<div class="brandbar"><a class="back" href="./" aria-label="퇴직 연금술사 소개로 돌아가기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span>퇴직 연금술사</span></a><button type="button" class="themebtn" id="themebtn" aria-label="다크 모드로 전환"></button></div>
+<div class="brandbar"><a class="back" href="./" aria-label="퇴직연금술사의 레시피 소개로 돌아가기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span>퇴직연금술사의 레시피</span></a><button type="button" class="themebtn" id="themebtn" aria-label="다크 모드로 전환"></button></div>
 
 <h1><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 17h3v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-3a3.16 3.16 0 0 0 2-2h1a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-1a5 5 0 0 0-2-4V3a4 4 0 0 0-3.2 1.6l-.3.4H11a6 6 0 0 0-6 6v1a5 5 0 0 0 2 4v3a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1z"/><path d="M16 10h.01"/><path d="M2 8v1a2 2 0 0 0 2 2h1"/></svg>연금 수령 계산기</h1>
 <p class="sub">퇴직금·IRP·연금저축을 합쳐, 매달 얼마 받고 세금은 얼마인지 계산합니다.</p>

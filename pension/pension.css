@@ -1,4 +1,4 @@
-/* 퇴직 연금술사 — 공용 팔레트. pension/ 아래 모든 페이지가 <link>로 불러온다.
+/* 퇴직연금술사의 레시피 — 공용 팔레트. pension/ 아래 모든 페이지가 <link>로 불러온다.
    여기 없는 색(--amber 등 상태색)은 계산기 전용이라 pension-alchemist.html 자체 <style>에 남아 있다. */
 :root{color-scheme:light dark;
   --bg:#f4f6f9;--surface2:#eef1f5;--card:#ffffff;--text:#161a20;--text2:#454c56;--muted:#66707c;
