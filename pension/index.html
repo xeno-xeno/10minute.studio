@@ -36,7 +36,7 @@
   gtag('config', 'G-8L3S8MLEGK');
 </script>
 
-<link rel="stylesheet" href="./pension.css?v=2026-09-22">
+<link rel="stylesheet" href="./pension.css?v=2026-09-24h">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);-webkit-text-size-adjust:100%;line-height:1.5;word-break:keep-all;overflow-wrap:break-word;}
@@ -59,11 +59,17 @@ h1{font-size:clamp(1.75rem,7vw,2.25rem);font-weight:700;letter-spacing:-.02em;li
 .asof{font-size:.75rem;color:var(--muted);margin-top:.7rem;}
 h2{font-size:1.0625rem;font-weight:700;margin:1.6rem 0 .7rem;}
 
-.cards{list-style:none;display:grid;gap:.75rem;}
+.cards{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;}
+@media(max-width:560px){.cards{grid-template-columns:1fr;}}
 .card{background:var(--card);border:.5px solid var(--line);border-radius:14px;padding:1.1rem 1.25rem;display:flex;flex-direction:column;align-items:flex-start;gap:.35rem;}
+.card{position:relative;transition:transform .1s ease-out,border-color .15s ease;}
+.card:not(.soon):hover{border-color:var(--blue);}
+.card:not(.soon):active{transform:scale(.99);}
+.card .btn:active{transform:none;}  /* transform이 걸리면 ::after의 기준 박스가 버튼으로 줄어 클릭이 끊긴다 */
+.card .btn::after{content:'';position:absolute;inset:0;border-radius:14px;}  /* 링크를 카드 전체로 늘려 카드 어디를 눌러도 이동 */
 .card h3{font-size:1rem;font-weight:600;}
-.card p{font-size:.875rem;color:var(--text2);line-height:1.6;}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 1.3rem;margin-top:.5rem;border-radius:10px;background:var(--blue);color:var(--on-blue);font-size:.9375rem;font-weight:600;text-decoration:none;transition:transform .1s ease-out;}
+.card p{font-size:.875rem;color:var(--text2);line-height:1.6;margin-bottom:.5rem;}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 1.3rem;margin-top:auto;border-radius:10px;background:var(--blue);color:var(--on-blue);font-size:.9375rem;font-weight:600;text-decoration:none;transition:transform .1s ease-out;}
 .btn:active{transform:scale(.97);}
 .card.soon{opacity:.75;}
 .card.soon .btn{background:transparent;color:var(--muted);border:.5px solid var(--line);}
@@ -106,10 +112,25 @@ footer a:hover{color:var(--text);}
       <p>받고 싶은 희망 월 금액을 입력하면, 지금부터 어떤 금융 상품에 얼마를 준비해야 하는지 계산합니다.</p>
       <a class="btn" href="goal.html" onclick="gtag('event','calc_click',{tool:'goal',location:'card'})">계산하기</a>
     </li>
-    <li class="card soon">
+    <li class="card">
+      <h3>얼마나 돌려받을까? - 세액공제 환급 계산기</h3>
+      <p>연금저축·IRP에 넣은 금액으로 연말정산에서 돌려받는 세금을 계산합니다. 한도까지 더 넣으면 늘어나는 환급액도 보여줍니다.</p>
+      <a class="btn" href="refund.html" onclick="gtag('event','calc_click',{tool:'refund',location:'card'})">계산하기</a>
+    </li>
+    <li class="card">
+      <h3>일시금으로 받을까, 연금으로 받을까? - 퇴직금 세금 비교</h3>
+      <p>퇴직금을 한 번에 받을 때의 퇴직소득세와, IRP로 옮겨 연금으로 받을 때의 세금(연차별 30·40·50% 감면)을 나란히 비교합니다.</p>
+      <a class="btn" href="severance.html" onclick="gtag('event','calc_click',{tool:'severance',location:'card'})">계산하기</a>
+    </li>
+    <li class="card">
       <h3>이정돈 알아야죠 - 연금 세금 가이드</h3>
       <p>연금 수령 시 세금이 어떻게 매겨지는지, 인출 시기와 순서/세율, 연 1,500만원 한도 등, 알아두면 도움이 될 정보를 정리했습니다.</p>
-      <span class="btn" aria-disabled="true">준비 중</span>
+      <a class="btn" href="guide.html" onclick="gtag('event','calc_click',{tool:'guide',location:'card'})">읽어보기</a>
+    </li>
+    <li class="card">
+      <h3>바뀐 건 없을까? - 연금·세법 소식</h3>
+      <p>연금 세제와 관련된 공식 자료의 제목과 출처를 모았습니다. 제목을 누르면 원문 사이트로 이동합니다.</p>
+      <a class="btn" href="news.html" onclick="gtag('event','calc_click',{tool:'news',location:'card'})">소식 보기</a>
     </li>
   </ul>
 
@@ -127,7 +148,6 @@ footer a:hover{color:var(--text);}
 <footer>
   <a href="https://xeno-xeno.github.io/10minute.studio/">10minute.studio</a>
   <a href="../privacy.html">개인정보처리방침</a>
-  <a href="../terms.html">이용약관</a>
   <a href="../contact.html">문의</a>
 </footer>
 

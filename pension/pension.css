@@ -19,3 +19,20 @@
 .theme-anim,.theme-anim *{transition:background-color .25s ease,color .25s ease,border-color .25s ease!important;}
 :focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+/* 계산기 하단 '다른 계산기' 카드 (제목+버튼만) — 클래스명 xl은 페이지별 .card/.btn과 겹치지 않게 별도로 둔다 */
+.xl{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin:1.5rem 0 0;padding-top:1.25rem;border-top:.5px solid var(--line-soft);}
+.xl-t{grid-column:1/-1;font-size:.9375rem;font-weight:700;color:var(--text);}
+.xl a:active{transform:scale(.99);}
+.xl a{display:flex;flex-direction:column;justify-content:space-between;gap:.7rem;padding:1rem 1.1rem;background:var(--surface2);background:color-mix(in srgb,var(--blue) 4%,var(--bg));border:.5px solid color-mix(in srgb,var(--blue) 15%,transparent);border-radius:14px;color:var(--text);text-decoration:none;font-size:.9375rem;font-weight:600;line-height:1.4;}
+.xl a span{align-self:flex-start;color:var(--blue);font-size:.8125rem;font-weight:600;}
+.xl a span::before{content:'» ';}
+.xl a:hover span{text-decoration:underline;text-underline-offset:3px;}
+@media(max-width:560px){.xl{grid-template-columns:1fr;}}
+/* '결과 보기' — 결과 영역은 이 버튼(또는 모바일 하단 바)을 누르기 전까지 숨긴다 */
+.showrow{margin:1.2rem 0 .5rem;}
+.showbtn{width:100%;min-height:52px;border:0;border-radius:12px;background:var(--blue);color:var(--on-blue);font:inherit;font-size:1rem;font-weight:700;cursor:pointer;transition:transform .1s ease-out;}
+.showbtn:active{transform:scale(.98);}
+.livebar.pre{display:none !important;}   /* 결과 보기 전에는 하단 바를 숨긴다 — 입력을 끝까지 채우고 내려온 자리의 버튼 하나만 남긴다 */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1rem;}
+.cmp .card{margin-bottom:0;}
+@media(max-width:560px){.cmp{grid-template-columns:1fr;}}

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" id="tc" content="#f4f6f9">
+<script>try{const t=localStorage.getItem('pension-alchemist:theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;}catch(e){}</script>
+<title>연금 수령 세금 가이드 (연금저축·IRP·퇴직금 2026) | 퇴직 연금술사</title>
+<meta name="description" content="연금저축·IRP·퇴직금을 받을 때 세금이 어떻게 매겨지는지 2026년 세법 기준으로 정리했습니다. 연금소득세율, 연 1,500만원 분리과세 한도, 연금수령한도, 법정 인출순서, 퇴직소득세 계산까지.">
+<meta name="keywords" content="연금 수령 세금, 연금소득세율, 연금저축 IRP 세금, 연 1,500만원 분리과세, 연금수령한도, 퇴직소득세 계산, 퇴직 연금술사">
+<meta name="author" content="10minute.studio">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://xeno-xeno.github.io/10minute.studio/pension/guide.html">
+<link rel="icon" type="image/svg+xml" href="../assets/images/clock-10.svg">
+<meta property="og:title" content="연금 수령 세금 가이드 (연금저축·IRP·퇴직금 2026) | 퇴직 연금술사">
+<meta property="og:description" content="연금저축·IRP·퇴직금 수령 세금을 2026년 세법 기준으로 정리한 가이드.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="https://xeno-xeno.github.io/10minute.studio/pension/guide.html">
+<meta property="og:site_name" content="10minute.studio">
+<meta property="og:image" content="https://xeno-xeno.github.io/10minute.studio/assets/images/pension_hero.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="800">
+<meta property="og:image:type" content="image/jpeg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="연금 수령 세금 가이드 (연금저축·IRP·퇴직금 2026) | 퇴직 연금술사">
+<meta name="twitter:description" content="연금저축·IRP·퇴직금 수령 세금을 2026년 세법 기준으로 정리한 가이드.">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8L3S8MLEGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-8L3S8MLEGK');
+</script>
+
+<link rel="stylesheet" href="./pension.css?v=2026-09-24h">
+<script src="./engine.js?v=2026-09-22"></script>
+<style>
+/* 이 페이지 전용 컴포넌트 CSS — pension-alchemist.html과 같은 컴포넌트를 지금은 그대로 복붙해 쓴다.
+   (엔진·CSS 분리 때 정한 대로, 컴포넌트 공유는 index.html의 동명 클래스와 충돌해 뒤로 미뤘다.) */
+/* 이 페이지만 쓰는 보조 강조색 — 결과 숫자 하나에만 써서, 버튼·체크박스 등 상호작용 요소의
+   파란색(사이트 공용 --blue)은 그대로 두고 "정방향과는 다른 도구"라는 것만 표시한다. */
+:root{--accent2:#6d28d9;--red:#b3261e;--warn-bg:#fff5e0;}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--accent2:#c4b5fd;--red:#ff8f86;--warn-bg:rgba(232,178,90,.14);}}
+:root[data-theme="dark"]{--accent2:#c4b5fd;--red:#ff8f86;--warn-bg:rgba(232,178,90,.14);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html.lock{overflow:hidden;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);-webkit-text-size-adjust:100%;line-height:1.5;word-break:keep-all;}
+.page{max-width:760px;margin:0 auto;padding:1.25rem 1rem 3rem;}
+.off{display:none !important;}
+.brandbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;}
+.brandbar a{font-size:.8125rem;color:var(--muted);text-decoration:none;}
+.brandbar a:hover{color:var(--text);}
+.brandbar a.back{display:inline-flex;align-items:center;gap:2px;min-height:44px;margin:-8px 0 -8px -8px;padding:0 10px 0 4px;font-size:.9375rem;font-weight:500;color:var(--blue);border-radius:10px;}
+.back svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+.brandbar a.back:hover{color:var(--blue);background:var(--line-soft);}
+.themebtn{flex:none;width:40px;height:40px;margin:-6px -8px -6px 0;display:grid;place-items:center;border:0;border-radius:50%;background:none;color:var(--text2);cursor:pointer;transition:background-color .15s ease,transform .1s ease-out;}
+.themebtn:hover{background:var(--line-soft);}
+.themebtn:active{transform:scale(.92);}
+.themebtn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+h1{display:flex;align-items:center;gap:8px;font-size:clamp(1.25rem,4.6vw,1.5rem);font-weight:700;letter-spacing:-.02em;line-height:1.25;margin-bottom:.3rem;}
+h1 svg{flex:none;width:1.15em;height:1.15em;color:var(--blue);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+/* 카드 그룹 사이 흐름 표시 */
+.flow-divider{display:flex;align-items:center;gap:10px;margin:.9rem 0;color:var(--muted);}
+.flow-divider::before,.flow-divider::after{content:'';flex:1;height:1px;background:var(--line);}
+.flow-divider svg{flex:none;width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.sub{font-size:.875rem;color:var(--text2);}
+.asof{font-size:.75rem;color:var(--muted);margin:.35rem 0 1rem;}
+.asof.stale{color:var(--red);}
+
+.tabs{display:flex;gap:4px;margin-bottom:1rem;border-bottom:.5px solid var(--line);}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;font:inherit;font-size:.9375rem;color:var(--muted);padding:9px 14px;cursor:pointer;margin-bottom:-.5px;transition:background-color .15s ease,color .15s ease,transform .1s ease-out;}
+.tabs button[aria-selected="true"]{color:var(--blue);font-weight:600;border-bottom-color:var(--blue);}
+.tabs button:active{transform:scale(.96);}
+@media(pointer:coarse){.tabs button{min-height:44px;} details.acc>summary{min-height:48px;}}
+
+table{width:100%;border-collapse:collapse;font-size:.8125rem;}
+th{background:var(--surface2);padding:5px 7px;text-align:right;font-weight:500;color:var(--text2);border-bottom:.5px solid var(--line-soft);white-space:nowrap;font-size:.75rem;}
+th:first-child{text-align:left;}
+td{padding:4px 7px;text-align:right;border-bottom:.5px solid var(--line-soft);white-space:nowrap;font-size:.8125rem;}
+td:first-child{text-align:left;color:var(--text2);}
+
+details.acc{background:var(--card);border:.5px solid var(--line);border-radius:14px;margin-bottom:8px;overflow:hidden;}
+details.acc>summary{list-style:none;cursor:pointer;padding:.95rem 1.1rem;font-size:.9375rem;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+details.acc>summary::-webkit-details-marker{display:none;}
+details.acc>summary::after{content:'+';color:var(--muted);font-size:1.125rem;font-weight:400;}
+details.acc[open]>summary::after{content:'−';}
+details.acc[open]>summary{border-bottom:.5px solid var(--line-soft);}
+.accbody{padding:1rem 1.1rem 1.1rem;font-size:.84375rem;line-height:1.7;color:var(--text2);}
+details.acc[open]>.accbody{animation:accIn .18s ease-out;}
+@keyframes accIn{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
+.accbody p{margin-bottom:.6rem;}
+.accbody p:last-child{margin-bottom:0;}
+.accbody table{font-size:.8125rem;margin:.4rem 0 .7rem;}
+.accbody td,.accbody th{text-align:left;white-space:normal;}
+.src{font-size:.75rem;color:var(--muted);border-top:.5px solid var(--line-soft);padding-top:.5rem;margin-top:.7rem;}
+
+.card{background:var(--card);border:.5px solid var(--line);border-radius:14px;padding:1.1rem 1.25rem;margin-bottom:1rem;}
+.st{font-size:.8125rem;font-weight:600;color:var(--text2);margin:0 0 10px;}
+.st.title{font-size:1.0625rem;font-weight:700;color:var(--text);margin:0 0 .9rem;display:flex;align-items:center;}
+.num{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--text);color:var(--card);font-size:.75rem;font-weight:700;margin-right:8px;}
+.hint{font-size:.8125rem;color:var(--muted);line-height:1.55;margin:-.35rem 0 .9rem;}
+.hint:empty{display:none;}
+.note{font-size:.8125rem;color:var(--muted);margin-top:8px;line-height:1.6;}
+.lnk{background:none;border:0;font:inherit;font-size:.8125rem;color:var(--blue);cursor:pointer;padding:.25rem 0;text-decoration:underline;text-underline-offset:3px;}
+.help{flex:none;width:20px;height:20px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--muted);font:inherit;font-size:.6875rem;font-weight:700;line-height:1;cursor:pointer;display:inline-grid;place-items:center;}
+.help:hover{color:var(--blue);border-color:var(--blue);}
+
+.sr{display:grid;grid-template-columns:1fr auto;grid-template-areas:"label value" "range range" "cap cap";align-items:center;column-gap:12px;margin-bottom:.9rem;}
+.lb{grid-area:label;display:flex;align-items:center;gap:6px;min-width:0;}
+.lb label{font-size:.9375rem;font-weight:500;color:var(--text);line-height:1.35;}
+.sv{grid-area:value;font-size:.9375rem;font-weight:700;color:var(--blue);text-align:right;}
+.sr input[type=range]{grid-area:range;}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;min-width:0;height:44px;margin:0;background:transparent;cursor:pointer;}
+input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(to right,var(--blue) var(--p,0%),var(--line) var(--p,0%));}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;margin-top:-12px;border-radius:50%;background:#fff;border:2px solid var(--blue);box-shadow:0 1px 4px rgba(0,0,0,.25);}
+input[type=range]::-moz-range-track{height:4px;border-radius:2px;background:var(--line);}
+input[type=range]::-moz-range-progress{height:4px;border-radius:2px;background:var(--blue);}
+input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:#fff;border:2px solid var(--blue);box-shadow:0 1px 4px rgba(0,0,0,.25);}
+@media(min-width:769px){
+  .sr{grid-template-columns:230px 1fr 96px;grid-template-areas:"label range value" ". cap cap";column-gap:14px;margin-bottom:.35rem;}
+  input[type=range]{height:32px;}
+}
+
+.chk{display:flex;align-items:center;gap:12px;min-height:48px;padding:.35rem 0;font-size:.9375rem;line-height:1.35;color:var(--text);margin:0;cursor:pointer;}
+.chk input[type=checkbox]{flex:none;-webkit-appearance:none;appearance:none;position:relative;width:24px;height:24px;margin:0;border-radius:7px;border:1.5px solid var(--muted);background:transparent;cursor:pointer;transition:background-color .15s ease,border-color .15s ease;}
+.chk input[type=checkbox]::after{content:'';position:absolute;left:7.5px;top:2.5px;width:6px;height:12px;border:solid var(--on-blue);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) scale(0);transition:transform .15s cubic-bezier(.2,.8,.2,1);}
+.chk input[type=checkbox]:checked{background:var(--blue);border-color:var(--blue);}
+.chk input[type=checkbox]:checked::after{transform:rotate(45deg) scale(1);}
+
+.seg,.chips{display:inline-flex;border:.5px solid var(--line);border-radius:10px;overflow:hidden;margin:2px 0 8px;max-width:100%;}
+.chips{display:flex;}
+.chips button{flex:1;}
+.seg button,.chips button{background:var(--card);border:0;font:inherit;font-size:.875rem;color:var(--text2);padding:9px 14px;cursor:pointer;white-space:nowrap;}
+.seg button+button,.chips button+button{border-left:.5px solid var(--line);}
+.seg button[aria-pressed="true"],.chips button[aria-pressed="true"]{background:var(--blue);color:var(--on-blue);font-weight:600;}
+.seg button:disabled{opacity:.4;cursor:not-allowed;}
+.optlabel{display:flex;align-items:center;gap:6px;font-size:.9375rem;font-weight:500;margin:.5rem 0 4px;}
+.seg button,.chips button{transition:background-color .15s ease,color .15s ease,transform .1s ease-out;}
+.seg button:active,.chips button:active{transform:scale(.96);}
+
+.hero{background:var(--card);border:.5px solid var(--line);border-radius:14px;padding:1.1rem 1.25rem;margin-bottom:1rem;}
+.hero-l{font-size:.8125rem;color:var(--muted);margin:0 0 .2rem;}
+.hero-v{font-size:clamp(2rem,9vw,2.75rem);font-weight:700;letter-spacing:-.03em;line-height:1.1;margin:0;color:var(--accent2);}
+.hero-s{font-size:.875rem;color:var(--text2);margin:.5rem 0 0;}
+.warn{background:var(--warn-bg);border-radius:10px;padding:10px 14px;font-size:.8125rem;color:var(--text2);margin-bottom:1rem;line-height:1.6;}
+.warn:empty{display:none;}
+.warn b{color:var(--text);}
+.kv{display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:baseline;padding:.6rem 0;border-bottom:.5px solid var(--line-soft);font-size:.875rem;}
+.kv:last-child{border-bottom:0;}
+.kv .k{color:var(--text2);}
+.kv .v{font-weight:600;text-align:right;}
+.kv .s{grid-column:1/-1;font-size:.75rem;color:var(--muted);}
+
+.sitefoot{margin-top:2rem;padding-top:1rem;border-top:.5px solid var(--line-soft);font-size:.8125rem;color:var(--muted);}
+.sitefoot .disclaimer{line-height:1.6;margin-bottom:.7rem;}
+.sitefoot nav{display:flex;flex-wrap:wrap;gap:.4rem 1rem;}
+.sitefoot a{color:var(--muted);text-decoration:none;}
+.sitefoot a:hover{color:var(--text);}
+.foot{display:flex;justify-content:center;margin:1rem 0 .5rem;}
+.foot .lnk{color:var(--muted);}
+
+.livebar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:none;align-items:center;justify-content:space-between;gap:12px;padding:.7rem 1rem calc(.7rem + env(safe-area-inset-bottom));background:var(--card);border-top:.5px solid var(--line);box-shadow:0 -6px 24px rgba(10,20,40,.12);transform:translateY(110%);transition:transform .32s cubic-bezier(.32,.72,0,1);}
+.livebar.on{transform:none;}
+.livebar b{font-size:1.125rem;color:var(--blue);letter-spacing:-.02em;}
+.livebar span{font-size:.8125rem;color:var(--text2);}
+.livebar button{flex:none;font:inherit;font-size:.875rem;font-weight:600;padding:9px 16px;border-radius:10px;border:0;background:var(--blue);color:var(--on-blue);cursor:pointer;transition:transform .1s ease-out;}
+.livebar button:active{transform:scale(.94);}
+@media(max-width:768px){.livebar{display:flex;}.page{padding-bottom:5.5rem;}}
+
+dialog.sheet{border:0;padding:0;background:var(--card);color:var(--text);width:min(600px,100%);max-height:86dvh;border-radius:18px 18px 0 0;margin:auto auto 0;overflow:hidden;}
+dialog.sheet[open]{display:flex;flex-direction:column;animation:sheetUp .5s cubic-bezier(.32,.72,0,1);}
+dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
+@keyframes sheetUp{from{transform:translateY(100%);opacity:0;}to{transform:none;opacity:1;}}
+@media(min-width:769px){dialog.sheet{margin:auto;border-radius:18px;max-height:80dvh;}}
+.sheet-grab{flex:none;width:36px;height:5px;border-radius:99px;background:var(--line);margin:.6rem auto -.15rem;touch-action:none;cursor:grab;}
+.sheet-grab:active{cursor:grabbing;}
+@media(min-width:769px){.sheet-grab{display:none;}}
+.sheet-h{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:1rem 1.1rem .8rem;border-bottom:.5px solid var(--line-soft);}
+.sheet-h h2{font-size:1.0625rem;font-weight:700;}
+.sheet-x{flex:none;width:36px;height:36px;border:0;border-radius:50%;background:var(--surface2);color:var(--text2);font:inherit;font-size:1.25rem;line-height:1;cursor:pointer;}
+.sheet-b{overflow:auto;padding:1rem 1.1rem calc(1.4rem + env(safe-area-inset-bottom));font-size:.875rem;line-height:1.75;color:var(--text2);overscroll-behavior:contain;}
+.sheet-b p{margin-bottom:.7rem;}
+.sheet-b p:last-child{margin-bottom:0;}
+.sheet-b b{color:var(--text);font-weight:600;}
+.sheet-act{display:flex;gap:10px;margin-top:1.1rem;}
+.sheet-act button{flex:1;font:inherit;font-size:.9375rem;font-weight:600;padding:13px;border-radius:12px;border:.5px solid var(--line);background:var(--card);color:var(--text2);cursor:pointer;}
+.sheet-act button.main{background:var(--blue);border-color:var(--blue);color:var(--on-blue);}
+
+.sv,.hero-v,.livebar b,.kv .v{font-variant-numeric:tabular-nums;}
+@media(pointer:coarse){
+  .themebtn{width:44px;height:44px;}
+  .seg button,.chips button{min-height:44px;}
+  .help{width:24px;height:24px;}
+}
+@media(max-width:768px){.page{padding:.75rem .8rem calc(5.5rem + env(safe-area-inset-bottom));}.card{padding:1rem;}.foot{display:none;}}
+@media(prefers-reduced-transparency:reduce){dialog.sheet::backdrop{background:rgba(8,12,20,.8);backdrop-filter:none;}}
+.art h2{font-size:1.125rem;font-weight:700;margin:2.2rem 0 .6rem;scroll-margin-top:1rem;}
+.art h3{font-size:.9375rem;font-weight:700;margin:1.2rem 0 .4rem;}
+.art p{font-size:.9375rem;line-height:1.85;color:var(--text2);margin-bottom:.75rem;}
+.art b{color:var(--text);font-weight:600;}
+.art ul{margin:0 0 .85rem 1.2rem;font-size:.9375rem;line-height:1.85;color:var(--text2);}
+.art table{margin:.4rem 0 .9rem;font-size:.8125rem;}
+.art th,.art td{text-align:left;white-space:normal;vertical-align:top;}
+.art .src{margin:.2rem 0 0;}
+.tw{overflow-x:auto;}
+.toc{background:var(--card);border:.5px solid var(--line);border-radius:14px;padding:1rem 1.2rem;margin:1rem 0 0;}
+.toc p{font-size:.8125rem;font-weight:600;color:var(--text2);margin:0;}
+.toc ol{margin:.4rem 0 0 1.2rem;font-size:.9375rem;line-height:2;}
+.toc a{color:var(--blue);text-decoration:none;}
+.toc a:hover{text-decoration:underline;}
+.chg{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:99px;background:var(--surface2);color:var(--blue);font-size:.6875rem;font-weight:600;vertical-align:middle;}
+.formula{background:var(--surface2);border-radius:8px;padding:.7rem .9rem;font-size:.875rem;line-height:1.7;color:var(--text);margin:.3rem 0 .9rem;}
+.formula span{color:var(--muted);}
+.cta{display:inline-block;margin:.2rem 0 .3rem;font-size:.9375rem;font-weight:600;color:var(--blue);text-decoration:none;}
+.cta:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+
+<div class="page art">
+
+<div class="brandbar"><a class="back" href="./" aria-label="퇴직 연금술사 소개로 돌아가기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span>퇴직 연금술사</span></a><button type="button" class="themebtn" id="themebtn" aria-label="다크 모드로 전환"></button></div>
+
+<h1><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>연금 수령 세금 가이드</h1>
+<p class="sub">연금저축·IRP·퇴직금을 받을 때 세금이 어떻게 매겨지는지, 2026년 세법 기준으로 정리했습니다.</p>
+<p class="asof" id="asof"></p>
+
+<nav class="toc" aria-label="목차">
+  <p>목차</p>
+  <ol>
+    <li><a href="#summary">한눈에 보기</a></li>
+    <li><a href="#accounts">연금저축·IRP·DC는 어떻게 다른가</a></li>
+    <li><a href="#deduct">납입 한도와 세액공제</a></li>
+    <li><a href="#eligible">연금을 받을 수 있는 조건과 연금수령연차</a></li>
+    <li><a href="#limit">연금수령한도 (120% 룰)</a></li>
+    <li><a href="#order">법정 인출순서</a></li>
+    <li><a href="#rate">나이별 연금소득세율</a></li>
+    <li><a href="#cap">연 1,500만원 분리과세 한도</a></li>
+    <li><a href="#severance">퇴직금을 연금으로 받으면 세금이 줄어드는 이유</a></li>
+    <li><a href="#retax">퇴직소득세 계산 구조</a></li>
+    <li><a href="#basic">기본세율표</a></li>
+    <li><a href="#notes">이 가이드의 한계</a></li>
+  </ol>
+</nav>
+
+<h2 id="summary">한눈에 보기</h2>
+<ul>
+  <li><b>세액공제</b>: 연금저축 600만원, 연금저축과 IRP 합산 900만원까지 납입액의 16.5%(총급여 5,500만원 이하, 종합소득금액 4,500만원 이하) 또는 13.2%를 연말정산에서 돌려받습니다.</li>
+  <li><b>연금소득세</b>: 55~69세 5.5%, 70~79세 4.4%, 80세 이상 3.3%이고, 종신형은 나이와 관계없이 3.3%입니다. <span class="chg">2026 개정</span></li>
+  <li><b>연 1,500만원</b>: 세액공제를 받은 원금과 운용수익의 합이 연 1,500만원을 넘으면 그해 받은 연금 전부가 다시 과세됩니다.</li>
+  <li><b>퇴직금</b>: IRP로 옮겨 연금으로 나눠 받으면 퇴직소득세의 70%(10년차 이하), 60%(11~20년차), 50%(21년차 이후)만 냅니다. <span class="chg">2026 개정</span></li>
+  <li><b>연금수령한도</b>: 한 해에 뺄 수 있는 돈은 그해 1월 1일 평가액 ÷ (11 − 연금수령연차) × 120%까지이고, 11년차부터는 한도가 없습니다.</li>
+</ul>
+<p>아래 각 항목은 계산기가 실제로 적용하는 규칙과 같습니다. 직접 계산해 보고 싶다면 <a class="cta" href="pension-alchemist.html">연금 수령 계산기 ›</a>를 이용해 보세요.</p>
+
+<h2 id="accounts">연금저축·IRP·DC는 어떻게 다른가</h2>
+<p>이름이 비슷해서 헷갈리기 쉽지만 성격이 셋 다 다릅니다.</p>
+<div class="tw"><table>
+  <tr><th></th><th>DC 퇴직연금</th><th>연금저축</th><th>IRP</th></tr>
+  <tr><td>돈의 출처</td><td>회사가 넣는 퇴직금</td><td>내가 넣는 돈</td><td>내가 넣는 돈 + 퇴직금 이전</td></tr>
+  <tr><td>가입 자격</td><td>회사가 DC를 도입한 근로자</td><td>누구나</td><td>소득이 있는 사람</td></tr>
+  <tr><td>납입 한도</td><td>회사 규정에 따름</td><td colspan="2">둘을 합쳐 연 1,800만원</td></tr>
+  <tr><td>세액공제</td><td>없음 (회사 부담분)</td><td>그중 600만원까지</td><td>그중 900만원까지 (연금저축 포함)</td></tr>
+  <tr><td>주식형 비중</td><td>70%까지</td><td>100% 가능</td><td>70%까지</td></tr>
+  <tr><td>중도인출</td><td>법정 사유만</td><td>비교적 자유</td><td>법정 사유만</td></tr>
+  <tr><td>인출 시 과세</td><td>퇴직소득세 × 감면</td><td>연금소득세 3.3~5.5%</td><td>재원별로 다름</td></tr>
+</table></div>
+<p><b>DC</b>는 회사가 매년 퇴직금을 넣어 주고 운용은 본인이 하는 제도입니다. 퇴직하면 이 돈은 만 55세 전이라면 원칙적으로 IRP 계좌로 옮겨지고, 그때부터 <b>이연퇴직소득</b>이라는 이름으로 불립니다. 퇴직소득세를 연금 수령 시점까지 미루는 과세이연 효과가 있습니다.</p>
+<p><b>연금저축</b>과 <b>IRP</b>는 둘 다 세액공제를 받는 개인 연금입니다. 가장 큰 차이는 유연성과 공제 한도의 맞교환입니다. 연금저축은 주식형 100% 운용이 가능하고 급할 때 꺼내 쓰기도 쉽지만 공제는 600만원까지입니다. IRP는 300만원을 더 공제받는 대신 30%를 안전자산에 묶어야 하고 중도인출이 법정 사유로 제한됩니다.</p>
+<p>그래서 일반적으로는 <b>연금저축 600만원을 먼저 채우고 남는 300만원을 IRP에 넣는</b> 순서를 많이 씁니다. 다만 그 돈을 중간에 쓸 가능성이 있다면 순서를 바꾸는 편이 안전하고, 반대로 "중간에 못 깨는" 구조가 오히려 도움이 되는 분도 있습니다. 정답은 본인의 인출 가능성에 달려 있습니다.</p>
+<p class="src">근로자퇴직급여 보장법 · 소득세법 제59조의3 · 퇴직연금감독규정(위험자산 70% 한도)</p>
+
+<h2 id="deduct">납입 한도와 세액공제</h2>
+<ul>
+  <li><b>납입 한도</b> 연 1,800만원 — 연금저축과 IRP를 합산한 개인 단위 한도입니다. 부부는 각자 1,800만원씩 가능합니다.</li>
+  <li><b>세액공제 한도</b> 연 900만원 — 연금저축 단독으로는 600만원까지만 공제됩니다. IRP에 900만원을 전부 넣거나, 연금저축 600 + IRP 300 조합이어야 한도를 꽉 채웁니다.</li>
+  <li><b>공제율</b> 총급여 5,500만원(종합소득금액 4,500만원) 이하 16.5%, 초과 13.2%입니다. 지방소득세 10%를 포함한 값이며, 세액공제 자체는 15%와 12%입니다.</li>
+  <li>ISA 만기자금 전환분과 퇴직금 이전액은 1,800만원 한도와 별도로 들어갑니다.</li>
+</ul>
+<p>900만원을 다 채우면 16.5% 구간에서 연 148만 5천원을 돌려받습니다. 한도를 넘겨 납입한 금액은 세액공제를 못 받는 대신 <b>과세제외금액</b>이 되어 나중에 인출할 때 세금이 붙지 않고, 연 1,500만원 한도 계산에서도 빠집니다. 손해만은 아닙니다.</p>
+<p>공제액은 그해 내야 할 세금(종합소득산출세액)까지만 받을 수 있어서, 세금이 적은 분은 위 금액보다 적게 돌려받습니다.</p>
+<a class="cta" href="refund.html">세액공제 환급 계산기로 내 환급액 계산하기 ›</a>
+<p class="src">소득세법 제59조의3 제1항 · 조세특례제한법 제91조의18</p>
+
+<h2 id="eligible">연금을 받을 수 있는 조건과 연금수령연차</h2>
+<p>연금계좌에서 돈을 <b>연금으로</b> 받으려면 만 55세가 지나야 하고 계좌에 가입한 지 5년이 지나야 합니다. 계좌에 이연퇴직소득이 있으면 5년 요건은 면제됩니다.</p>
+<p>연금을 받은 햇수(연금수령연차)는 <b>'받을 수 있게 된 해'를 1년차</b>로 셉니다. 실제로 돈을 빼기 시작한 해가 1년차가 아닙니다. 예를 들어 55세에 조건을 채우고 65세에 처음 받으면, 첫 수령이 벌써 11년차입니다. 이것이 두 가지를 바꿉니다.</p>
+<ul>
+  <li>연금수령연차가 11년 이상이면 <b>연금수령한도가 적용되지 않습니다</b>. 인출액 전체를 연금수령으로 봅니다.</li>
+  <li>이연퇴직소득 감면이 30%가 아니라 40%(20년 초과면 50%)에서 시작합니다.</li>
+</ul>
+<p>2013년 3월 1일 이전에 가입한 연금계좌는 특례로 <b>6년차부터</b> 기산합니다.</p>
+<p class="src">소득세법 시행령 제40조의2 · 국세청 「연금소득의 범위」</p>
+
+<h2 id="limit">연금수령한도 (120% 룰)</h2>
+<p>한 해에 연금으로 인정받고 뺄 수 있는 금액에는 상한이 있습니다.</p>
+<p class="formula">연금수령한도 = 그해 1월 1일 현재 평가액 ÷ (11 − 연금수령연차) × 120%<br><span>예: 잔액 1억원, 1년차면 1억 ÷ 10 × 1.2 = 1,200만원</span></p>
+<p>연차가 오를수록 분모가 작아져 한도가 커지고, <b>11년차부터는 한도 자체가 사라집니다</b>. 한도를 넘겨 뺀 금액은 연금수령이 아니라 연금외수령으로 봐서, 자기납입분은 기타소득세 16.5%, 이연퇴직소득은 감면 없는 퇴직소득세가 붙습니다.</p>
+<p>계좌별로 각각 계산합니다. 연금저축에서 뺀 금액은 IRP 한도를 잠식하지 않습니다.</p>
+<p class="src">소득세법 시행령 제40조의2 제3항 제3호</p>
+
+<h2 id="order">법정 인출순서</h2>
+<p>연금계좌에서 돈을 빼면 재원의 성격에 따라 정해진 순서대로 나갑니다. 본인이 고를 수 없습니다.</p>
+<div class="tw"><table>
+  <tr><th>순위</th><th>재원</th><th>과세</th></tr>
+  <tr><td>1</td><td>과세제외금액 (세액공제 안 받은 원금)</td><td>비과세</td></tr>
+  <tr><td>2</td><td>이연퇴직소득 (퇴직금)</td><td>퇴직소득세 × 감면</td></tr>
+  <tr><td>3</td><td>세액공제 받은 원금 + 운용수익</td><td>연금소득세 3.3~5.5%</td></tr>
+</table></div>
+<p>세금이 싼 돈부터 빠져나가는 구조입니다. 그래서 받기 시작한 초반에는 세금 비율이 낮다가 후반으로 갈수록 올라갑니다. 주의할 점은 1순위와 2순위 재원에서 발생한 <b>운용수익은 3순위로 귀속</b>된다는 것입니다. 원금만 앞 순위에 남습니다.</p>
+<p class="src">소득세법 시행령 제40조의3</p>
+
+<h2 id="rate">나이별 연금소득세율</h2>
+<div class="tw"><table>
+  <tr><th>수령 나이</th><th>확정기간형</th><th>종신형</th></tr>
+  <tr><td>55 ~ 69세</td><td>5.5%</td><td>3.3%</td></tr>
+  <tr><td>70 ~ 79세</td><td>4.4%</td><td>3.3%</td></tr>
+  <tr><td>80세 이상</td><td>3.3%</td><td>3.3%</td></tr>
+</table></div>
+<p>모두 지방소득세 10%를 포함한 세율입니다. 나이는 만 나이 기준이며, 수령 도중 생일이 지나 구간이 바뀌면 그때부터 낮은 세율이 적용됩니다. 개시를 늦출 수 있다면 그 자체로 절세가 됩니다.</p>
+<p>종신형은 사망할 때까지 받고 중도 해지할 수 없는 계약이라 나이와 관계없이 3.3%입니다. 확정기간형보다 70세 미만은 2.2%p, 70~79세는 1.1%p 낮습니다. 2025년까지는 종신형이 4.4%였고, 2026년 1월 1일 이후 받는 연금부터 3.3%로 내렸습니다. <span class="chg">2026 개정</span></p>
+<p class="src">소득세법 제143조의2 · 국세청 「연금소득 원천징수 방법」</p>
+
+<h2 id="cap">연 1,500만원 분리과세 한도</h2>
+<p>연금저축·IRP에서 받는 연금 중 <b>세액공제를 받은 원금과 운용수익</b>의 합계가 연 1,500만원 이하면, 나이에 따라 3.3~5.5%로 원천징수하고 과세가 끝납니다.</p>
+<p>1원이라도 넘으면 넘은 부분만이 아니라 <b>그해 받은 연금 전부</b>에 세금이 다시 매겨집니다. 종합과세와 분리과세(16.5%) 중 유리한 쪽을 고릅니다. 한도를 살짝 넘기는 게 가장 손해라서 월 125만원 선을 지키라는 말이 나옵니다.</p>
+<p>한도 계산에서 빠지는 것은 다음과 같습니다.</p>
+<ul>
+  <li>과세제외금액 (세액공제를 받지 않고 넣은 원금)</li>
+  <li>이연퇴직소득 재원에서 나온 인출</li>
+  <li>국민연금 등 공적연금 (별도 체계)</li>
+</ul>
+<p>기준금액은 2023년에 1,200만원에서 1,500만원으로 올랐고, 같은 시기부터 초과 시 분리과세 선택이 가능해졌습니다.</p>
+<p class="src">소득세법 제14조 제3항 제9호 · 제129조</p>
+
+<h2 id="severance">퇴직금을 연금으로 받으면 세금이 줄어드는 이유</h2>
+<p>퇴직금을 IRP로 받아 연금으로 나눠 받으면 퇴직소득세의 일부만 원천징수합니다. 2026년부터 20년 초과 구간이 신설되어 2단계가 3단계가 됐습니다. <span class="chg">2026 개정</span></p>
+<div class="tw"><table>
+  <tr><th>연금수령연차</th><th>원천징수</th><th>감면</th></tr>
+  <tr><td>10년 이하</td><td>퇴직소득세의 70%</td><td>30%</td></tr>
+  <tr><td>10년 초과 ~ 20년 이하</td><td>60%</td><td>40%</td></tr>
+  <tr><td>20년 초과</td><td>50%</td><td>50%</td></tr>
+</table></div>
+<p>2026년 1월 1일 이후 연금 수령분부터 적용됩니다. 오래 나눠 받을수록 유리한 구조라, 55세 이상이라면 퇴직 후 연금을 빨리 개시해 수령 기간을 늘리는 쪽이 절세에 도움이 됩니다.</p>
+<p>이연퇴직소득에서 나온 인출은 <b>연 1,500만원 한도와 무관</b>합니다. 다만 이 재원을 굴려 생긴 운용수익은 연금소득으로 분류되어 한도에 포함됩니다.</p>
+<a class="cta" href="severance.html">퇴직금 일시금 vs 연금 세금 비교하기 ›</a>
+<p class="src">국세청 「연금소득 원천징수 방법」 · 기획재정부 2025년 세제개편</p>
+
+<h2 id="retax">퇴직소득세 계산 구조</h2>
+<p>퇴직소득세는 일한 햇수가 길수록 세금이 줄도록 설계돼 있습니다. 계산은 네 단계입니다. 결과만 궁금하면 건너뛰어도 됩니다.</p>
+<h3>① 근속연수공제</h3>
+<div class="tw"><table>
+  <tr><th>근속연수</th><th>공제액</th></tr>
+  <tr><td>5년 이하</td><td>100만원 × 근속연수</td></tr>
+  <tr><td>5년 초과 10년 이하</td><td>500만원 + 200만원 × (근속 − 5)</td></tr>
+  <tr><td>10년 초과 20년 이하</td><td>1,500만원 + 250만원 × (근속 − 10)</td></tr>
+  <tr><td>20년 초과</td><td>4,000만원 + 300만원 × (근속 − 20)</td></tr>
+</table></div>
+<h3>② 환산급여</h3>
+<p class="formula">환산급여 = (퇴직급여 − 근속연수공제) × 12 ÷ 근속연수</p>
+<h3>③ 환산급여공제</h3>
+<div class="tw"><table>
+  <tr><th>환산급여</th><th>공제액</th></tr>
+  <tr><td>800만원 이하</td><td>전액</td></tr>
+  <tr><td>800만원 초과 ~ 7,000만원</td><td>800만원 + 800만원 초과분의 60%</td></tr>
+  <tr><td>7,000만원 초과 ~ 1억원</td><td>4,520만원 + 7,000만원 초과분의 55%</td></tr>
+  <tr><td>1억원 초과 ~ 3억원</td><td>6,170만원 + 1억원 초과분의 45%</td></tr>
+  <tr><td>3억원 초과</td><td>1억 5,170만원 + 3억원 초과분의 35%</td></tr>
+</table></div>
+<h3>④ 산출세액</h3>
+<p class="formula">(환산급여 − 환산급여공제)에 기본세율을 적용한 뒤 × 근속연수 ÷ 12, 여기에 지방소득세 10%를 더합니다.</p>
+<p class="src">소득세법 제48조 · 제55조 · 국세청 퇴직소득세 계산식표(2026-09-21 대조)</p>
+
+<h2 id="basic">기본세율표</h2>
+<p>종합과세를 택할 때와 퇴직소득세 계산에 같은 세율표를 씁니다.</p>
+<div class="tw"><table>
+  <tr><th>과세표준</th><th>세율</th><th>누진공제</th></tr>
+  <tr><td>1,400만원 이하</td><td>6%</td><td>—</td></tr>
+  <tr><td>5,000만원 이하</td><td>15%</td><td>126만원</td></tr>
+  <tr><td>8,800만원 이하</td><td>24%</td><td>576만원</td></tr>
+  <tr><td>1억 5,000만원 이하</td><td>35%</td><td>1,544만원</td></tr>
+  <tr><td>3억원 이하</td><td>38%</td><td>1,994만원</td></tr>
+  <tr><td>5억원 이하</td><td>40%</td><td>2,594만원</td></tr>
+  <tr><td>10억원 이하</td><td>42%</td><td>3,594만원</td></tr>
+  <tr><td>10억원 초과</td><td>45%</td><td>6,594만원</td></tr>
+</table></div>
+<p>지방소득세 10%가 별도로 붙습니다.</p>
+<p class="src">소득세법 제55조</p>
+
+<h2 id="notes">이 가이드의 한계</h2>
+<ul>
+  <li><b>건강보험료</b> — 연금소득은 지역가입자 보험료 산정에 반영됩니다. 세금을 줄여도 보험료로 나가는 부분이 있습니다.</li>
+  <li><b>국민연금</b> — 공적연금은 별도 체계라 다루지 않았습니다. 실제 노후 현금흐름을 볼 때는 따로 더해야 합니다.</li>
+  <li><b>종합과세 선택</b> — 1,500만원을 넘길 때 종합과세와 분리과세 중 무엇이 유리한지는 다른 소득에 따라 다릅니다.</li>
+  <li><b>중도인출·부득이한 사유</b> — 연금외수령, 의료목적 인출 등은 다루지 않았습니다.</li>
+  <li><b>세법 변경</b> — 연금 세제는 자주 바뀝니다. 상단 검토일 이후의 개정은 반영돼 있지 않습니다. 최신 소식은 <a class="cta" style="font-size:inherit;" href="news.html">뉴스 ›</a>에서 원문 링크로 확인하세요.</li>
+</ul>
+<p>이 글은 참고용이며 개별 세무상담을 대신하지 않습니다. 실제 신고와 납부 전에는 국세청 안내나 세무 전문가를 통해 확인해 주세요.</p>
+
+<nav class="xl" aria-label="계산기">
+  <p class="xl-t">숫자로 직접 확인해 보세요</p>
+  <a href="pension-alchemist.html" onclick="gtag('event','calc_click',{tool:'pension-alchemist',location:'guide'})">얼마나 받을 수 있을까?<br>연금 수령 계산기<span>계산하기</span></a>
+  <a href="goal.html" onclick="gtag('event','calc_click',{tool:'goal',location:'guide'})">얼마를 준비해야 할까?<br>목표 역산 계산기<span>계산하기</span></a>
+  <a href="refund.html" onclick="gtag('event','calc_click',{tool:'refund',location:'guide'})">얼마나 돌려받을까?<br>세액공제 환급 계산기<span>계산하기</span></a>
+  <a href="severance.html" onclick="gtag('event','calc_click',{tool:'severance',location:'guide'})">일시금 vs 연금, 세금은?<br>퇴직금 세금 비교 계산기<span>계산하기</span></a>
+</nav>
+
+<footer class="sitefoot">
+  <p class="disclaimer">이 글은 참고용이며 개별 세무상담을 대신하지 않습니다. 연금 세제는 자주 바뀌므로 위에 표시된 세법 기준일을 함께 확인해 주세요.</p>
+  <nav aria-label="사이트 정보">
+    <a href="https://xeno-xeno.github.io/10minute.studio/">10minute.studio</a>
+    <a href="../privacy.html">개인정보처리방침</a>
+    <a href="../contact.html">문의</a>
+  </nav>
+</footer>
+
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const reduceMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* 라이트/다크 */
+const THEME_KEY = 'pension-alchemist:theme';
+const darkMQ = matchMedia('(prefers-color-scheme: dark)');
+const ICON_SUN  = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+const ICON_MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+const isDark = () => document.documentElement.dataset.theme ? document.documentElement.dataset.theme === 'dark' : darkMQ.matches;
+function syncThemeUI(){
+  const d = isDark();
+  $('themebtn').innerHTML = d ? ICON_SUN : ICON_MOON;
+  $('themebtn').setAttribute('aria-label', d ? '라이트 모드로 전환' : '다크 모드로 전환');
+  $('tc').content = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
+}
+$('themebtn').addEventListener('click', () => {
+  const next = isDark() ? 'light' : 'dark', root = document.documentElement;
+  if(!reduceMotion()){ root.classList.add('theme-anim'); setTimeout(() => root.classList.remove('theme-anim'), 300); }
+  root.dataset.theme = next;
+  try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
+  syncThemeUI();
+});
+darkMQ.addEventListener('change', syncThemeUI);
+
+const stale = Engine.THIS_YEAR - Engine.TAX_BASIS.year;
+$('asof').className = stale > 0 ? 'asof stale' : 'asof';
+$('asof').innerHTML = `${Engine.TAX_BASIS.law} 기준 · 검토일 ${Engine.TAX_BASIS.reviewed}` + (stale > 0 ? ` · <b>검토 후 ${stale}년 경과 — 개정 여부를 확인해 주세요</b>` : '');
+
+syncThemeUI();
+</script>
+</body>
+</html>
