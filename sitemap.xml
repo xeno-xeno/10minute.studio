@@ -6,13 +6,6 @@
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
-  <!-- 호스트 루트 (xeno-xeno.github.io 레포). 네이버 사이트 인식용 허브 페이지 -->
-  <url>
-    <loc>https://xeno-xeno.github.io/</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
   <url>
     <loc>https://xeno-xeno.github.io/10minute.studio/timeArt.html</loc>
     <lastmod>2026-08-24</lastmod>
