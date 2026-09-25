@@ -107,6 +107,7 @@ function runYear(s, age, rcYrPs, rcYrIrp, p, capLimit, forceRate){
   let psW=0,psNetSum=0,t1W=0,dcW=0,t3W=0,netSum=0,taxSum=0;
   let stageYr=null, hitPayout=false, hitPsLimit=false, hitCap=false, shortfall=false;
   let dcExhausted=false, t1Exhausted=false;
+  let dcNetSum=0, t3NetSum=0, exW=0, exTax=0;
 
   for(let m=0;m<12;m++){
     const tr = forceRate != null ? forceRate : rateFn(age + m/12);
@@ -158,7 +159,7 @@ function runYear(s, age, rcYrPs, rcYrIrp, p, capLimit, forceRate){
       const net    = gross*(1-effTax);
       const prev = s.dc;
       s.dc -= gross; dcW += gross; irpUsed += gross;
-      monthNet += net; monthTax += gross-net; need -= net;
+      monthNet += net; monthTax += gross-net; need -= net; dcNetSum += net;
       if(prev>0 && s.dc<=0.01) dcExhausted = true;
     }
     if(need>0.01 && s.t3>0.01){                         // 3순위
@@ -166,7 +167,30 @@ function runYear(s, age, rcYrPs, rcYrIrp, p, capLimit, forceRate){
       const gross   = Math.min(need/(1-tr), s.t3, room(), capRoom);
       const net     = gross*(1-tr);
       s.t3 -= gross; t3W += gross; irpUsed += gross; capUsed += gross;
-      monthNet += net; monthTax += gross-net; need -= net;
+      monthNet += net; monthTax += gross-net; need -= net; t3NetSum += net;
+    }
+
+    /* 연금수령한도 초과분(연금외수령) — 한도가 다 찬 계좌에서만, 부족분을 마저 뺀다.
+       과세제외 원금 비과세 / 이연퇴직소득 감면 없는 퇴직소득세 / 나머지 기타소득세 16.5%.
+       연금소득이 아니라서 연 1,500만원 한도(capUsed)에는 들어가지 않는다. */
+    if(p.limitExcess){
+      const takeEx = (key, taxRate, onTake) => {
+        if(need<=0.01 || s[key]<=0.01) return;
+        const gross = Math.min(need/(1-taxRate), s[key]);
+        const net = gross*(1-taxRate);
+        s[key] -= gross; exW += gross; exTax += gross-net;
+        monthNet += net; monthTax += gross-net; need -= net;
+        onTake(gross, net);
+      };
+      if(room()<=0.01){
+        takeEx('t1', 0,     g => { t1W += g; });
+        takeEx('dc', dcEff, (g,n) => { dcW += g; dcNetSum += n; });
+        takeEx('t3', OVER_RATE, (g,n) => { t3W += g; t3NetSum += n; });
+      }
+      if(psRoom()<=0.01){
+        takeEx('a1', 0,     (g,n) => { psW += g; psNetSum += n; });
+        takeEx('a3', OVER_RATE, (g,n) => { psW += g; psNetSum += n; });
+      }
     }
 
     if(need > 0.01){
@@ -179,7 +203,8 @@ function runYear(s, age, rcYrPs, rcYrIrp, p, capLimit, forceRate){
 
   return {state:s, capUsed, stage:stageYr,
     psW, psNetSum, t1W, dcW, t3W, netSum, taxSum,
-    hitPayout, hitPsLimit, hitCap, shortfall, dcExhausted, t1Exhausted};
+    hitPayout, hitPsLimit, hitCap, shortfall, dcExhausted, t1Exhausted,
+    dcNetSum, t3NetSum, exW, exTax, psLimit, irpLimit};
 }
 
 /* ═════════ 시뮬레이션 ═════════ */
@@ -225,6 +250,9 @@ function simulate(p){
       net:r.netSum/12, tax:r.taxSum/12, capUsed:r.capUsed,
       hitPayout:r.hitPayout, hitPsLimit:r.hitPsLimit, hitCap:r.hitCap,
       shortfall:r.shortfall, dcExhausted:r.dcExhausted, t1Exhausted:r.t1Exhausted,
+      dcNet:r.dcNetSum/12, t3Net:r.t3NetSum/12,
+      exW:r.exW/12, exTax:r.exTax/12, overPayout:r.exW>0.01,
+      psLimit:r.psLimit, irpLimit:r.irpLimit,   // 그해 연금수령한도(연, 만원) — 11년차부터 Infinity
     });
 
     if(st.a1<=0.01 && st.a3<=0.01 && st.t1<=0.01 && st.dc<=0.01 && st.t3<=0.01) break;
@@ -330,7 +358,8 @@ function compareSeverance({sev, wy, startAge, years}){
   const rows = [];
   for(let age = startAge; bal > 0.01 && age <= 100; age++){
     const yr = recvYear(age, 55, 0);
-    const w = Math.min(perYear, payoutLimit(bal, yr), bal);
+    // 100세에서 계산을 끝내므로 남은 잔액은 그해에 전부 받는다 — 안 그러면 남은 금액의 세금이 합계에서 빠진다
+    const w = age === 100 ? bal : Math.min(perYear, payoutLimit(bal, yr), bal);
     const tax = w * eff * (1 - dcRed(yr));
     bal -= w; pensionTax += tax;
     rows.push({age, yr, w, tax, red: dcRed(yr)});
@@ -421,6 +450,16 @@ function selfTest(){
   // 같은 조건이라도 65세 개시면 11년차라 한도가 없다
   const r2b = sim({t3:5000, s3Net:400, startAge:65, eligibleAgeIrp:55});
   if(r2b[0].hitPayout) throw new Error('11년차인데 수령한도가 걸렸다');
+
+  // 연금수령한도 초과 허용(limitExcess): 넘긴 부분만 16.5%, 목표는 채운다. 끄면 기존처럼 한도에서 자른다
+  const lx = sim({t3:5000, s3Net:400, startAge:55, limitExcess:true});
+  if(!lx[0].overPayout) throw new Error('한도 초과 인출 플래그 누락');
+  near(lx[0].exTax, lx[0].exW*.165, 1e-6, '한도 초과분은 16.5%');
+  if(!(lx[0].net > r2[0].net)) throw new Error('초과 허용인데 한도 안 모드보다 더 못 받는다');
+  if(r2[0].exW !== 0 || r2[0].overPayout) throw new Error('초과 허용을 껐는데 초과 인출이 생겼다');
+  if(sim({t3:5000, s3Net:400, startAge:65, limitExcess:true})[0].overPayout) throw new Error('11년차인데 초과 인출이 생겼다');
+  // 초과 허용 시 그해 한도 표시: 5000 × 1.2 ÷ 10 = 600
+  near(lx[0].irpLimit, 600, 1e-6, '행에 담긴 IRP 연금수령한도');
 
   // 과세제외 원금은 비과세
   near(sim({t1:6000, s1Net:50})[0].tax, 0, 1e-9, '과세제외 원금 비과세');
@@ -531,6 +570,9 @@ function selfTest(){
   if(!(sv5.actualYears > 5)) throw new Error('비교: 짧은 기간은 수령한도 때문에 늘어나야 한다');
   if(!(sv1.pensionTax < sv1.lumpTax)) throw new Error('비교: 연금 수령이 일시금보다 세금이 적어야 한다');
   near(compareSeverance({sev:0, wy:20, startAge:55, years:10}).pensionTax, 0, 1e-9, '비교: 0원');
+  // 100세를 넘기는 기간이어도 퇴직금 전액에 세금이 매겨져야 한다(80세 개시 30년 → 100세에 잔액 일괄)
+  const sv80 = compareSeverance({sev:30000, wy:20, startAge:80, years:30});
+  near(sv80.rows.reduce((a,r)=>a+r.w,0), 30000, 1e-6, '비교: 100세 이후 잔액 누락 없음');
 
   console.log('%c✓ selfTest 통과', 'color:#1D9E75;font-weight:bold');
 }

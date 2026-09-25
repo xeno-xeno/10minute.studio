@@ -339,8 +339,10 @@ function render(){
   $('hero').innerHTML = ps + irp === 0
     ? `<p class="hero-l">예상 환급액</p><p class="hero-v">0원</p><p class="hero-s">납입액을 정하면 환급액이 계산됩니다. 최대 ${won(r.extraRefund)}만원까지 돌려받을 수 있습니다.</p>`
     : `<p class="hero-l">연말정산 예상 환급액</p><p class="hero-v">${won(r.refund)}만원</p><p class="hero-s">공제 대상 ${Engine.fmt(r.base)}만원 × ${pct}% (지방소득세 포함)</p>`;
-  $('warn').innerHTML = r.excluded > 0
-    ? `<b>${Engine.fmt(r.excluded)}만원은 공제 한도를 넘었습니다.</b> 환급은 없지만 나중에 받을 때 세금 없는 원금으로 먼저 나옵니다.` : '';
+  const overPay = Math.max(0, ps + irp - 1800);   // 연금저축+IRP 합산 납입 한도
+  const excl = r.excluded - overPay;               // 납입 한도 안에서 공제만 못 받는 금액
+  $('warn').innerHTML = (overPay > 0 ? `<p><b>연 납입 한도 1,800만원을 넘었습니다.</b> 연금저축과 IRP를 합쳐 1,800만원까지만 넣을 수 있어, ${Engine.fmt(overPay)}만원은 실제로는 납입할 수 없는 금액입니다. 환급액에는 영향이 없습니다.</p>` : '')
+    + (excl > 0 ? `<p><b>${Engine.fmt(excl)}만원은 공제 한도를 넘었습니다.</b> 환급은 없지만 나중에 받을 때 세금 없는 원금으로 먼저 나옵니다.</p>` : '');
   $('kv').innerHTML = `
     <div class="kv"><span class="k">공제 대상 납입액</span><span class="v">${Engine.fmt(r.base)}만원</span><span class="s">연금저축 600만원, 합산 900만원 한도 적용</span></div>
     <div class="kv"><span class="k">적용 공제율</span><span class="v">${pct}%</span><span class="s">세액공제 ${r.rate * 100}% + 지방소득세 ${r.rate * 10}%</span></div>
