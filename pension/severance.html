@@ -219,8 +219,9 @@ dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
 <div class="card">
   <p class="st title">퇴직금과 연금 시작</p>
   <div class="sr"><span class="lb"><label for="sev">퇴직금 (퇴직급여액)</label></span><input type="range" id="sev" min="0" max="50000" step="500" value="0"><span class="sv" aria-hidden="true" id="sev-o"></span></div>
-  <div class="sr"><span class="lb"><label for="wy">일한 근속연수</label></span><input type="range" id="wy" min="1" max="40" step="1" value="1"><span class="sv" aria-hidden="true" id="wy-o"></span></div>
-  <div class="sr"><span class="lb"><label for="age">연금 받기 시작할 나이 (만)</label></span><input type="range" id="age" min="55" max="75" step="1" value="55"><span class="sv" aria-hidden="true" id="age-o"></span></div>
+  <div class="sr"><span class="lb"><label for="wy">이 퇴직금을 받는 직장에서 일한 햇수</label></span><input type="range" id="wy" min="1" max="40" step="1" value="1"><span class="sv" aria-hidden="true" id="wy-o"></span></div>
+  <p class="hint">이직했다면 직장별로 따로 계산하세요. 이전 직장 햇수는 합치지 않습니다. 중간정산 등 특례가 있을 수 있으니 국세청 안내를 확인하세요.</p>
+  <div class="sr"><span class="lb"><label for="age">연금 받기 시작할 나이 (만)</label></span><input type="range" id="age" min="55" max="80" step="1" value="55"><span class="sv" aria-hidden="true" id="age-o"></span></div>
 </div>
 
 <div class="showrow" id="showrow"><button type="button" class="showbtn" id="showbtn">결과 보기</button></div>
@@ -347,7 +348,7 @@ function render(){
     <div class="kv"><span class="k">세금 합계</span><span class="v">${won(r.pensionTax)}만원</span><span class="s">${redSummary(r.rows)}</span></div>
     <div class="kv"><span class="k">세금 비율</span><span class="v">${(r.pensionTax / sev * 100).toFixed(1)}%</span></div>
     <div class="kv"><span class="k">실수령액 합계</span><span class="v">${Engine.fmt(sev - r.pensionTax)}만원</span><span class="s">${r.actualYears}년간 (만 ${age}~${last.age}세)</span></div>`;
-  $('kv-yrs').innerHTML = YEAR_OPTIONS.map(y => {
+  $('kv-yrs').innerHTML = YEAR_OPTIONS.filter(y => age + y - 1 <= 100).map(y => {   // 100세를 넘기는 기간은 보여주지 않는다
     const c = Engine.compareSeverance({sev, wy, startAge: age, years: y});
     return `<div class="kv"><span class="k">${y}년에 걸쳐</span><span class="v">${won(c.pensionTax)}만원</span><span class="s">일시금보다 ${won(c.saved)}만원 절약 · ${redSummary(c.rows)}</span></div>`;
   }).join('');

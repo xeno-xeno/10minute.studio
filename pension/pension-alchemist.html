@@ -327,7 +327,7 @@ dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
   <p class="optlabel" style="margin-top:.2rem;">가진 연금 <small style="font-weight:400;color:var(--muted);">해당하는 것을 고르세요</small></p>
   <label class="chk"><input type="checkbox" id="has-dc" checked> 퇴직금(DC·DB)을 연금으로 받을 예정입니다</label>
   <label class="chk"><input type="checkbox" id="has-ps"> 연금저축 계좌가 있습니다</label>
-  <label class="chk"><input type="checkbox" id="has-irp"> IRP에 앞으로 납입할 계획입니다</label>
+  <label class="chk"><input type="checkbox" id="has-irp"> IRP 계좌가 있거나 앞으로 납입할 계획입니다</label>
   <p class="fwarn" id="acct-warn"></p>
   <button type="button" class="lnk" data-help="ps-irp">연금저축과 IRP, 뭐가 다른가요?</button>
   <label class="chk off" id="five-year-row"><input type="checkbox" id="five-year-check"> 가입한 지 이미 5년이 지났습니다</label>
@@ -337,7 +337,8 @@ dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
 <div class="card off" id="card-dc">
   <p class="st title">퇴직금</p>
   <div class="sr"><span class="lb"><label for="dc">받을 때 예상 금액</label></span><input type="range" id="dc" min="0" max="30000" step="500" value="0"><span class="sv" aria-hidden="true" id="dc-o"></span></div>
-  <div class="sr"><span class="lb"><label for="wy">일한 근속연수</label></span><input type="range" id="wy" min="1" max="40" step="1" value="1"><span class="sv" aria-hidden="true" id="wy-o"></span></div>
+  <div class="sr"><span class="lb"><label for="wy">이 퇴직금을 받는 직장에서 일한 햇수</label></span><input type="range" id="wy" min="1" max="40" step="1" value="1"><span class="sv" aria-hidden="true" id="wy-o"></span></div>
+  <p class="hint">이직했다면 직장별로 따로 계산하세요. 이전 직장 햇수는 합치지 않습니다. 중간정산 등 특례가 있을 수 있으니 국세청 안내를 확인하세요.</p>
   <p class="hint" id="dc-line" style="margin-bottom:.2rem;"></p>
   <button type="button" class="lnk" data-help="dc-tax">퇴직금 세금이 줄어드는 방식</button>
 </div>
@@ -345,21 +346,15 @@ dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
 <div class="card off" id="card-ps">
   <p class="st title">연금저축</p>
   <div class="sr"><span class="lb"><label for="seed">지금 계좌 잔액</label><button type="button" class="help" data-help="ps-calc" aria-label="연금저축 설명">?</button></span><input type="range" id="seed" min="0" max="20000" step="100" value="0"><span class="sv" aria-hidden="true" id="seed-o"></span></div>
-  <details class="more">
-    <summary>자세히 설정</summary>
-    <div class="morebody">
-      <div class="sr"><span class="lb"><label for="seed-t1">그중 세금 없이 뺄 수 있는 돈</label></span><input type="range" id="seed-t1" min="0" max="10000" step="100" value="0"><span class="sv" aria-hidden="true" id="seed-t1-o"></span></div>
-      <p class="hint">과세제외금액입니다. 모르면 0으로 두세요.</p>
-      <label class="chk"><input type="checkbox" id="ps-legacy-simple"> 2013년 3월 1일 이전에 가입했습니다</label>
-    </div>
-  </details>
+  <label class="chk"><input type="checkbox" id="ps-legacy-simple"> 2013년 3월 1일 이전에 가입했습니다</label>
 </div>
 
 <div class="card off" id="card-irp">
-  <p class="st title">IRP 추가 납입</p>
-  <div class="sr"><span class="lb"><label for="pay">납입금액 (연간)</label><button type="button" class="help" data-help="irp-limit" aria-label="납입 한도 설명">?</button></span><input type="range" id="pay" min="0" max="1800" step="100" value="0"><span class="sv" aria-hidden="true" id="pay-o"></span></div>
+  <p class="st title">IRP</p>
+  <div class="sr"><span class="lb"><label for="irp-seed">지금 계좌 잔액</label></span><input type="range" id="irp-seed" min="0" max="20000" step="100" value="0"><span class="sv" aria-hidden="true" id="irp-seed-o"></span></div>
+  <div class="sr"><span class="lb"><label for="pay">앞으로 낼 금액 (연간)</label><button type="button" class="help" data-help="irp-limit" aria-label="납입 한도 설명">?</button></span><input type="range" id="pay" min="0" max="1800" step="100" value="0"><span class="sv" aria-hidden="true" id="pay-o"></span></div>
   <p class="fwarn hintlike" id="pay-warn"></p>
-  <div class="sr"><span class="lb"><label for="payyr">납입 기간</label></span><input type="range" id="payyr" min="0" max="20" step="1" value="0"><span class="sv" aria-hidden="true" id="payyr-o"></span></div>
+  <div class="sr"><span class="lb"><label for="payyr">앞으로 더 낼 기간</label></span><input type="range" id="payyr" min="0" max="20" step="1" value="0"><span class="sv" aria-hidden="true" id="payyr-o"></span></div>
   <p class="fwarn" id="payyr-warn"></p>
   <p class="hint" id="acc-line" style="margin-bottom:0;"></p>
 </div>
@@ -371,6 +366,7 @@ dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
   <p class="st title"><span class="num">2</span>연금 수령 방법</p>
   <div class="sr"><span class="lb"><label for="goal">매달 받고 싶은 금액 (세후)</label></span><input type="range" id="goal" min="50" max="400" step="5" value="50"><span class="sv" aria-hidden="true" id="goal-o"></span></div>
   <p class="hint">이 금액은 물가상승률을 반영하지 않은 명목 금액입니다 — '자세한 결과'의 '지금 돈 가치' 열에서 오늘 기준 가치를 확인할 수 있습니다.</p>
+  <p class="hint" id="lim-line"></p>
   <p class="optlabel">기대수익률 <button type="button" class="help" data-help="rate" aria-label="수익률 설명">?</button></p>
   <div class="chips" role="group" aria-label="기대수익률" id="chips-risk">
     <button type="button" data-v="3" aria-pressed="false">안정형 3%</button>
@@ -385,8 +381,8 @@ dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
         <button type="button" data-v="life" aria-pressed="true">종신형</button>
         <button type="button" data-v="term" aria-pressed="false">확정기간형</button>
       </div>
-      <p class="optlabel">연 1,500만원 한도 <button type="button" class="help" data-help="cap" aria-label="1,500만원 한도 설명">?</button></p>
-      <div class="seg" role="group" aria-label="연 1,500만원 한도 처리" id="seg-cap">
+      <p class="optlabel">인출 한도 (연 1,500만원 · 연금수령한도 120%) <button type="button" class="help" data-help="cap" aria-label="인출 한도 설명">?</button></p>
+      <div class="seg" role="group" aria-label="인출 한도 처리" id="seg-cap">
         <button type="button" data-v="keep" aria-pressed="true">한도 안에서 수령</button>
         <button type="button" data-v="over" aria-pressed="false">초과 허용</button>
       </div>
@@ -546,9 +542,10 @@ dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
       <li><b>건강보험료</b> — 연금소득은 지역가입자 보험료 산정에 반영됩니다. 세금을 줄여도 보험료로 나가는 부분이 있습니다.</li>
       <li><b>국민연금</b> — 공적연금은 별도 체계라 포함하지 않았습니다. 실제 노후 현금흐름을 보실 때는 따로 더하셔야 합니다.</li>
       <li><b>종합과세 선택</b> — 1,500만원 초과 시 16.5% 분리과세만 계산합니다. 다른 소득이 적으면 종합과세가 유리할 수 있습니다.</li>
-      <li><b>계좌별 요건 충족 시점</b> — 가입 연도를 하나만 입력받아 연금저축과 IRP에 같이 적용합니다. 실제로는 계좌마다 가입일이 달라 충족 시점이 갈릴 수 있고, 5년 요건 면제도 이연퇴직소득이 든 계좌에만 적용됩니다.</li>
+      <li><b>계좌별 요건 충족 시점</b> — "가입한 지 5년이 지났는가"를 예/아니오 하나로만 받아 연금저축과 IRP에 같이 적용합니다. 실제로는 계좌마다 가입일이 달라 충족 시점이 갈릴 수 있고, 5년 요건 면제도 이연퇴직소득이 든 계좌에만 적용됩니다.</li>
+      <li><b>과세제외금액</b> — 지금 가진 연금저축·IRP 잔액은 전부 세금이 붙는 돈으로 보수적으로 계산합니다. 세액공제 한도(900만원)를 넘겨 앞으로 넣는 돈만 세금 없는 돈으로 잡습니다.</li>
       <li><b>종신형 근사</b> — 종신형도 목표 월 금액을 잔액이 있는 동안 꺼내 쓰는 방식으로 계산하며, 실제 종신 계약(사망 시까지 지급)의 조건은 반영하지 않습니다. 세율(3.3%)만 종신형을 따릅니다.</li>
-      <li><b>중도인출·부득이한 사유</b> — 연금외수령, 의료목적 인출 등은 다루지 않습니다.</li>
+      <li><b>중도인출·부득이한 사유</b> — 의료목적 등 부득이한 사유의 인출과 중도해지는 다루지 않습니다. 연금수령한도를 넘겨 빼는 연금외수령은 '인출 한도'의 '초과 허용'에서만 계산합니다.</li>
       <li><b>세법 변경</b> — 연금 세제는 자주 바뀝니다. 상단 검토일 이후의 개정은 반영돼 있지 않습니다.</li>
     </ul>
     <p>계산 결과는 참고용이며 개별 세무상담을 대신하지 않습니다.</p>
@@ -587,7 +584,7 @@ dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
 
     <section id="h-ps-calc" data-title="연금저축 계산 방식" hidden>
       <p>월 수령액은 잔액의 1%로 잡았습니다. <b>예: 4,500만원이면 매달 45만원.</b> 이 금액을 매달 먼저 받고, 목표 실수령액에 모자란 만큼을 IRP가 채웁니다. (계산식: 첫해 연금수령한도 ÷ 12 = 잔액 × 1.2 ÷ 10 ÷ 12)</p>
-      <p><b>과세제외금액</b>은 세금 혜택(세액공제)을 받지 않고 넣은 돈입니다. 뺄 때 세금이 없고 1,500만원 한도에도 들어가지 않습니다. 금융사 앱에서 조회할 수 있고, 모르면 0으로 두세요(전부 세금이 붙는 돈으로 보수적으로 계산합니다).</p>
+      <p><b>과세제외금액</b>은 세금 혜택(세액공제)을 받지 않고 넣은 돈입니다. 뺄 때 세금이 없고 1,500만원 한도에도 들어가지 않습니다. 이 계산기는 입력한 잔액을 전부 세금이 붙는 돈으로 보수적으로 계산합니다. 세액공제 한도(900만원)를 넘겨 앞으로 넣는 돈만 세금 없는 돈으로 잡습니다.</p>
       <p>연금저축은 IRP와 <b>별개 계좌</b>라서 뺄 수 있는 한도(연금수령한도)를 각자 갖습니다. 다만 <b>연 1,500만원 한도는 연금저축과 IRP를 합쳐서</b> 적용됩니다.</p>
     </section>
 
@@ -603,7 +600,7 @@ dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
         <tr><td>퇴직금 수령</td><td>불가</td><td>가능</td></tr>
       </table>
       <p>그래서 보통 <b>연금저축 600만원을 먼저 채우고, 남는 300만원을 IRP에 넣는</b> 순서를 씁니다. 다만 IRP는 중간에 깨기 어려워서, 그 돈을 중간에 쓸 가능성이 있다면 순서를 바꾸는 편이 낫습니다.</p>
-      <p>퇴직금은 만 55세 전에 받으면 원칙적으로 IRP 계좌로 이전되므로, 이미 IRP를 가지고 계실 수도 있습니다. IRP 납입금액은 <b>앞으로 더 넣을 계획</b>입니다.</p>
+      <p>퇴직금은 만 55세 전에 받으면 원칙적으로 IRP 계좌로 이전되므로, 이미 IRP를 가지고 계실 수도 있습니다. IRP는 <b>지금 잔액</b>에서 시작하고, 납입금액과 기간은 <b>앞으로 더 넣을 계획</b>입니다. 이미 낸 돈은 잔액에 이미 들어 있으니 기간에 다시 세지 않습니다.</p>
     </section>
 
     <section id="h-dc-tax" data-title="퇴직금 세금이 줄어드는 방식" hidden>
@@ -623,9 +620,12 @@ dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
       <p><b>계산 방식 참고</b> — 이 계산기는 종신형도 목표 월 금액을 잔액이 있는 동안 꺼내 쓰는 방식으로 계산하고, 종신형에서 따르는 것은 세율(3.3%)뿐입니다. 실제 종신형의 지급액과 계약 조건은 상품마다 다르니 참고용으로만 보세요.</p>
     </section>
 
-    <section id="h-cap" data-title="연 1,500만원 한도" hidden>
-      <p><b>한도 안에서 수령</b>: 낮은 세율(3.3~5.5%)을 유지하도록 연 1,500만원까지만 인출합니다.</p>
-      <p><b>초과 허용</b>: 목표 실수령액을 맞추기 위해 한도를 넘겨 인출하고, 초과한 해는 <b>그해 사적연금 전액</b>에 16.5% 분리과세를 적용합니다. 종합과세를 택하는 쪽이 유리한 경우도 있지만, 다른 소득에 따라 달라져 여기서는 계산하지 않습니다.</p>
+    <section id="h-cap" data-title="인출 한도 (1,500만원 · 120%)" hidden>
+      <p>인출에는 한도가 두 가지 있습니다. <b>① 연 1,500만원</b>(낮은 세율 3.3~5.5% 유지), <b>② 연금수령한도</b>(연금수령 1~10년차, 평가액 ÷ (11 − 연차) × 120%. 11년차부터 없음).</p>
+      <p><b>한도 안에서 수령</b>: 두 한도를 모두 지킵니다. 목표에 모자란 만큼은 미달로 표시합니다.</p>
+      <p><b>초과 허용</b>: 목표 실수령액을 맞추기 위해 한도를 넘겨 인출합니다.</p>
+      <p>① 1,500만원을 넘긴 해는 <b>그해 사적연금 전액</b>에 16.5% 분리과세를 적용합니다. 종합과세를 택하는 쪽이 유리한 경우도 있지만, 다른 소득에 따라 달라져 여기서는 계산하지 않습니다.</p>
+      <p>② 연금수령한도를 넘긴 부분은 연금이 아니라 <b>연금외수령</b>입니다. 내가 넣은 돈과 수익은 <b>기타소득세 16.5%</b>, 퇴직금은 <b>감면 없는 퇴직소득세</b>가 붙고, 세금 없는 돈(과세제외 원금)은 비과세입니다. 한도 안쪽은 원래 세율이고, 연 1,500만원 한도에는 들어가지 않습니다.</p>
     </section>
 
     <section id="h-goal" data-title="돈의 종류별 목표" hidden>
@@ -654,7 +654,7 @@ dialog.sheet::backdrop{background:rgba(8,12,20,.5);backdrop-filter:blur(2px);}
 
     <section id="h-legend" data-title="표 기호 설명" hidden>
       <p><b>연금 연차</b>: 연금을 받을 수 있게 된 해부터 센 햇수입니다(실제로 받기 시작한 해가 아니라 조건을 채운 해가 1년차). 금액은 모두 세금 떼기 전 월평균입니다.</p>
-      <p>⚠수령한도 = 그해 뺄 수 있는 한도(연금수령한도, 120%)에 닿음<br>⚠1500 = 연 1,500만원 한도에 닿음<br>⚠16.5% = 한도를 넘겨 세금 16.5% 적용<br>⚠미달 = 목표 실수령액에 못 미침</p>
+      <p>⚠수령한도 = 그해 뺄 수 있는 한도(연금수령한도, 120%)에 닿음<br>⚠한도초과 = 수령한도를 넘겨 빼서 초과분에 세금 16.5%(퇴직금은 감면 없음)<br>⚠1500 = 연 1,500만원 한도에 닿음<br>⚠16.5% = 한도를 넘겨 세금 16.5% 적용<br>⚠미달 = 목표 실수령액에 못 미침</p>
     </section>
 
   </div>
@@ -666,7 +666,7 @@ let C1=null, C2=null;
 let payType = 'life';   // term | life (기본 종신형)
 let rateMode = 'basic'; // basic | detail
 let inflPct = 2.5;      // 물가상승률 (%) — 프리셋 2.0 / 2.5 / 3.0
-let capMode = 'keep';   // keep | over
+let capMode = 'keep';   // keep | over — 연 1,500만원과 연금수령한도(120%)를 함께 다룬다
 let warnShown = false;  // 경고박스가 비어있다가 채워지는 순간만 페이드인
 const $ = id => document.getElementById(id);
 /* CSS 변수 값 읽기 — 차트 색을 다크모드에 맞추려고 */
@@ -703,12 +703,12 @@ function render(){
   const annPay   = hasIrp ? +$('pay').value : 0;
   const payYears = +$('payyr').value;
   const seed     = hasPs ? +$('seed').value : 0;
-  const seedT1   = hasPs ? Math.min(+$('seed-t1').value, seed) : 0;
+  const irpSeed   = hasIrp ? +$('irp-seed').value : 0;   // 과세제외금액은 묻지 않고 전부 과세 대상으로 본다(보수적)
   const dcBal    = hasDc ? +$('dc').value : 0;
   $('card-dc').classList.toggle('off',  !hasDc);
   $('card-ps').classList.toggle('off',  !hasPs);
   $('card-irp').classList.toggle('off', !hasIrp);
-  const noMoney  = !(dcBal > 0 || seed > 0 || annPay > 0);   // 아직 금액을 넣지 않은 처음 상태
+  const noMoney  = !(dcBal > 0 || seed > 0 || irpSeed > 0 || annPay > 0);   // 아직 금액을 넣지 않은 처음 상태
   const wYears   = +$('wy').value;
   const goal     = +$('goal').value;
   const split    = $('goal-split').checked;   // 기본은 목표 하나를 세 단계에 똑같이 적용
@@ -760,7 +760,7 @@ function render(){
   $('pay-o').textContent    = annPay>0 ? annPay.toLocaleString()+'만원' : '납입 안 함';
   $('payyr-o').textContent  = payYears>0 ? payYears+'년' : '—';
   $('seed-o').textContent   = seed.toLocaleString()+'만원';
-  $('seed-t1-o').textContent= seedT1.toLocaleString()+'만원';
+  $('irp-seed-o').textContent    = irpSeed.toLocaleString()+'만원';
   $('dc-o').textContent     = dcBal.toLocaleString()+'만원';
   $('wy-o').textContent     = wYears+'년';
   $('sev-link').href = `severance.html?sev=${dcBal}&wy=${wYears}`;   // 입력한 퇴직금을 비교 계산기로 넘긴다
@@ -797,12 +797,12 @@ function render(){
     ? `세금 혜택(세액공제) 한도 900만원을 넘는 ${(annPay-Engine.DEDUCT_CAP).toLocaleString()}만원은 '세금 없는 돈'이 되어 나중에 뺄 때 세금이 없습니다.` : '');
 
   /* 축적 */
-  const ps  = Engine.accumulate(0,      accRate, nowAge, startAge, seed, seedT1, payYears);
-  const acc = Engine.accumulate(annPay, accRate, nowAge, startAge, 0, 0, payYears);
+  const ps  = Engine.accumulate(0,      accRate, nowAge, startAge, seed, 0, payYears);   // 과세제외금액은 묻지 않고 전부 과세 대상으로 본다(보수적)
+  const acc = Engine.accumulate(annPay, accRate, nowAge, startAge, irpSeed, 0, payYears);
   const psGross = Engine.monthlyPayout(ps.total);
   const psTr    = 1 - rateFn(startAge);
-  $('acc-line').textContent = annPay > 0
-    ? `받기 시작할 때 IRP 잔액 ${Engine.fmt(acc.total)}만원 (넣은 돈 ${Engine.fmt(annPay*acc.paidYears)}만원)`
+  $('acc-line').textContent = (annPay > 0 || irpSeed > 0)
+    ? `받기 시작할 때 IRP 잔액 ${Engine.fmt(acc.total)}만원` + (annPay > 0 ? ` (지금 잔액 ${Engine.fmt(irpSeed)}만원 + 앞으로 넣을 돈 ${Engine.fmt(annPay*acc.paidYears)}만원과 수익)` : '')
     : '';
 
   /* 퇴직소득세 */
@@ -818,10 +818,20 @@ function render(){
     t1:acc.t1, t3:acc.t3, dc:dcBal,
     dcEffTaxRate:dcRate, irpRate:drawRate, startAge,
     eligibleAgePs:eligAge, eligibleAgeIrp:eligAge,
-    legacyOffsetPs, legacyOffsetIrp, lifetime, allowOver,
+    legacyOffsetPs, legacyOffsetIrp, lifetime, allowOver, limitExcess:allowOver,
     s1Net, s2Net, s3Net
   };
   const rows = Engine.simulate(base);
+
+  /* 목표 슬라이더 아래 참고: 받기 시작하는 해 연금수령한도(세전, 위에서 입력한 잔액 기준) */
+  const r0 = rows[0];
+  const limMonth = v => Engine.fmtD(v/12);
+  $('lim-line').textContent = (noMoney || !r0) ? ''
+    : (r0.rcYrPs >= 11 && r0.rcYrIrp >= 11) ? `참고: 만 ${r0.age}세는 연금수령 11년차 이상이라 연금수령한도가 없습니다.`
+    : `참고: 받기 시작하는 해(만 ${r0.age}세)에 뺄 수 있는 연금수령한도는 세금 떼기 전 기준 `
+      + [r0.psLimit > 0 && r0.psLimit !== Infinity ? `연금저축 월 ${limMonth(r0.psLimit)}만원` : '',
+         r0.irpLimit > 0 && r0.irpLimit !== Infinity ? `IRP·퇴직금 월 ${limMonth(r0.irpLimit)}만원` : ''].filter(Boolean).join(' + ')
+      + '입니다. 목표(세후)가 이보다 크면 한도에 걸립니다.';
 
   /* 단계 전환 */
   const s1Age = rows.find(r=>r.stage>=2)?.age ?? null;
@@ -854,8 +864,15 @@ function render(){
   const capRows    = rows.filter(r=>r.hitCap);
   const overRows   = rows.filter(r=>r.overCap);
   const shortRows  = shortRowsAll;
-  if(psLimRows.length)  warns.push(`<b>연금저축에서 매달 받는 금액이 그해 뺄 수 있는 한도(연금수령한도)를 넘었습니다</b> — ${psLimRows[0].age}세 등 ${psLimRows.length}개 해. 한도까지만 뺐습니다.`);
-  if(payoutRows.length) warns.push(`<b>그해 뺄 수 있는 한도(연금수령한도)에 닿았습니다</b> — ${payoutRows[0].age}세 등 ${payoutRows.length}개 해. 한도까지만 뺐습니다. 넘겨 빼면 '연금'이 아니라 일반 인출로 봐서 세금이 훨씬 커집니다(내가 넣은 돈은 16.5%, 퇴직금은 세금 감면 없음).`);
+  const exRows = rows.filter(r=>r.overPayout);
+  const free = (key, yrKey) => rows.find(r=>r[yrKey] >= 11)?.age;   // 한도가 사라지는 나이(11년차)
+  const limNote = (r, key, yrKey) => `${r.age}세(${r[yrKey]}년차) 한도는 연 ${Engine.fmt(r[key])}만원(월 ${Engine.fmtD(r[key]/12)}만원)입니다${free(key, yrKey) ? ` — 11년차인 ${free(key, yrKey)}세부터는 한도가 없습니다` : ''}.`;
+  if(psLimRows.length)  warns.push(`<b>연금저축에서 매달 받는 금액이 그해 뺄 수 있는 한도(연금수령한도)를 넘었습니다</b> — ${psLimRows[0].age}세 등 ${psLimRows.length}개 해. 한도까지만 뺐습니다. ${limNote(psLimRows[0], 'psLimit', 'rcYrPs')}`);
+  if(payoutRows.length) warns.push(`<b>그해 뺄 수 있는 한도(연금수령한도)에 닿았습니다</b> — ${payoutRows[0].age}세 등 ${payoutRows.length}개 해. 한도까지만 뺐습니다. ${limNote(payoutRows[0], 'irpLimit', 'rcYrIrp')} 넘겨 빼면 '연금'이 아니라 연금외수령이라 내가 넣은 돈은 기타소득세 16.5%, 퇴직금은 감면 없는 세금이 붙습니다. '자세히 설정'의 인출 한도에서 '초과 허용'을 고르면 넘게 받을 때의 세금을 볼 수 있습니다.`);
+  if(exRows.length){
+    const exGross = exRows.reduce((a,r)=>a+r.exW*12,0), exTax = exRows.reduce((a,r)=>a+r.exTax*12,0);
+    warns.push(`<b>연금수령한도를 넘겨 빼서 세금이 더 붙었습니다</b> — ${exRows[0].age}세 등 ${exRows.length}개 해, 넘긴 금액 합계 ${Engine.fmt(exGross)}만원에 세금 ${Engine.fmt(exTax)}만원(내가 넣은 돈·수익 16.5%, 퇴직금은 감면 없음, 세금 없는 돈은 비과세). ${limNote(exRows[0], 'irpLimit', 'rcYrIrp')}`);
+  }
   if(capRows.length)    warns.push(`<b>연금을 1년에 1,500만원까지만 받도록 했습니다</b> — ${capRows[0].age}세 등 ${capRows.length}개 해. 그 이상 받으면 세금이 크게 달라지기 때문입니다. '연금 수령 방법'의 '자세히 설정'에서 '초과 허용'을 고르면 넘게 받을 때의 세금도 볼 수 있습니다.`);
   if(overRows.length)   warns.push(`<b>1,500만원을 넘겨 받아 세금 16.5%(분리과세)를 적용했습니다</b> — ${overRows[0].age}세 등 ${overRows.length}개 해. 넘은 부분만이 아니라 <b>그해 받은 연금 전부</b>에 적용됩니다. 다른 소득이 적으면 종합과세가 더 유리할 수 있지만 여기서는 계산하지 않습니다.`);
   if(shortRows.length)  warns.push(`<b>목표 실수령액에 못 미칩니다</b> — ${shortRows[0].age}세부터 ${shortRows.length}개 해. 돈이 다 떨어졌거나 위의 한도에 걸렸기 때문입니다.`);
@@ -866,7 +883,7 @@ function render(){
 
   /* 히어로 — 첫해 월 실수령액과 지속 가능성 */
   const first = rows[0];
-  $('hero').innerHTML = noMoney ? `<p class="hero-l">결과</p><p class="hero-s" style="margin:0;">퇴직금·연금저축 잔액·IRP 납입 중 하나를 입력하면 월 수령액이 계산됩니다.</p>` : first ? `
+  $('hero').innerHTML = noMoney ? `<p class="hero-l">결과</p><p class="hero-s" style="margin:0;">퇴직금·연금저축 잔액·IRP 잔액이나 납입 중 하나를 입력하면 월 수령액이 계산됩니다.</p>` : first ? `
     <p class="hero-l">만 ${first.age}세부터 받기 시작 · 첫해 월 실수령액 (세금 뗀 뒤)</p>
     <p class="hero-v">${Engine.fmtD(first.net)}만원</p>
     <p class="hero-s" style="font-size:1rem;"><b style="color:${vColor};">${verdict}</b></p>
@@ -928,8 +945,8 @@ function render(){
     if(C1){ C1.data = cfg1.data; C1.update('none'); } else C1 = new Chart($('c1'), cfg1);
 
     if(showDetail){
-    const dcNetArr = rows.map(r=>Math.round(r.dcW*(1-dcRate/100*(1-Engine.dcRed(r.rcYrIrp)))));
-    const t3NetArr = rows.map(r=>Math.round(r.t3W*(1-r.rate)));
+    const dcNetArr = rows.map(r=>Math.round(r.dcNet));   // 엔진이 세금을 이미 뗀 값 — 한도 초과분(감면 없음·16.5%)도 포함
+    const t3NetArr = rows.map(r=>Math.round(r.t3Net));
     const bar = (label, data, color, a) => ({label, data, backgroundColor:color+a, borderRadius:2, stack:'s'});
     const cfg2 = {type:'bar', data:{labels, datasets:[
         bar('연금저축', rows.map(r=>Math.round(r.psNetW)), col.blue, 'ff'),
@@ -981,6 +998,7 @@ function render(){
   const tagOf = r => r.stage===1?'<span class="tag t1">세금 없는 돈</span>':r.stage===2?'<span class="tag t2">퇴직금</span>':'<span class="tag t3">세금혜택분</span>';
   const flagsOf = r => (r.hitPsLimit?'<span class="lim">⚠연금저축한도</span>':'')
                      + (r.hitPayout?'<span class="lim">⚠수령한도</span>':'')
+                     + (r.overPayout?'<span class="lim">⚠한도초과</span>':'')
                      + (r.hitCap?'<span class="lim">⚠1500</span>':'')
                      + (r.overCap?'<span class="lim">⚠16.5%</span>':'')
                      + (r.shortfall?'<span class="lim">⚠미달</span>':'');
@@ -1023,7 +1041,7 @@ function render(){
 }
 
 /* ═════════ 입력 바인딩 ═════════ */
-['now','age','goal','rate-basic','irp-r','draw-r','pay','payyr','seed','seed-t1','dc','wy','s1','s2','s3']
+['now','age','goal','rate-basic','irp-r','draw-r','pay','payyr','seed','irp-seed','dc','wy','s1','s2','s3']
   .forEach(id => $(id).addEventListener('input', update));
 ['has-dc','has-ps','has-irp','ps-legacy-simple','five-year-check'].forEach(id => $(id).addEventListener('change', update));
 /* 단계별 목표를 처음 켜면 지금 목표 금액에서 출발한다 */
